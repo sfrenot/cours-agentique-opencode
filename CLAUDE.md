@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Nature du dépôt
 
-Ce n'est pas un dépôt de code : c'est un dépôt git de supports de cours, servant à préparer un cours/TP de l'INSA de Lyon sur le **développement agentique avec opencode** (4 séances). Pas de build, lint ni tests. Le dépôt est `/Users/sfrenot/cours/Agentique`. Le dossier Obsidian `~/Documents/Obsidian Vault/IA/Cours Agentique` est un lien symbolique vers ce dépôt, pour que Stéphane continue à éditer le markdown dans Obsidian. Ne pousser vers GitHub qu'avec son accord.
+Ce n'est pas un dépôt de code : c'est un dépôt git de supports de cours, servant à préparer un cours/TP de l'INSA de Lyon sur le **développement agentique avec opencode** (4 séances). Pas de build, lint ni tests. Le dépôt est `/Users/sfrenot/cours/Agentique`. Le dossier Obsidian `~/Documents/Obsidian Vault/IA/Cours Agentique` est un lien symbolique vers ce dépôt, pour que Stéphane continue à éditer le markdown dans Obsidian. Stéphane a demandé (26/11/2026) que chaque modification validée soit **commitée et poussée automatiquement** sur `main` (GitHub Pages se met à jour tout seul) : après chaque changement de la page ou des fichiers du dépôt, faire `git commit` puis `git push` sans redemander. Exception : jamais de réécriture d'historique ni de `push --force` sans son accord explicite.
 
 ## Fichiers sources (NE PAS MODIFIER)
 

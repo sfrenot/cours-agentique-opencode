@@ -148,6 +148,12 @@ Pour comprendre cette différence, faite l'expérience comparative suivante :
 - Créez un répertoire vide, `mkdir test1` dans lequel vous lancez `opencode`. Puis lancez une discussion avec le LLM connecté. "Bonjour, qui es-tu ?". Une fois la réponse obtenue, lancez la commande /export
 - Dans une autre session, 'mkdir test2', écrivez dans un fichier le même prompt : echo "Bonjour, qui es-tu" > greeting.md. Lancez opencode, puis tapez la commande @greeting.md. Si vous exportez la session vous verrez qu'elle devient plus dense. 
 
+#note #tous  la liste des llm, vous trouverez au moins trois moteurs différents : 
+1. LL Wired Qwen3 8:27b MLX *LiteLLM*
+2. Ll Ge Gwen3 5:9 8B *LiteLLM*
+3. Big Pickle *OpenCode*
+Qwen 
+
 # Les briques de construction d'opencode
 ## 1 La boucle agentique
 Elle tourne avec un agent principal dans votre prompt. Elle peut être lancée sans prompt (headless) avec la commande `opencode run`. Elle peut, elle même lancer plusieurs agents qui s'occuperont de différentes tâches `Lance 3 agents, pour vérifier le prix des yaourts sur achant, leclerc et intermarché`.

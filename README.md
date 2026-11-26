@@ -8,7 +8,7 @@ Auteur : Stéphane Frénot, avec Claude (Anthropic).
 
 | Fichier | Rôle |
 |---|---|
-| `Cours - Développement d'une application par la voie agentique.md` | Source du cours (notes Obsidian), balisée `#generaliste`, `#informaticien`, `#tous` |
+| `Cours - Développement d'une application par la voie agentique.md` | Source du cours (notes Obsidian), balisée `#généraliste`, `#informaticien`, `#tous` |
 | `Instruction.md` | Cahier des charges de la préparation du cours |
 | `Deroulement-cours-opencode.html` | Support de cours à ouvrir dans un navigateur : deux versions (informaticien / généraliste) avec un bouton de bascule, schémas, exercices corrigés, mini-projets |
 | `Capture d’écran 2026-11-19 à 11.26.11.png` | Capture citée par le markdown |

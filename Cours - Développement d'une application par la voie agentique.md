@@ -422,8 +422,6 @@ Le nombre d'allers-retours change d'une fois à l'autre : on ne peut pas prévoi
 > 3. *Crée un fichier courses.txt qui contient trois articles, un par ligne.*
 > 4. *Crée un fichier index.html avec une liste de courses à cocher, comme en G2.*
 >
-> Repassez ensuite sur **Qwen 3.8** avec `/models` et posez les questions 2 et 4 de nouveau.
->
 > > [!success]- Ce qu'il faut observer
 > > - **Question 1** : réponse juste et rapide. Pour une question simple et connue, le petit modèle suffit.
 > > - **Question 2** : la bonne réponse est 15 (3 × 12 = 36, 36 − 6 = 30, puis 30 ÷ 2 = 15). Le petit modèle se trompe souvent dans un raisonnement en plusieurs étapes, tout en répondant avec assurance.

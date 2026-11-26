@@ -1422,7 +1422,7 @@ Pourquoi as-tu modifié cette ligne ? Qu'est-ce qui casse si je l'enlève ?</cod
 <h3 id="gp-modeles">Choisir un modèle</h3>
 <p>Dans opencode, chaque modèle a un nom en deux parties, par exemple <code>litellm/ll_wired-qwen3.5:0.8b</code>. La première partie indique <b>par où passer</b> pour joindre le modèle, la seconde <b>quel modèle</b> utiliser. Pour en choisir un, tapez <code>/models</code> dans l'assistant, puis quelques lettres (« qwen », « pickle ») : la liste se réduit aux modèles dont le nom contient ces lettres.</p>
 <figure>
-<svg viewBox="0 0 760 235" role="img" aria-label="Vous choisissez un modèle ; opencode regarde le début de son nom. Les modèles qui commencent par litellm passent par la passerelle de l'INSA vers le serveur de modèles, où tournent Qwen 3.8 et Qwen 3.5. Les modèles qui commencent par opencode partent vers un service en ligne sur internet, où tourne Big Pickle.">
+<svg viewBox="0 0 760 240" role="img" aria-label="Vous choisissez un modèle ; opencode regarde le début de son nom. Les modèles qui commencent par litellm passent par la passerelle de l'INSA vers le serveur de modèles, où tournent Qwen 3.8 et Qwen 3.5. Les modèles qui commencent par opencode partent vers un service en ligne sur internet, où tourne Big Pickle.">
   <rect class="box" x="20" y="90" width="150" height="60" rx="6"/>
   <text class="ttl" x="95" y="115" text-anchor="middle">Vous choisissez</text>
   <text class="lbl" x="95" y="134" text-anchor="middle">avec /models</text>
@@ -1441,14 +1441,14 @@ Pourquoi as-tu modifié cette ligne ? Qu'est-ce qui casse si je l'enlève ?</cod
   <text class="lbl" x="674" y="80" text-anchor="middle">Qwen 3.8 · 16 Go</text>
   <text class="lbl" x="674" y="98" text-anchor="middle">Qwen 3.5 · 500 Mo</text>
   <line class="ln" x1="584" y1="69" x2="608" y2="69" marker-end="url(#ah)"/>
-  <rect class="box" x="464" y="166" width="274" height="54" rx="6"/>
-  <text class="ttl" x="601" y="189" text-anchor="middle">Service en ligne OpenCode</text>
-  <text class="lbl" x="601" y="207" text-anchor="middle">Big Pickle</text>
+  <rect class="box" x="464" y="158" width="274" height="70" rx="6"/>
+  <text class="ttl" x="601" y="179" text-anchor="middle">Service en ligne OpenCode</text>
+  <text class="lbl" x="601" y="197" text-anchor="middle">Big Pickle</text>
+  <text class="lbl deny" x="601" y="216" text-anchor="middle">vos questions sortent de l'INSA</text>
   <path class="ln-acc" d="M400,104 L428,104 L428,69 L462,69" marker-end="url(#aha)"/>
   <text class="lbl mono acc" x="416" y="60">litellm/…</text>
   <path class="ln" d="M400,140 L428,140 L428,193 L462,193" marker-end="url(#ah)"/>
-  <text class="lbl mono" x="416" y="230">opencode/…</text>
-  <text class="lbl deny" x="601" y="152" text-anchor="middle">vos questions sortent de l'INSA</text>
+  <text class="lbl mono" x="416" y="234">opencode/…</text>
 </svg>
 <figcaption>Le début du nom décide du chemin : <code>litellm/…</code> reste à l'INSA, <code>opencode/…</code> part sur internet.</figcaption>
 </figure>

@@ -1,0 +1,10 @@
+# macOS
+.DS_Store
+
+# Obsidian (état local de l'éditeur)
+.obsidian/workspace*.json
+.obsidian/cache
+.trash/
+
+# Claude Code (réglages locaux)
+.claude/settings.local.json

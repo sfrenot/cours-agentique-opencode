@@ -307,8 +307,9 @@ La réponse finale peut arriver tout de suite, comme lorsqu'on interroge un mote
 | 0:15–0:45 | Quatre façons de s'adresser à une IA |
 | 0:45–1:05 | Démonstration : ouvrir opencode, choisir le modèle, premier échange |
 | 1:05–1:30 | Comment l'assistant travaille |
-| 1:30–2:10 | Exercice G1 : « Bonjour, qui es-tu ? » |
-| 2:10–3:00 | Exercice G2 : une liste de courses à cocher |
+| 1:30–2:05 | Exercice G1 : « Bonjour, qui es-tu ? » |
+| 2:05–2:40 | Exercice G2 : une liste de courses à cocher |
+| 2:40–3:00 | Exercice G3 : faire vérifier la page par opencode |
 
 #### Quatre façons de s'adresser à une IA
 
@@ -392,6 +393,25 @@ Le nombre d'allers-retours change d'une fois à l'autre : on ne peut pas prévoi
 > > - La page s'ouvre, on peut ajouter des articles et les cocher. Le nouveau bouton efface les articles cochés et garde les autres.
 > > - Si l'assistant a créé plusieurs fichiers ou veut installer des logiciels, c'est que la consigne n'était pas assez précise. Rappelez-lui « un seul fichier, rien à télécharger ».
 > > - Ce qu'il faut retenir : plus la consigne est précise et courte, plus un petit modèle réussit. Une tâche à la fois.
+
+> [!question] G3 · Faire vérifier la page par opencode (application · 20 min)
+> Toujours dans le dossier `courses`, demandez à l'assistant de contrôler son propre travail :
+>
+> ```
+> Vérifie le fichier index.html sans le modifier. Pour chaque point de la consigne
+> (champ de saisie, bouton Ajouter, case à cocher devant chaque article, bouton qui
+> supprime les articles cochés, un seul fichier sans rien télécharger d'internet),
+> réponds "OK" ou "manquant", avec la ligne concernée. Signale aussi les erreurs
+> que tu repères dans le code.
+> ```
+>
+> Comparez ensuite son verdict avec ce que vous avez constaté vous-même dans le navigateur en G2.
+>
+> > [!success]- Ce qu'il faut observer
+> > - Pour vérifier, l'assistant relit le fichier avec l'outil de lecture (`read`), parfois aussi avec une recherche dans le texte (`grep`). Il ne modifie rien, parce que la consigne le lui interdit.
+> > - Il répond point par point. Une liste de contrôle précise donne une vérification plus fiable qu'un simple « vérifie que ça marche ».
+> > - Il lit le code, mais il ne voit pas la page s'afficher : il peut dire « OK » pour un bouton qui ne fonctionne pas. Sa vérification complète la vôtre, elle ne la remplace pas.
+> > - S'il signale un point « manquant », demandez-lui de le corriger, puis relancez la vérification : c'est la démarche « faire, vérifier, corriger » qui servira dans les projets.
 
 ## Séance 2
 
@@ -549,10 +569,10 @@ C'est l'outil adapté pour demander une explication en cours de travail. Le cont
 | Durée | Activité |
 |---|---|
 | 0:00–0:35 | La mémoire de travail du modèle |
-| 0:35–1:15 | Exercice G3 : votre fiche de consignes |
-| 1:15–1:50 | Exercice G4 : demander la permission |
-| 1:50–2:20 | Exercice G5 : revenir en arrière |
-| 2:20–3:00 | Exercice G6 : une question à côté avec `/btw` |
+| 0:35–1:15 | Exercice G4 : votre fiche de consignes |
+| 1:15–1:50 | Exercice G5 : demander la permission |
+| 1:50–2:20 | Exercice G6 : revenir en arrière |
+| 2:20–3:00 | Exercice G7 : une question à côté avec `/btw` |
 
 #### Ce que le modèle reçoit à chaque fois
 
@@ -578,7 +598,7 @@ Notre modèle comparé à une IA du commerce :
 
 #### Exercices
 
-> [!question] G3 · Votre fiche de consignes (réglage · 40 min)
+> [!question] G4 · Votre fiche de consignes (réglage · 40 min)
 > Dans le dossier `courses`, tapez `/init` : l'assistant écrit lui-même une fiche de consignes, le fichier `AGENTS.md`. Lisez-la. Demandez-lui ensuite de la remplacer par vos propres consignes, en langage courant, avec au plus 6 lignes. Exemple de demande : *Remplace le contenu de AGENTS.md par ces consignes : …*
 >
 > > [!success]- Exemple de fiche
@@ -593,7 +613,7 @@ Notre modèle comparé à une IA du commerce :
 > >
 > > Testez avec : *Ajoute un compteur du nombre d'articles en haut de la liste.* Si votre prénom apparaît dans la réponse, la fiche a bien été lue. La fiche est relue à chaque étape : elle coûte de la place dans la mémoire de travail, il faut donc la garder courte.
 
-> [!question] G4 · Demander la permission (réglage · 35 min)
+> [!question] G5 · Demander la permission (réglage · 35 min)
 > Chaque action de l'assistant a l'un de trois statuts : autorisé (il agit seul), demander (il vous pose la question) ou interdit. Demandez à l'assistant de créer, dans le dossier `courses`, un fichier `opencode.json` avec exactement ce contenu :
 >
 > ```
@@ -613,13 +633,13 @@ Notre modèle comparé à une IA du commerce :
 > > - `"rm *": "deny"` : la suppression (`rm`) est refusée d'office. L'assistant ne peut pas passer outre, parce que c'est opencode qui bloque l'action, pas le modèle qui décide.
 > > - `"*": "ask"` : toutes les autres commandes demandent votre accord. Si l'assistant cherche un autre moyen d'effacer le fichier, il doit vous le demander.
 
-> [!question] G5 · Revenir en arrière (manipulation · 30 min)
+> [!question] G6 · Revenir en arrière (manipulation · 30 min)
 > Demandez : *Mets le fond de la page en bleu foncé et le texte en blanc.* Récupérez la page et regardez-la. Tapez ensuite `/undo`, récupérez de nouveau la page, puis tapez `/redo`.
 >
 > > [!success]- Ce qu'il faut observer
 > > `/undo` annule le dernier échange **et** remet les fichiers dans leur état précédent : le fond redevient clair. Votre demande réapparaît dans la zone de saisie, prête à être reformulée. `/redo` rétablit l'échange et la modification. Attention : seules les modifications de fichiers sont annulées. Une recherche web ou un message envoyé ne peuvent pas être « dé-faits ».
 
-> [!question] G6 · Une question à côté avec `/btw` (manipulation · 20 min)
+> [!question] G7 · Une question à côté avec `/btw` (manipulation · 20 min)
 > En plein travail, on a souvent une question rapide (« à quoi sert cette ligne ? ») sans vouloir l'ajouter à la conversation. Tapez par exemple : `/btw à quoi sert le bouton Ajouter dans le fichier ?`
 >
 > > [!success]- Ce qu'il faut observer
@@ -819,9 +839,9 @@ Le vocabulaire n'est pas normalisé. Ce qui distingue les mécanismes, c'est le 
 | Durée | Activité |
 |---|---|
 | 0:00–0:30 | Plusieurs assistants, plusieurs rôles |
-| 0:30–1:10 | Exercice G7 : préparer avant d'agir |
-| 1:10–2:20 | Exercice G8 : un assistant de recherche sur le web |
-| 2:20–3:00 | G9 : démonstration, confier un calcul à une autre machine |
+| 0:30–1:10 | Exercice G8 : préparer avant d'agir |
+| 1:10–2:20 | Exercice G9 : un assistant de recherche sur le web |
+| 2:20–3:00 | G10 : démonstration, confier un calcul à une autre machine |
 
 #### Plusieurs assistants, plusieurs rôles
 
@@ -834,13 +854,13 @@ Exemple : *Lance 3 assistants pour comparer le prix des yaourts chez Auchan, Lec
 
 #### Exercices
 
-> [!question] G7 · Préparer avant d'agir (manipulation · 40 min)
+> [!question] G8 · Préparer avant d'agir (manipulation · 40 min)
 > Dans un nouveau dossier `convertisseur`, ouvrez opencode, appuyez sur <kbd>Tab</kbd> pour passer en mode **Plan** et demandez : *Prépare le plan d'une page web qui convertit des euros en dollars, avec un taux fixe de 1 € = 1,10 $.* Vérifiez qu'aucun fichier n'a été créé. Repassez en mode **Build** avec <kbd>Tab</kbd> et demandez : *Applique le plan.*
 >
 > > [!success]- Ce qu'il faut observer
 > > En mode Plan, l'assistant décrit ce qu'il compte faire (un seul fichier, un champ en euros, le résultat en dollars, la formule) sans rien écrire. En mode Build, il garde le plan en mémoire et l'exécute. Relire le plan avant de dire « applique » permet de corriger un malentendu avant qu'il ne coûte du temps.
 
-> [!question] G8 · Un assistant de recherche sur le web (réglage · 70 min)
+> [!question] G9 · Un assistant de recherche sur le web (réglage · 70 min)
 > Un assistant spécialisé se décrit dans un simple fichier texte. Demandez à l'assistant principal de créer le fichier `~/.config/opencode/agents/web-explore.md` avec ce contenu :
 >
 > ```
@@ -870,7 +890,7 @@ Exemple : *Lance 3 assistants pour comparer le prix des yaourts chez Auchan, Lec
 > > - L'assistant principal confie la recherche à `web-explore` et reçoit seulement sa réponse courte.
 > > - Le petit modèle se trompe plus souvent. Il faut lui donner des étapes numérotées, simples et peu nombreuses. La ligne `steps: 25` l'oblige à répondre au bout de 25 étapes s'il tourne en rond.
 
-> [!question] G9 · Confier un calcul à une autre machine (démonstration · 40 min)
+> [!question] G10 · Confier un calcul à une autre machine (démonstration · 40 min)
 > Sur la machine de TP, l'assistant n'a pas le droit de lancer lui-même des programmes Python. Un assistant spécialisé, préparé par l'enseignant, envoie le programme au serveur de l'INSA, le lance là-bas et rapporte le résultat. Démonstration : à partir d'un fichier de notes, l'assistant écrit un petit programme de calcul de moyenne et le fait exécuter à distance.
 >
 > > [!success]- Ce qu'il faut observer
@@ -1010,12 +1030,12 @@ Exemple : *Lance 3 assistants pour comparer le prix des yaourts chez Auchan, Lec
 
 | Durée | Activité |
 |---|---|
-| 0:00–0:30 | Exercice G10 : retrouver son travail |
-| 0:30–1:00 | Exercice G11 : quand ça ne marche plus |
+| 0:00–0:30 | Exercice G11 : retrouver son travail |
+| 0:30–1:00 | Exercice G12 : quand ça ne marche plus |
 | 1:00–2:50 | Projet au choix : boîte en papier ou emploi du temps |
 | 2:50–3:00 | Bilan : au fil de la conversation ou avec un cahier des charges ? |
 
-> [!question] G10 · Retrouver son travail (manipulation · 30 min)
+> [!question] G11 · Retrouver son travail (manipulation · 30 min)
 > opencode enregistre chaque conversation et la range avec le dossier dans lequel vous l'avez ouverte. Retournez dans le dossier `courses`, ouvrez opencode et essayez :
 >
 > |   |   |
@@ -1028,7 +1048,7 @@ Exemple : *Lance 3 assistants pour comparer le prix des yaourts chez Auchan, Lec
 > > [!success]- Ce qu'il faut observer
 > > Les conversations sont liées au dossier : ouvert depuis un autre dossier, opencode ne les montre pas. Une copie faite avec `/fork` duplique la conversation, pas les fichiers. Les deux versions travaillent donc sur le même `index.html`.
 
-> [!question] G11 · Quand ça ne marche plus (réflexion · 30 min)
+> [!question] G12 · Quand ça ne marche plus (réflexion · 30 min)
 > Pour chaque situation, choisissez la réaction la plus douce qui règle le problème.
 >
 > > [!success]- Réponses
@@ -1374,7 +1394,7 @@ Deux projets à mener en binôme. Les deux suivent la même démarche : on écri
 >
 > 1. Faites écrire par l'assistant un cahier des charges, `SPEC.md`, qui reprend les règles ci-dessus en phrases simples.
 > 2. Demandez **un programme** qui construit l'emploi du temps à partir des tableaux. Ne demandez pas à l'assistant de le construire de tête : il se tromperait.
-> 3. Faites exécuter ce programme par l'assistant de calcul (vu en G9).
+> 3. Faites exécuter ce programme par l'assistant de calcul (vu en G10).
 > 4. Démarrez une **nouvelle conversation** avec `/clear` et demandez un **second programme** qui vérifie chaque règle sur le résultat, à partir du seul `SPEC.md`.
 > 5. Demandez enfin une page web qui affiche l'emploi du temps de chaque groupe sous forme de grille.
 >
@@ -1429,7 +1449,7 @@ Trois habitudes qui comptent plus que la connaissance des commandes, parce que l
 > Placée dans votre fiche de consignes, cette phrase sert de témoin. Tant que votre prénom apparaît, l'assistant suit vos consignes. S'il disparaît, c'est que la mémoire de travail a été résumée ou que la fiche n'a pas été lue : c'est le moment de vérifier, ou de repartir d'une conversation vierge.
 
 > [!question] Demandez des explications si besoin
-> Ne laissez pas l'assistant faire une chose que vous ne comprenez pas. Demandez-lui ce qu'il va faire avant de l'autoriser, ou pourquoi il a modifié une ligne. Pour une question rapide qui ne doit pas encombrer la conversation, utilisez `/btw` (exercice G6).
+> Ne laissez pas l'assistant faire une chose que vous ne comprenez pas. Demandez-lui ce qu'il va faire avant de l'autoriser, ou pourquoi il a modifié une ligne. Pour une question rapide qui ne doit pas encombrer la conversation, utilisez `/btw` (exercice G7).
 
 ## Catalogue des exercices
 

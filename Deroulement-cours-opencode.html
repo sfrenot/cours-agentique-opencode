@@ -1617,7 +1617,8 @@ opencode</code></pre>
 <details><summary>Ce qu'il faut observer</summary>
 <ul>
 <li>Dans le premier cas, la conversation enregistrée contient votre phrase et la réponse, rien de plus.</li>
-<li>Dans le second, l'assistant a ouvert le fichier et l'a joint à la question : l'enregistrement est plus long, alors que la question est la même.</li>
+<li>Dans le second, l'assistant déclenche un outil de lecture de fichier (l'action <code>read</code>) pour lire le contenu de <code>greeting.md</code>, puis le joint à la question. On voit cet appel d'outil dans l'enregistrement, qui est plus long alors que la question est la même.</li>
+<li>Notez aussi que les deux réponses à la même question peuvent ne pas avoir le même niveau de détail. Le modèle ne répond jamais deux fois exactement de la même façon, et il n'a pas reçu le même texte dans les deux cas.</li>
 <li>Ce qu'il faut retenir : le modèle reçoit toujours plus que ce que vous tapez. opencode ajoute ses propres règles et le contenu des fichiers. C'est le sujet de la séance 2.</li>
 </ul>
 </details>

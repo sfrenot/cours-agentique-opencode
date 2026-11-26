@@ -367,7 +367,8 @@ Le nombre d'allers-retours change d'une fois à l'autre : on ne peut pas prévoi
 >
 > > [!success]- Ce qu'il faut observer
 > > - Dans le premier cas, la conversation enregistrée contient votre phrase et la réponse, rien de plus.
-> > - Dans le second, l'assistant a ouvert le fichier et l'a joint à la question : l'enregistrement est plus long, alors que la question est la même.
+> > - Dans le second, l'assistant déclenche un outil de lecture de fichier (l'action `read`) pour lire le contenu de `greeting.md`, puis le joint à la question. On voit cet appel d'outil dans l'enregistrement, qui est plus long alors que la question est la même.
+> > - Notez aussi que les deux réponses à la même question peuvent ne pas avoir le même niveau de détail. Le modèle ne répond jamais deux fois exactement de la même façon, et il n'a pas reçu le même texte dans les deux cas.
 > > - Ce qu'il faut retenir : le modèle reçoit toujours plus que ce que vous tapez. opencode ajoute ses propres règles et le contenu des fichiers. C'est le sujet de la séance 2.
 
 > [!question] G2 · Une liste de courses à cocher (application · 50 min)

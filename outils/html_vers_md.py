@@ -251,19 +251,21 @@ class Rendu:
 
     def figure(self, n):
         out = []
+        svgs = list(n.trouver(lambda x: x.tag == "svg"))
+        base = n.attrs.get("id", self.section).replace("fig-", "figure-")
         for e in n.trouver(lambda x: x.tag in ("svg", "img")):
             if e.tag == "img":
                 out.append(f"![[{e.attrs['src']}]]")
                 continue
-            k = self.compteur.get(self.section, 0) + 1
-            self.compteur[self.section] = k
-            nom = f"{self.section}-{k}.svg"
+            k = self.compteur.get(base, 0) + 1
+            self.compteur[base] = k
+            nom = f"{base}{'abcdef'[k - 1] if len(svgs) > 1 else ''}.svg"
             bloc = self.blocs_svg[e.attrs["_index"]]
             self.fichiers[nom] = svg_autonome(bloc, self.defs, self.css, self.css_patron)
             out.append(f"![[schemas/{nom}]]")
         cap = next(n.trouver(lambda x: x.tag == "figcaption"), None)
         if cap:
-            out.append("*" + self.ligne(cap) + "*")
+            out.append(self.ligne(cap))
         return ["\n".join(out)]
 
     def callout(self, genre, titre, blocs, replie=False):

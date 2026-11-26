@@ -47,8 +47,7 @@ text{font-size:5.5px}
   <rect class="zone" x="450" y="12" width="300" height="122" rx="10"/>
   <text class="lbl" x="464" y="30">réseau de l'INSA</text>
   <rect class="box" x="464" y="42" width="120" height="54" rx="6"/>
-  <text class="ttl" x="524" y="65" text-anchor="middle">Passerelle</text>
-  <text class="lbl" x="524" y="83" text-anchor="middle">aiguille</text>
+  <text class="ttl" x="524" y="74" text-anchor="middle">Passerelle</text>
   <rect class="box" x="610" y="36" width="128" height="88" rx="6"/>
   <text class="ttl" x="674" y="58" text-anchor="middle">Serveur</text>
   <text class="lbl" x="674" y="80" text-anchor="middle">Qwen 3.8 · 16 Go</text>

@@ -86,8 +86,8 @@ Aucune connaissance en programmation n'est demandée. Les quelques commandes à 
 
 opencode tourne sur une machine de TP. Il ne calcule rien lui-même : chaque appel au modèle part en HTTP vers la passerelle LiteLLM, qui le transmet au Mac Studio où les modèles sont chargés. Les sessions sont stockées dans une base SQLite gérée par un service de fond. Le TUI n'est qu'un client de ce service.
 
-![[schemas/infra-1.svg]]
-*Le modèle tourne sur une autre machine que le harnais. Le service de fond porte la boucle agentique et la base des sessions, et le TUI n'en est qu'un client. En pointillé, le chemin ajouté en S3 pour exécuter du Python à distance.*
+![[schemas/figure-i1.svg]]
+**Figure I1 · Infrastructure du cours.** Le modèle tourne sur une autre machine que le harnais. Le service de fond porte la boucle agentique et la base des sessions, et le TUI n'en est qu'un client. En pointillé, le chemin ajouté en S3 pour exécuter du Python à distance.
 
 > [!note]
 > **À vérifier avant la séance 1.** Chaque compte étudiant doit avoir le fournisseur `litellm` déclaré dans `~/.config/opencode/opencode.json` (URL `http://gatewayllm:4000/v1` et clé personnelle). La commande `opencode models | grep wired` doit lister les deux modèles du cours.
@@ -99,8 +99,8 @@ Un modèle se désigne par un identifiant `fournisseur/modèle`. La première pa
 - **Les fournisseurs déclarés dans `opencode.json`** : ici `litellm`. Le plugin `opencode-plugin-litellm` interroge la passerelle et récupère tout seul la liste des modèles qu'elle sert. Il n'y a rien à recopier dans la configuration.
 - **Le fournisseur intégré `opencode`** (OpenCode Zen), un service en ligne qui propose des modèles hébergés, dont certains gratuits.
 
-![[schemas/modeles-1.svg]]
-*Le préfixe de l'identifiant décide du chemin. `litellm/…` reste dans le réseau de l'école, `opencode/…` part vers un service sur internet.*
+![[schemas/figure-i2.svg]]
+**Figure I2 · Le chemin dépend du fournisseur.** Le préfixe de l'identifiant décide du chemin. `litellm/…` reste dans le réseau de l'école, `opencode/…` part vers un service sur internet.
 
 | Identifiant | Fournisseur | Où il tourne | Usage dans le cours |
 |---|---|---|---|
@@ -127,8 +127,8 @@ Dans le nom `ll_wired-qwen3.8:27b-mlx`, le début désigne l'hébergement côté
 
 Vous travaillez depuis votre ordinateur, mais l'assistant tourne sur une machine de l'INSA à laquelle vous vous connectez à distance. Le modèle d'IA, la partie qui « réfléchit » et rédige, tourne sur un troisième ordinateur, lui aussi installé à l'INSA.
 
-![[schemas/gp-infra-1.svg]]
-*Trois ordinateurs, trois rôles. Vos questions et vos fichiers restent dans le réseau de l'école, contrairement à ce qui se passe avec ChatGPT ou Claude.*
+![[schemas/figure-g1.svg]]
+**Figure G1 · Trois ordinateurs, trois rôles.** Vos questions et vos fichiers restent dans le réseau de l'école, contrairement à ce qui se passe avec ChatGPT ou Claude.
 
 Deux modèles sont disponibles. Le grand (27 milliards de réglages internes, 16 Go en mémoire) sert à réfléchir. Le tout petit (0,8 milliard, 500 Mo en mémoire) montre ce qu'on peut faire avec très peu de moyens. Tous deux sont bien moins puissants que les IA du commerce : on leur confie des tâches courtes et précises, et on vérifie le résultat.
 
@@ -136,8 +136,8 @@ Deux modèles sont disponibles. Le grand (27 milliards de réglages internes, 16
 
 Dans opencode, chaque modèle a un nom en deux parties, par exemple `litellm/ll_wired-qwen3.5:0.8b`. La première partie indique **par où passer** pour joindre le modèle, la seconde **quel modèle** utiliser. Pour en choisir un, tapez `/models` dans l'assistant, puis quelques lettres (« qwen », « pickle ») : la liste se réduit aux modèles dont le nom contient ces lettres.
 
-![[schemas/gp-modeles-1.svg]]
-*Le début du nom décide du chemin : `litellm/…` reste à l'INSA, `opencode/…` part sur internet.*
+![[schemas/figure-g2.svg]]
+**Figure G2 · Choisir un modèle.** Le début du nom décide du chemin : `litellm/…` reste à l'INSA, `opencode/…` part sur internet.
 
 | Modèle | Où il tourne | À quoi il sert ici |
 |---|---|---|
@@ -172,8 +172,8 @@ Dans opencode, chaque modèle a un nom en deux parties, par exemple `litellm/ll_
 
 D'un niveau au suivant, la demande s'enrichit. Au niveau 4, la demande ne part plus en une seule fois : elle déclenche une suite d'allers-retours entre la machine et le modèle.
 
-![[schemas/s1-1.svg]]
-*Aux niveaux 1 à 3, il y a un seul aller-retour. Au niveau 4, le nombre de tours n'est pas connu d'avance.*
+![[schemas/figure-i3.svg]]
+**Figure I3 · Les 4 niveaux d'interaction.** Aux niveaux 1 à 3, il y a un seul aller-retour. Au niveau 4, le nombre de tours n'est pas connu d'avance.
 
 Deux façons extrêmes de chercher une solution :
 
@@ -192,14 +192,14 @@ Deux façons extrêmes de chercher une solution :
 Un CLI (*Command Line Interface*) ou TUI (*Terminal User Interface*) est un interpréteur de commandes transmises par un terminal. On lance la commande `opencode` (ou `claude`) dans sa fenêtre.
 
 ![[images/opencode-lancement.png]]
-*opencode au lancement : l'agent courant (Build), le modèle (Big Pickle), le dossier de travail et les raccourcis <kbd>Shift</kbd>+<kbd>Tab</kbd> (agents) et <kbd>Ctrl</kbd>+<kbd>P</kbd> (commandes).*
+**Figure I4 · opencode au lancement.** L'agent courant (Build), le modèle (Big Pickle), le dossier de travail et les raccourcis <kbd>Shift</kbd>+<kbd>Tab</kbd> (agents) et <kbd>Ctrl</kbd>+<kbd>P</kbd> (commandes).
 
 Cette fenêtre est l'équivalent strict du shell qui dialogue avec le système d'exploitation, sauf que ce shell-ci dialogue avec un LLM, et éventuellement avec le système. C'est un agent qui tourne sur la boucle d'action suivante.
 
 #### La boucle agentique
 
-![[schemas/s1-2.svg]]
-*Le modèle n'agit jamais lui-même. Il demande une action, le harnais l'exécute et réinjecte le résultat. La boucle s'arrête quand le modèle répond par du texte, parfois dès le premier tour.*
+![[schemas/figure-i5.svg]]
+**Figure I5 · La boucle agentique.** Le modèle n'agit jamais lui-même. Il demande une action, le harnais l'exécute et réinjecte le résultat. La boucle s'arrête quand le modèle répond par du texte, parfois dès le premier tour.
 
 La réponse finale peut arriver tout de suite, comme lorsqu'on interroge un moteur de recherche ou qu'on reste au niveau du prompt. Cette boucle est le point clé de la programmation agentique : elle est pilotable, configurable et autonome. Il est pourtant impossible de lui donner un comportement exact et formel, car son déroulement dépend de la demande initiale et du modèle utilisé. Elle est subie.
 
@@ -329,12 +329,12 @@ Dans ce cours, on travaille surtout au fil de la conversation, en ajoutant des �
 opencode s'utilise dans une fenêtre de commande : on tape `opencode`, et une zone de saisie apparaît. On y écrit ses demandes comme dans un chat, mais l'assistant peut aussi agir sur les fichiers du dossier où on l'a ouvert.
 
 ![[images/opencode-lancement.png]]
-*opencode au lancement. En bas de la zone de saisie : le mode (Build) et le modèle utilisé (Big Pickle). En dessous : le dossier de travail.*
+**Figure G3 · opencode au lancement.** En bas de la zone de saisie : le mode (Build) et le modèle utilisé (Big Pickle). En dessous : le dossier de travail.
 
 #### Comment l'assistant travaille
 
-![[schemas/gp-s1-1.svg]]
-*Le modèle d'IA n'agit jamais lui-même. Il demande une action, opencode l'exécute et lui rapporte le résultat, et ainsi de suite jusqu'à la réponse finale.*
+![[schemas/figure-g4.svg]]
+**Figure G4 · Comment l'assistant travaille.** Le modèle d'IA n'agit jamais lui-même. Il demande une action, opencode l'exécute et lui rapporte le résultat, et ainsi de suite jusqu'à la réponse finale.
 
 Le nombre d'allers-retours change d'une fois à l'autre : on ne peut pas prévoir exactement ce que fera l'assistant. C'est pourquoi on vérifie toujours le résultat.
 
@@ -416,8 +416,8 @@ Le nombre d'allers-retours change d'une fois à l'autre : on ne peut pas prévoi
 
 #### Harnais et contexte
 
-![[schemas/s2-1.svg]]
-*Le harnais se configure, le contexte se subit. Un meilleur `AGENTS.md` améliore le contexte mais ne change rien au harnais. À l'inverse, changer de harnais avec le même modèle change le résultat.*
+![[schemas/figure-i6.svg]]
+**Figure I6 · Harnais et contexte.** Le harnais se configure, le contexte se subit. Un meilleur `AGENTS.md` améliore le contexte mais ne change rien au harnais. À l'inverse, changer de harnais avec le même modèle change le résultat.
 
 |   | Harnais | Contexte |
 |---|---|---|
@@ -555,8 +555,8 @@ C'est l'outil adapté pour demander une explication en cours de travail. Le cont
 
 #### Ce que le modèle reçoit à chaque fois
 
-![[schemas/gp-s2-1.svg]]
-*Le modèle n'a pas d'autre mémoire que ce bloc. Ce qui n'y figure pas, il ne le sait pas.*
+![[schemas/figure-g5.svg]]
+**Figure G5 · La mémoire de travail.** Le modèle n'a pas d'autre mémoire que ce bloc. Ce qui n'y figure pas, il ne le sait pas.
 
 Le bloc grossit à chaque échange. Quand il devient trop gros (pour notre modèle, l'équivalent d'environ 230 pages de livre), opencode le résume automatiquement et des détails se perdent. Les IA comptent ce volume en « morceaux de mots » : environ 3 morceaux pour 2 mots en français.
 
@@ -673,8 +673,8 @@ Dans la boucle, le LLM demande implicitement des actions au CLI. Leur nombre est
 
 La boucle tourne avec un agent principal, dans le TUI ou sans interface avec `opencode run`. Elle peut lancer plusieurs agents qui s'occupent chacun d'une tâche, par exemple : *Lance 3 agents pour vérifier le prix des yaourts chez Auchan, Leclerc et Intermarché.* L'agent `explore` analyse du code ou un répertoire à plusieurs niveaux de profondeur (`quick`, `medium`, `thorough`). L'agent `general` peut lancer d'autres agents.
 
-![[schemas/s3-1.svg]]
-*Chaque sous-agent travaille dans son propre contexte, et seul son compte rendu revient dans le contexte de l'agent principal. C'est aussi un outil d'économie de tokens : la page web lue par `web-explore` ne remplit pas le contexte A.*
+![[schemas/figure-i7.svg]]
+**Figure I7 · Orchestration par sous-agents.** Chaque sous-agent travaille dans son propre contexte, et seul son compte rendu revient dans le contexte de l'agent principal. C'est aussi un outil d'économie de tokens : la page web lue par `web-explore` ne remplit pas le contexte A.
 
 #### Exercices
 
@@ -826,8 +826,8 @@ Le vocabulaire n'est pas normalisé. Ce qui distingue les mécanismes, c'est le 
 
 opencode a deux modes principaux, que l'on change avec la touche <kbd>Tab</kbd> : **Plan** réfléchit et propose sans rien toucher, **Build** agit. Il peut aussi confier une partie du travail à des **assistants spécialisés**. Chacun a sa propre mémoire de travail et ses propres autorisations, et il peut utiliser un autre modèle.
 
-![[schemas/gp-s3-1.svg]]
-*Chaque assistant spécialisé travaille dans sa propre mémoire et ne rapporte qu'un résumé. La page web lue par l'assistant de recherche n'encombre pas la mémoire de l'assistant principal.*
+![[schemas/figure-g6.svg]]
+**Figure G6 · Les assistants spécialisés.** Chaque assistant spécialisé travaille dans sa propre mémoire et ne rapporte qu'un résumé. La page web lue par l'assistant de recherche n'encombre pas la mémoire de l'assistant principal.
 
 Exemple : *Lance 3 assistants pour comparer le prix des yaourts chez Auchan, Leclerc et Intermarché.* Chaque assistant cherche de son côté, en même temps, et l'assistant principal compare les trois résumés.
 
@@ -1053,9 +1053,9 @@ Deux projets plus longs, à mener en binôme en S4 à la place du quiz ou en tra
 > [!question] E17 · Boîte en papier de 5 cm × 5 cm avec couvercle lié (projet · 70 à 90 min)
 > Produire un patron imprimable, à l'échelle réelle, d'une boîte cubique de 5 cm de côté, dont le couvercle est attaché au dos de la boîte et fermé par un rabat glissé à l'avant. On découpe le patron, on le plie et on le colle : la boîte doit se fermer.
 >
-> ![[schemas/e17-1.svg]]
-> ![[schemas/e17-2.svg]]
-> *À gauche, la boîte assemblée, couvercle ouvert. À droite, son patron, dessiné en millimètres : traits pleins à découper, pointillés à plier. Les quatre languettes « colle » des côtés se collent à l'intérieur du dos et de la face avant. Le couvercle pivote sur le pli dos/couvercle, et son rabat se glisse derrière la face avant.*
+> ![[schemas/figure-i8a.svg]]
+> ![[schemas/figure-i8b.svg]]
+> **Figure I8 · La boîte et son patron.** À gauche, la boîte assemblée, couvercle ouvert. À droite, son patron, dessiné en millimètres : traits pleins à découper, pointillés à plier. Les quatre languettes « colle » des côtés se collent à l'intérieur du dos et de la face avant. Le couvercle pivote sur le pli dos/couvercle, et son rabat se glisse derrière la face avant.
 >
 > **Livrables**
 >
@@ -1308,9 +1308,9 @@ Deux projets à mener en binôme. Les deux suivent la même démarche : on écri
 > [!question] P1 · Une boîte en papier de 5 cm avec couvercle attaché (projet · 90 min)
 > Faire produire un patron à imprimer, à taille réelle, d'une boîte en forme de cube de 5 cm de côté. Le couvercle est attaché au dos de la boîte et se ferme par un rabat glissé à l'avant. On découpe, on plie, on colle : la boîte doit se fermer.
 >
-> ![[schemas/gp-p1-1.svg]]
-> ![[schemas/gp-p1-2.svg]]
-> *À gauche, la boîte montée, couvercle ouvert. À droite, son patron : traits pleins à découper, pointillés à plier. Les quatre pattes « colle » se collent à l'intérieur du dos et de l'avant.*
+> ![[schemas/figure-g7a.svg]]
+> ![[schemas/figure-g7b.svg]]
+> **Figure G7 · La boîte et son patron.** À gauche, la boîte montée, couvercle ouvert. À droite, son patron : traits pleins à découper, pointillés à plier. Les quatre pattes « colle » se collent à l'intérieur du dos et de l'avant.
 >
 > **Étapes**
 >

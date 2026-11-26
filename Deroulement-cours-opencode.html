@@ -250,7 +250,7 @@ html{scroll-behavior:smooth}
 <h2 id="infra">L'infrastructure utilisée</h2>
 <p>opencode tourne sur une machine de TP. Il ne calcule rien lui-même : chaque appel au modèle part en HTTP vers la passerelle LiteLLM, qui le transmet au Mac Studio où les modèles sont chargés. Les sessions sont stockées dans une base SQLite gérée par un service de fond. Le TUI n'est qu'un client de ce service.</p>
 
-<figure>
+<figure id="fig-i1">
 <svg viewBox="0 0 780 330" role="img" aria-label="Le poste étudiant se connecte en SSH à la machine de TP ; le TUI opencode parle au service de fond qui stocke les sessions dans opencode.db et appelle LiteLLM, qui route vers les modèles Qwen du Mac Studio serveurllm ; le sous-agent remote-python envoie le code en SSH vers serveurllm.">
   <rect class="zone" x="150" y="20" width="330" height="290" rx="10"/>
   <text class="lbl" x="164" y="40">machine d'accès (TP)</text>
@@ -309,7 +309,7 @@ html{scroll-behavior:smooth}
   <text class="lbl" x="400" y="240">remote-python</text>
   <text class="lbl" x="400" y="254">ssh + tar</text>
 </svg>
-<figcaption>Le modèle tourne sur une autre machine que le harnais. Le service de fond porte la boucle agentique et la base des sessions, et le TUI n'en est qu'un client. En pointillé, le chemin ajouté en S3 pour exécuter du Python à distance.</figcaption>
+<figcaption><b>Figure I1 · Infrastructure du cours.</b> Le modèle tourne sur une autre machine que le harnais. Le service de fond porte la boucle agentique et la base des sessions, et le TUI n'en est qu'un client. En pointillé, le chemin ajouté en S3 pour exécuter du Python à distance.</figcaption>
 </figure>
 
 <div class="note"><p><b>À vérifier avant la séance 1.</b> Chaque compte étudiant doit avoir le fournisseur <code>litellm</code> déclaré dans <code>~/.config/opencode/opencode.json</code> (URL <code>http://gatewayllm:4000/v1</code> et clé personnelle). La commande <code>opencode models | grep wired</code> doit lister les deux modèles du cours.</p></div>
@@ -320,7 +320,7 @@ html{scroll-behavior:smooth}
 <li><b>Les fournisseurs déclarés dans <code>opencode.json</code></b> : ici <code>litellm</code>. Le plugin <code>opencode-plugin-litellm</code> interroge la passerelle et récupère tout seul la liste des modèles qu'elle sert. Il n'y a rien à recopier dans la configuration.</li>
 <li><b>Le fournisseur intégré <code>opencode</code></b> (OpenCode Zen), un service en ligne qui propose des modèles hébergés, dont certains gratuits.</li>
 </ul>
-<figure>
+<figure id="fig-i2">
 <svg viewBox="0 0 760 235" role="img" aria-label="Le choix d'un modèle passe par opencode, qui lit le préfixe de l'identifiant. Le préfixe litellm envoie la requête à la passerelle gatewayllm, qui la transmet à serveurllm où tournent qwen3.8 27b et qwen3.5 0.8b, dans le réseau INSA. Le préfixe opencode envoie la requête au service en ligne OpenCode Zen, hors du réseau INSA, où tourne big-pickle.">
   <rect class="box" x="20" y="90" width="150" height="60" rx="6"/>
   <text class="ttl" x="95" y="115" text-anchor="middle">Choix du modèle</text>
@@ -350,7 +350,7 @@ html{scroll-behavior:smooth}
   <text class="lbl mono" x="416" y="230">opencode/…</text>
   <text class="lbl deny" x="601" y="152" text-anchor="middle">les données sortent de l'INSA</text>
 </svg>
-<figcaption>Le préfixe de l'identifiant décide du chemin. <code>litellm/…</code> reste dans le réseau de l'école, <code>opencode/…</code> part vers un service sur internet.</figcaption>
+<figcaption><b>Figure I2 · Le chemin dépend du fournisseur.</b> Le préfixe de l'identifiant décide du chemin. <code>litellm/…</code> reste dans le réseau de l'école, <code>opencode/…</code> part vers un service sur internet.</figcaption>
 </figure>
 <div class="tbl"><table>
 <thead><tr><th>Identifiant</th><th>Fournisseur</th><th>Où il tourne</th><th>Usage dans le cours</th></tr></thead>
@@ -393,7 +393,7 @@ opencode run -m opencode/big-pickle "Dis bonjour en une phrase."</code></pre>
 
 <h3>Les 4 niveaux d'interaction</h3>
 <p>D'un niveau au suivant, la demande s'enrichit. Au niveau 4, la demande ne part plus en une seule fois : elle déclenche une suite d'allers-retours entre la machine et le modèle.</p>
-<figure>
+<figure id="fig-i3">
 <svg viewBox="0 0 760 250" role="img" aria-label="Quatre niveaux : prompt seul ; prompt structuré avec rôle et format ; prompt accompagné d'extraits de documentation (RAG) ; harnais qui boucle entre le LLM et des outils.">
   <text class="lbl" x="20" y="22">ce qui est envoyé au LLM</text>
   <text class="ttl" x="20" y="58">1 · Prompt</text>
@@ -421,7 +421,7 @@ opencode run -m opencode/big-pickle "Dis bonjour en une phrase."</code></pre>
   <text class="lbl acc" x="475" y="246" text-anchor="middle">× n tours</text>
   <line class="ln" x1="590" y1="206" x2="690" y2="206" marker-end="url(#ah)"/><text class="lbl" x="700" y="210">réponse</text>
 </svg>
-<figcaption>Aux niveaux 1 à 3, il y a un seul aller-retour. Au niveau 4, le nombre de tours n'est pas connu d'avance.</figcaption>
+<figcaption><b>Figure I3 · Les 4 niveaux d'interaction.</b> Aux niveaux 1 à 3, il y a un seul aller-retour. Au niveau 4, le nombre de tours n'est pas connu d'avance.</figcaption>
 </figure>
 <p>Deux façons extrêmes de chercher une solution :</p>
 <ul>
@@ -438,14 +438,14 @@ opencode run -m opencode/big-pickle "Dis bonjour en une phrase."</code></pre>
 
 <h3>Qu'est-ce qu'un CLI comme opencode ?</h3>
 <p>Un CLI (<i>Command Line Interface</i>) ou TUI (<i>Terminal User Interface</i>) est un interpréteur de commandes transmises par un terminal. On lance la commande <code>opencode</code> (ou <code>claude</code>) dans sa fenêtre.</p>
-<figure>
+<figure id="fig-i4">
 <img src="images/opencode-lancement.png" alt="Fenêtre de terminal avec opencode au lancement : logo opencode, zone de saisie, agent Build et modèle Big Pickle, raccourcis shift+tab agents et ctrl+p commands." width="1812" height="1140" style="width:100%;height:auto;border-radius:6px">
-<figcaption>opencode au lancement : l'agent courant (Build), le modèle (Big Pickle), le dossier de travail et les raccourcis <kbd>Shift</kbd>+<kbd>Tab</kbd> (agents) et <kbd>Ctrl</kbd>+<kbd>P</kbd> (commandes).</figcaption>
+<figcaption><b>Figure I4 · opencode au lancement.</b> L'agent courant (Build), le modèle (Big Pickle), le dossier de travail et les raccourcis <kbd>Shift</kbd>+<kbd>Tab</kbd> (agents) et <kbd>Ctrl</kbd>+<kbd>P</kbd> (commandes).</figcaption>
 </figure>
 <p>Cette fenêtre est l'équivalent strict du shell qui dialogue avec le système d'exploitation, sauf que ce shell-ci dialogue avec un LLM, et éventuellement avec le système. C'est un agent qui tourne sur la boucle d'action suivante.</p>
 
 <h3>La boucle agentique</h3>
-<figure>
+<figure id="fig-i5">
 <svg viewBox="0 0 760 290" role="img" aria-label="L'utilisateur donne une tâche au harnais ; le harnais envoie contexte et liste d'outils au LLM ; si le LLM demande un outil, le harnais vérifie la permission, exécute l'outil, ajoute le résultat au contexte et rappelle le LLM ; sinon la réponse texte revient à l'utilisateur.">
   <rect class="box" x="20" y="110" width="120" height="60" rx="6"/>
   <text class="ttl" x="80" y="137" text-anchor="middle">Utilisateur</text>
@@ -483,7 +483,7 @@ opencode run -m opencode/big-pickle "Dis bonjour en une phrase."</code></pre>
   <text class="lbl" x="372" y="214">résultat</text>
   <text class="lbl acc" x="345" y="60" text-anchor="middle">la boucle tourne tant que le LLM demande un outil</text>
 </svg>
-<figcaption>Le modèle n'agit jamais lui-même. Il demande une action, le harnais l'exécute et réinjecte le résultat. La boucle s'arrête quand le modèle répond par du texte, parfois dès le premier tour.</figcaption>
+<figcaption><b>Figure I5 · La boucle agentique.</b> Le modèle n'agit jamais lui-même. Il demande une action, le harnais l'exécute et réinjecte le résultat. La boucle s'arrête quand le modèle répond par du texte, parfois dès le premier tour.</figcaption>
 </figure>
 <p>La réponse finale peut arriver tout de suite, comme lorsqu'on interroge un moteur de recherche ou qu'on reste au niveau du prompt. Cette boucle est le point clé de la programmation agentique : elle est pilotable, configurable et autonome. Il est pourtant impossible de lui donner un comportement exact et formel, car son déroulement dépend de la demande initiale et du modèle utilisé. Elle est subie.</p>
 <div class="note"><p><b>Note.</b> On peut limiter le nombre de tours de la boucle avec le paramètre <code>steps</code> d'un agent ou d'un sous-agent (par exemple <code>steps: 25</code>). Cela évite qu'il parte en boucle : une fois la limite atteinte, il doit répondre. Voir les fichiers d'agents de la séance 3.</p></div>
@@ -595,7 +595,7 @@ et deux boutons : "+1" et "Remise à zéro". Moins de 60 lignes.</code></pre>
 </tbody></table></div>
 
 <h3>Harnais et contexte</h3>
-<figure>
+<figure id="fig-i6">
 <svg viewBox="0 0 760 360" role="img" aria-label="Le harnais assemble à chaque appel un contexte empilé : prompt système, AGENTS.md, définitions des outils et skills, historique, résultats des outils. Le LLM ne voit que ce bloc. Ses appels d'outil passent par les permissions puis l'exécution, dont le résultat est ajouté en bas de la pile. La compaction résume l'historique.">
   <rect class="zone" x="20" y="20" width="270" height="320" rx="10"/>
   <text class="ttl" x="36" y="44">Harnais · du code</text>
@@ -630,7 +630,7 @@ et deux boutons : "+1" et "Remise à zéro". Moins de 60 lignes.</code></pre>
   <path class="ln dash" d="M270,302 C330,302 340,232 378,226" marker-end="url(#ah)"/>
   <text class="lbl" x="304" y="244">résume</text>
 </svg>
-<figcaption>Le harnais se configure, le contexte se subit. Un meilleur <code>AGENTS.md</code> améliore le contexte mais ne change rien au harnais. À l'inverse, changer de harnais avec le même modèle change le résultat.</figcaption>
+<figcaption><b>Figure I6 · Harnais et contexte.</b> Le harnais se configure, le contexte se subit. Un meilleur <code>AGENTS.md</code> améliore le contexte mais ne change rien au harnais. À l'inverse, changer de harnais avec le même modèle change le résultat.</figcaption>
 </figure>
 <div class="tbl"><table>
 <thead><tr><th></th><th>Harnais</th><th>Contexte</th></tr></thead>
@@ -789,7 +789,7 @@ et deux boutons : "+1" et "Remise à zéro". Moins de 60 lignes.</code></pre>
 
 <h3>Orchestration par sous-agents</h3>
 <p>La boucle tourne avec un agent principal, dans le TUI ou sans interface avec <code>opencode run</code>. Elle peut lancer plusieurs agents qui s'occupent chacun d'une tâche, par exemple : <i>Lance 3 agents pour vérifier le prix des yaourts chez Auchan, Leclerc et Intermarché.</i> L'agent <code>explore</code> analyse du code ou un répertoire à plusieurs niveaux de profondeur (<code>quick</code>, <code>medium</code>, <code>thorough</code>). L'agent <code>general</code> peut lancer d'autres agents.</p>
-<figure>
+<figure id="fig-i7">
 <svg viewBox="0 0 760 300" role="img" aria-label="L'agent principal Build, sur le modèle 27b, délègue avec l'outil task à trois sous-agents : explore, web-explore sur le modèle 0,8b et remote-python qui exécute en SSH sur serveurllm. Chaque sous-agent a son propre contexte et ne renvoie qu'un résumé. Un sous-agent ne peut pas relancer de sous-agent.">
   <rect class="box-acc" x="280" y="20" width="200" height="64" rx="6"/>
   <text class="ttl" x="380" y="46" text-anchor="middle">Agent principal · Build</text>
@@ -816,7 +816,7 @@ et deux boutons : "+1" et "Remise à zéro". Moins de 60 lignes.</code></pre>
 
   <text class="lbl" x="380" y="268" text-anchor="middle"><tspan class="deny">task: deny</tspan> dans chaque sous-agent : profondeur maximale 1</text>
 </svg>
-<figcaption>Chaque sous-agent travaille dans son propre contexte, et seul son compte rendu revient dans le contexte de l'agent principal. C'est aussi un outil d'économie de tokens : la page web lue par <code>web-explore</code> ne remplit pas le contexte A.</figcaption>
+<figcaption><b>Figure I7 · Orchestration par sous-agents.</b> Chaque sous-agent travaille dans son propre contexte, et seul son compte rendu revient dans le contexte de l'agent principal. C'est aussi un outil d'économie de tokens : la page web lue par <code>web-explore</code> ne remplit pas le contexte A.</figcaption>
 </figure>
 
 <h3>Exercices</h3>
@@ -1076,7 +1076,7 @@ Les questions sont aussi recopiées dans index.html (ouverture sans serveur).
 <div class="ex" id="e17">
 <h4><span class="id">E17</span> Boîte en papier de 5 cm × 5 cm avec couvercle lié <span class="lvl">projet · 70 à 90 min</span></h4>
 <p>Produire un patron imprimable, à l'échelle réelle, d'une boîte cubique de 5 cm de côté, dont le couvercle est attaché au dos de la boîte et fermé par un rabat glissé à l'avant. On découpe le patron, on le plie et on le colle : la boîte doit se fermer.</p>
-<figure class="duo">
+<figure class="duo" id="fig-i8">
 <svg viewBox="0 0 260 250" role="img" aria-label="Boîte cubique de 5 cm assemblée, couvercle ouvert, attaché au bord arrière de l'ouverture, avec son rabat de fermeture en haut.">
   <polygon class="face" points="160,220 212,190 212,130 160,160"/>
   <polygon class="face" points="160,220 108,190 108,130 160,160"/>
@@ -1133,7 +1133,7 @@ Les questions sont aussi recopiées dans index.html (ouverture sans serveur).
   <line class="dim" x1="55" y1="216" x2="55" y2="220"/><line class="dim" x1="105" y1="216" x2="105" y2="220"/>
   <text x="80" y="214" text-anchor="middle">50 mm</text>
 </svg>
-<figcaption>À gauche, la boîte assemblée, couvercle ouvert. À droite, son patron, dessiné en millimètres : traits pleins à découper, pointillés à plier. Les quatre languettes « colle » des côtés se collent à l'intérieur du dos et de la face avant. Le couvercle pivote sur le pli dos/couvercle, et son rabat se glisse derrière la face avant.</figcaption>
+<figcaption><b>Figure I8 · La boîte et son patron.</b> À gauche, la boîte assemblée, couvercle ouvert. À droite, son patron, dessiné en millimètres : traits pleins à découper, pointillés à plier. Les quatre languettes « colle » des côtés se collent à l'intérieur du dos et de la face avant. Le couvercle pivote sur le pli dos/couvercle, et son rabat se glisse derrière la face avant.</figcaption>
 </figure>
 <h4>Livrables</h4>
 <ul>
@@ -1457,7 +1457,7 @@ Pourquoi as-tu modifié cette ligne ? Qu'est-ce qui casse si je l'enlève ?</cod
 
 <h2 id="gp-infra">Où tourne l'assistant ?</h2>
 <p>Vous travaillez depuis votre ordinateur, mais l'assistant tourne sur une machine de l'INSA à laquelle vous vous connectez à distance. Le modèle d'IA, la partie qui « réfléchit » et rédige, tourne sur un troisième ordinateur, lui aussi installé à l'INSA.</p>
-<figure>
+<figure id="fig-g1">
 <svg viewBox="0 0 760 210" role="img" aria-label="Votre ordinateur se connecte à distance à la machine de TP, où tournent opencode et vos dossiers. La machine de TP envoie les questions au serveur de modèles de l'INSA, qui renvoie les réponses. La machine de TP et le serveur sont dans le réseau de l'INSA.">
   <rect class="zone" x="220" y="20" width="525" height="175" rx="10"/>
   <text class="lbl" x="236" y="42">réseau de l'INSA : rien n'en sort</text>
@@ -1479,13 +1479,13 @@ Pourquoi as-tu modifié cette ligne ? Qu'est-ce qui casse si je l'enlève ?</cod
   <line class="ln" x1="538" y1="126" x2="452" y2="126" marker-end="url(#ah)"/>
   <text class="lbl" x="494" y="144" text-anchor="middle">réponses</text>
 </svg>
-<figcaption>Trois ordinateurs, trois rôles. Vos questions et vos fichiers restent dans le réseau de l'école, contrairement à ce qui se passe avec ChatGPT ou Claude.</figcaption>
+<figcaption><b>Figure G1 · Trois ordinateurs, trois rôles.</b> Vos questions et vos fichiers restent dans le réseau de l'école, contrairement à ce qui se passe avec ChatGPT ou Claude.</figcaption>
 </figure>
 <p>Deux modèles sont disponibles. Le grand (27 milliards de réglages internes, 16 Go en mémoire) sert à réfléchir. Le tout petit (0,8 milliard, 500 Mo en mémoire) montre ce qu'on peut faire avec très peu de moyens. Tous deux sont bien moins puissants que les IA du commerce : on leur confie des tâches courtes et précises, et on vérifie le résultat.</p>
 
 <h3 id="gp-modeles">Choisir un modèle</h3>
 <p>Dans opencode, chaque modèle a un nom en deux parties, par exemple <code>litellm/ll_wired-qwen3.5:0.8b</code>. La première partie indique <b>par où passer</b> pour joindre le modèle, la seconde <b>quel modèle</b> utiliser. Pour en choisir un, tapez <code>/models</code> dans l'assistant, puis quelques lettres (« qwen », « pickle ») : la liste se réduit aux modèles dont le nom contient ces lettres.</p>
-<figure>
+<figure id="fig-g2">
 <svg viewBox="0 0 760 240" role="img" aria-label="Vous choisissez un modèle ; opencode regarde le début de son nom. Les modèles qui commencent par litellm passent par la passerelle de l'INSA vers le serveur de modèles, où tournent Qwen 3.8 et Qwen 3.5. Les modèles qui commencent par opencode partent vers un service en ligne sur internet, où tourne Big Pickle.">
   <rect class="box" x="20" y="90" width="150" height="60" rx="6"/>
   <text class="ttl" x="95" y="115" text-anchor="middle">Vous choisissez</text>
@@ -1498,8 +1498,7 @@ Pourquoi as-tu modifié cette ligne ? Qu'est-ce qui casse si je l'enlève ?</cod
   <rect class="zone" x="450" y="12" width="300" height="122" rx="10"/>
   <text class="lbl" x="464" y="30">réseau de l'INSA</text>
   <rect class="box" x="464" y="42" width="120" height="54" rx="6"/>
-  <text class="ttl" x="524" y="65" text-anchor="middle">Passerelle</text>
-  <text class="lbl" x="524" y="83" text-anchor="middle">aiguille</text>
+  <text class="ttl" x="524" y="74" text-anchor="middle">Passerelle</text>
   <rect class="box" x="610" y="36" width="128" height="88" rx="6"/>
   <text class="ttl" x="674" y="58" text-anchor="middle">Serveur</text>
   <text class="lbl" x="674" y="80" text-anchor="middle">Qwen 3.8 · 16 Go</text>
@@ -1514,7 +1513,7 @@ Pourquoi as-tu modifié cette ligne ? Qu'est-ce qui casse si je l'enlève ?</cod
   <path class="ln" d="M400,140 L428,140 L428,193 L462,193" marker-end="url(#ah)"/>
   <text class="lbl mono" x="416" y="234">opencode/…</text>
 </svg>
-<figcaption>Le début du nom décide du chemin : <code>litellm/…</code> reste à l'INSA, <code>opencode/…</code> part sur internet.</figcaption>
+<figcaption><b>Figure G2 · Choisir un modèle.</b> Le début du nom décide du chemin : <code>litellm/…</code> reste à l'INSA, <code>opencode/…</code> part sur internet.</figcaption>
 </figure>
 <div class="tbl"><table>
 <thead><tr><th>Modèle</th><th>Où il tourne</th><th>À quoi il sert ici</th></tr></thead>
@@ -1559,13 +1558,13 @@ Pourquoi as-tu modifié cette ligne ? Qu'est-ce qui casse si je l'enlève ?</cod
 
 <h3>À quoi ressemble opencode</h3>
 <p>opencode s'utilise dans une fenêtre de commande : on tape <code>opencode</code>, et une zone de saisie apparaît. On y écrit ses demandes comme dans un chat, mais l'assistant peut aussi agir sur les fichiers du dossier où on l'a ouvert.</p>
-<figure>
+<figure id="fig-g3">
 <img src="images/opencode-lancement.png" alt="Fenêtre de terminal avec opencode au lancement : logo opencode, zone de saisie, agent Build et modèle Big Pickle, raccourcis shift+tab agents et ctrl+p commands." width="1812" height="1140" style="width:100%;height:auto;border-radius:6px">
-<figcaption>opencode au lancement. En bas de la zone de saisie : le mode (Build) et le modèle utilisé (Big Pickle). En dessous : le dossier de travail.</figcaption>
+<figcaption><b>Figure G3 · opencode au lancement.</b> En bas de la zone de saisie : le mode (Build) et le modèle utilisé (Big Pickle). En dessous : le dossier de travail.</figcaption>
 </figure>
 
 <h3>Comment l'assistant travaille</h3>
-<figure>
+<figure id="fig-g4">
 <svg viewBox="0 0 760 280" role="img" aria-label="Vous confiez une tâche à l'assistant. L'assistant transmet au modèle d'IA la tâche augmentée de ce qu'il faut savoir. Le modèle répond soit par une demande d'action, que l'assistant exécute après vérification de l'autorisation avant de rapporter le résultat au modèle, soit par la réponse finale qui vous revient.">
   <rect class="box" x="20" y="100" width="120" height="60" rx="6"/>
   <text class="ttl" x="80" y="135" text-anchor="middle">Vous</text>
@@ -1596,7 +1595,7 @@ Pourquoi as-tu modifié cette ligne ? Qu'est-ce qui casse si je l'enlève ?</cod
   <text class="lbl blue" x="378" y="204">résultat</text>
   <text class="lbl blue" x="350" y="56" text-anchor="middle">le va-et-vient continue tant que le modèle demande une action</text>
 </svg>
-<figcaption>Le modèle d'IA n'agit jamais lui-même. Il demande une action, opencode l'exécute et lui rapporte le résultat, et ainsi de suite jusqu'à la réponse finale.</figcaption>
+<figcaption><b>Figure G4 · Comment l'assistant travaille.</b> Le modèle d'IA n'agit jamais lui-même. Il demande une action, opencode l'exécute et lui rapporte le résultat, et ainsi de suite jusqu'à la réponse finale.</figcaption>
 </figure>
 <p>Le nombre d'allers-retours change d'une fois à l'autre : on ne peut pas prévoir exactement ce que fera l'assistant. C'est pourquoi on vérifie toujours le résultat.</p>
 <div class="note"><p><b>Note.</b> On peut limiter le nombre d'allers-retours, grâce à un réglage appelé <i>steps</i> (« étapes »). Cela évite qu'un assistant, ou un assistant spécialisé, tourne en rond sans fin. On le retrouve en séance 3.</p></div>
@@ -1661,7 +1660,7 @@ Tout dans un seul fichier, sans rien télécharger d'internet. Moins de 60 ligne
 </tbody></table></div>
 
 <h3>Ce que le modèle reçoit à chaque fois</h3>
-<figure>
+<figure id="fig-g5">
 <svg viewBox="0 0 760 300" role="img" aria-label="À chaque étape, l'assistant envoie au modèle un bloc de texte formé des règles d'opencode, de votre fiche de consignes, de la liste des actions possibles, de la conversation jusqu'ici et de ce que les actions ont rapporté. Le bloc grossit à chaque échange ; quand il est plein, il est résumé.">
   <line class="ln" x1="170" y1="70" x2="170" y2="270" marker-end="url(#ah)"/>
   <text class="lbl" x="160" y="170" text-anchor="end">grossit à</text>
@@ -1677,7 +1676,7 @@ Tout dans un seul fichier, sans rien télécharger d'internet. Moins de 60 ligne
   <line class="ln" x1="500" y1="155" x2="588" y2="155" marker-end="url(#ah)"/>
   <text class="lbl" x="350" y="24" text-anchor="middle">quand le bloc est plein : résumé automatique, des détails se perdent</text>
 </svg>
-<figcaption>Le modèle n'a pas d'autre mémoire que ce bloc. Ce qui n'y figure pas, il ne le sait pas.</figcaption>
+<figcaption><b>Figure G5 · La mémoire de travail.</b> Le modèle n'a pas d'autre mémoire que ce bloc. Ce qui n'y figure pas, il ne le sait pas.</figcaption>
 </figure>
 <p>Le bloc grossit à chaque échange. Quand il devient trop gros (pour notre modèle, l'équivalent d'environ 230 pages de livre), opencode le résume automatiquement et des détails se perdent. Les IA comptent ce volume en « morceaux de mots » : environ 3 morceaux pour 2 mots en français.</p>
 <div class="tbl"><table>
@@ -1770,7 +1769,7 @@ Tout dans un seul fichier, sans rien télécharger d'internet. Moins de 60 ligne
 
 <h3>Plusieurs assistants, plusieurs rôles</h3>
 <p>opencode a deux modes principaux, que l'on change avec la touche <kbd>Tab</kbd> : <b>Plan</b> réfléchit et propose sans rien toucher, <b>Build</b> agit. Il peut aussi confier une partie du travail à des <b>assistants spécialisés</b>. Chacun a sa propre mémoire de travail et ses propres autorisations, et il peut utiliser un autre modèle.</p>
-<figure>
+<figure id="fig-g6">
 <svg viewBox="0 0 760 230" role="img" aria-label="L'assistant principal confie une tâche à un assistant de recherche web, qui utilise le petit modèle, et à un assistant de calcul, qui travaille sur le serveur de l'INSA. Chacun ne rapporte qu'un résumé.">
   <rect class="box-acc" x="270" y="20" width="220" height="60" rx="6"/>
   <text class="ttl" x="380" y="46" text-anchor="middle">Assistant principal</text>
@@ -1788,7 +1787,7 @@ Tout dans un seul fichier, sans rien télécharger d'internet. Moins de 60 ligne
   <line class="ln-acc dash" x1="520" y1="150" x2="415" y2="82" marker-end="url(#aha)"/>
   <text class="lbl acc" x="500" y="112">rapporte un résumé</text>
 </svg>
-<figcaption>Chaque assistant spécialisé travaille dans sa propre mémoire et ne rapporte qu'un résumé. La page web lue par l'assistant de recherche n'encombre pas la mémoire de l'assistant principal.</figcaption>
+<figcaption><b>Figure G6 · Les assistants spécialisés.</b> Chaque assistant spécialisé travaille dans sa propre mémoire et ne rapporte qu'un résumé. La page web lue par l'assistant de recherche n'encombre pas la mémoire de l'assistant principal.</figcaption>
 </figure>
 <p>Exemple : <i>Lance 3 assistants pour comparer le prix des yaourts chez Auchan, Leclerc et Intermarché.</i> Chaque assistant cherche de son côté, en même temps, et l'assistant principal compare les trois résumés.</p>
 
@@ -1893,7 +1892,7 @@ Ne devine jamais le contenu d'une page que tu n'as pas lue.</code></pre>
 <div class="ex" id="gp-p1">
 <h4><span class="id">P1</span> Une boîte en papier de 5 cm avec couvercle attaché <span class="lvl">projet · 90 min</span></h4>
 <p>Faire produire un patron à imprimer, à taille réelle, d'une boîte en forme de cube de 5 cm de côté. Le couvercle est attaché au dos de la boîte et se ferme par un rabat glissé à l'avant. On découpe, on plie, on colle : la boîte doit se fermer.</p>
-<figure class="duo">
+<figure class="duo" id="fig-g7">
 <svg viewBox="0 0 260 250" role="img" aria-label="Exemple : boîte cubique de 5 cm montée, couvercle ouvert, attaché au bord arrière, avec son rabat.">
   <polygon class="face" points="160,220 212,190 212,130 160,160"/>
   <polygon class="face" points="160,220 108,190 108,130 160,160"/>
@@ -1948,7 +1947,7 @@ Ne devine jamais le contenu d'une page que tu n'as pas lue.</code></pre>
   <line class="dim" x1="55" y1="216" x2="55" y2="220"/><line class="dim" x1="105" y1="216" x2="105" y2="220"/>
   <text x="80" y="214" text-anchor="middle">5 cm</text>
 </svg>
-<figcaption>À gauche, la boîte montée, couvercle ouvert. À droite, son patron : traits pleins à découper, pointillés à plier. Les quatre pattes « colle » se collent à l'intérieur du dos et de l'avant.</figcaption>
+<figcaption><b>Figure G7 · La boîte et son patron.</b> À gauche, la boîte montée, couvercle ouvert. À droite, son patron : traits pleins à découper, pointillés à plier. Les quatre pattes « colle » se collent à l'intérieur du dos et de l'avant.</figcaption>
 </figure>
 <h4>Étapes</h4>
 <ol>

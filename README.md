@@ -16,4 +16,6 @@ Auteur : Stéphane Frénot, avec Claude (Anthropic).
 
 ## Consulter le cours
 
-Ouvrir `Deroulement-cours-opencode.html` dans un navigateur. Aucun serveur ni installation n'est nécessaire.
+En ligne : https://sfrenot.github.io/cours-agentique-opencode/
+
+Ou en local : ouvrir `Deroulement-cours-opencode.html` dans un navigateur. Aucun serveur ni installation n'est nécessaire.

@@ -1535,12 +1535,13 @@ Pourquoi as-tu modifié cette ligne ? Qu'est-ce qui casse si je l'enlève ?</cod
 <thead><tr><th>Durée</th><th>Activité</th></tr></thead>
 <tbody>
 <tr><td class="t">0:00–0:15</td><td>Tour de table : quels outils d'IA utilisez-vous déjà, et pour quoi faire ?</td></tr>
-<tr><td class="t">0:15–0:45</td><td>Quatre façons de s'adresser à une IA</td></tr>
-<tr><td class="t">0:45–1:05</td><td>Démonstration : ouvrir opencode, choisir le modèle, premier échange</td></tr>
-<tr><td class="t">1:05–1:30</td><td>Comment l'assistant travaille</td></tr>
-<tr><td class="t">1:30–2:05</td><td>Exercice G1 : « Bonjour, qui es-tu ? »</td></tr>
-<tr><td class="t">2:05–2:40</td><td>Exercice G2 : une liste de courses à cocher</td></tr>
-<tr><td class="t">2:40–3:00</td><td>Exercice G3 : faire vérifier la page par opencode</td></tr>
+<tr><td class="t">0:15–0:40</td><td>Quatre façons de s'adresser à une IA</td></tr>
+<tr><td class="t">0:40–1:00</td><td>Démonstration : ouvrir opencode, choisir le modèle, premier échange</td></tr>
+<tr><td class="t">1:00–1:20</td><td>Comment l'assistant travaille</td></tr>
+<tr><td class="t">1:20–1:50</td><td>Exercice G1 : « Bonjour, qui es-tu ? »</td></tr>
+<tr><td class="t">1:50–2:25</td><td>Exercice G2 : une liste de courses à cocher</td></tr>
+<tr><td class="t">2:25–2:40</td><td>Exercice G3 : faire vérifier la page par opencode</td></tr>
+<tr><td class="t">2:40–3:00</td><td>Exercice G4 : les limites du tout petit modèle</td></tr>
 </tbody></table></div>
 
 <h3>Quatre façons de s'adresser à une IA</h3>
@@ -1644,7 +1645,7 @@ Tout dans un seul fichier, sans rien télécharger d'internet. Moins de 60 ligne
 </div>
 
 <div class="ex" id="gp-g3">
-<h4><span class="id">G3</span> Faire vérifier la page par opencode <span class="lvl">application · 20 min</span></h4>
+<h4><span class="id">G3</span> Faire vérifier la page par opencode <span class="lvl">application · 15 min</span></h4>
 <p>Toujours dans le dossier <code>courses</code>, demandez à l'assistant de contrôler son propre travail :</p>
 <pre><code>Vérifie le fichier index.html sans le modifier. Pour chaque point de la consigne
 (champ de saisie, bouton Ajouter, case à cocher devant chaque article, bouton qui
@@ -1662,6 +1663,28 @@ que tu repères dans le code.</code></pre>
 </details>
 </div>
 
+<div class="ex" id="gp-g4">
+<h4><span class="id">G4</span> Les limites du tout petit modèle <span class="lvl">observation · 20 min</span></h4>
+<p>Dans un nouveau dossier <code>limites</code>, ouvrez opencode, tapez <code>/models</code> et choisissez <b>Qwen 3.5</b> (<code>litellm/ll_wired-qwen3.5:0.8b</code>, 500 Mo en mémoire). Posez-lui ces quatre demandes, une par une, et notez ce qui se passe :</p>
+<ol>
+<li><i>Quelle est la capitale de la France ?</i></li>
+<li><i>J'ai 3 boîtes de 12 œufs. J'en casse 6, puis je donne la moitié de ce qui reste. Combien m'en reste-t-il ?</i></li>
+<li><i>Crée un fichier courses.txt qui contient trois articles, un par ligne.</i></li>
+<li><i>Crée un fichier index.html avec une liste de courses à cocher, comme en G2.</i></li>
+</ol>
+<p>Repassez ensuite sur <b>Qwen 3.8</b> avec <code>/models</code> et posez les questions 2 et 4 de nouveau.</p>
+<details><summary>Ce qu'il faut observer</summary>
+<ul>
+<li><b>Question 1</b> : réponse juste et rapide. Pour une question simple et connue, le petit modèle suffit.</li>
+<li><b>Question 2</b> : la bonne réponse est 15 (3 × 12 = 36, 36 − 6 = 30, puis 30 ÷ 2 = 15). Le petit modèle se trompe souvent dans un raisonnement en plusieurs étapes, tout en répondant avec assurance.</li>
+<li><b>Question 3</b> : la tâche demande une action. Le petit modèle peut réussir, mais il lui arrive d'afficher le contenu du fichier au lieu de le créer, ou de mal utiliser l'outil d'écriture.</li>
+<li><b>Question 4</b> : la tâche est trop longue pour lui. On voit des pages incomplètes, des consignes oubliées, voire un assistant qui tourne en rond jusqu'à la limite d'étapes (<i>steps</i>).</li>
+<li>Avec Qwen 3.8, les questions 2 et 4 réussissent bien plus souvent, mais la réponse prend plus de temps.</li>
+<li><b>Ce qu'il faut retenir :</b> un modèle très léger est rapide et peu coûteux, mais il ne convient qu'à des tâches courtes, simples et bien cadrées. C'est pourquoi on le réserve en séance 3 à un assistant spécialisé qui suit une procédure en quelques étapes. Une réponse affirmée n'est pas une réponse juste : il faut vérifier.</li>
+</ul>
+</details>
+</div>
+
 <!-- ============ GP S2 ============ -->
 <h2 id="gp-s2">Séance 2 · Ce que l'assistant voit et retient</h2>
 <div class="goals"><h4>À la fin de la séance, vous savez</h4><ul>
@@ -1674,10 +1697,10 @@ que tu repères dans le code.</code></pre>
 <thead><tr><th>Durée</th><th>Activité</th></tr></thead>
 <tbody>
 <tr><td class="t">0:00–0:35</td><td>La mémoire de travail du modèle</td></tr>
-<tr><td class="t">0:35–1:15</td><td>Exercice G4 : votre fiche de consignes</td></tr>
-<tr><td class="t">1:15–1:50</td><td>Exercice G5 : demander la permission</td></tr>
-<tr><td class="t">1:50–2:20</td><td>Exercice G6 : revenir en arrière</td></tr>
-<tr><td class="t">2:20–3:00</td><td>Exercice G7 : une question à côté avec <code>/btw</code></td></tr>
+<tr><td class="t">0:35–1:15</td><td>Exercice G5 : votre fiche de consignes</td></tr>
+<tr><td class="t">1:15–1:50</td><td>Exercice G6 : demander la permission</td></tr>
+<tr><td class="t">1:50–2:20</td><td>Exercice G7 : revenir en arrière</td></tr>
+<tr><td class="t">2:20–3:00</td><td>Exercice G8 : une question à côté avec <code>/btw</code></td></tr>
 </tbody></table></div>
 
 <h3>Ce que le modèle reçoit à chaque fois</h3>
@@ -1718,8 +1741,8 @@ que tu repères dans le code.</code></pre>
 </tbody></table></div>
 
 <h3>Exercices</h3>
-<div class="ex" id="gp-g4">
-<h4><span class="id">G4</span> Votre fiche de consignes <span class="lvl">réglage · 40 min</span></h4>
+<div class="ex" id="gp-g5">
+<h4><span class="id">G5</span> Votre fiche de consignes <span class="lvl">réglage · 40 min</span></h4>
 <p>Dans le dossier <code>courses</code>, tapez <code>/init</code> : l'assistant écrit lui-même une fiche de consignes, le fichier <code>AGENTS.md</code>. Lisez-la. Demandez-lui ensuite de la remplacer par vos propres consignes, en langage courant, avec au plus 6 lignes. Exemple de demande : <i>Remplace le contenu de AGENTS.md par ces consignes : …</i></p>
 <details><summary>Exemple de fiche</summary>
 <pre><code># Mes consignes
@@ -1732,8 +1755,8 @@ que tu repères dans le code.</code></pre>
 </details>
 </div>
 
-<div class="ex" id="gp-g5">
-<h4><span class="id">G5</span> Demander la permission <span class="lvl">réglage · 35 min</span></h4>
+<div class="ex" id="gp-g6">
+<h4><span class="id">G6</span> Demander la permission <span class="lvl">réglage · 35 min</span></h4>
 <p>Chaque action de l'assistant a l'un de trois statuts : <span class="pill allow">autorisé</span> (il agit seul), <span class="pill ask">demander</span> (il vous pose la question) ou <span class="pill deny">interdit</span>. Demandez à l'assistant de créer, dans le dossier <code>courses</code>, un fichier <code>opencode.json</code> avec exactement ce contenu :</p>
 <pre><code>{
   "$schema": "https://opencode.ai/config.json",
@@ -1752,16 +1775,16 @@ que tu repères dans le code.</code></pre>
 </details>
 </div>
 
-<div class="ex" id="gp-g6">
-<h4><span class="id">G6</span> Revenir en arrière <span class="lvl">manipulation · 30 min</span></h4>
+<div class="ex" id="gp-g7">
+<h4><span class="id">G7</span> Revenir en arrière <span class="lvl">manipulation · 30 min</span></h4>
 <p>Demandez : <i>Mets le fond de la page en bleu foncé et le texte en blanc.</i> Récupérez la page et regardez-la. Tapez ensuite <code>/undo</code>, récupérez de nouveau la page, puis tapez <code>/redo</code>.</p>
 <details><summary>Ce qu'il faut observer</summary>
 <p><code>/undo</code> annule le dernier échange <b>et</b> remet les fichiers dans leur état précédent : le fond redevient clair. Votre demande réapparaît dans la zone de saisie, prête à être reformulée. <code>/redo</code> rétablit l'échange et la modification. Attention : seules les modifications de fichiers sont annulées. Une recherche web ou un message envoyé ne peuvent pas être « dé-faits ».</p>
 </details>
 </div>
 
-<div class="ex" id="gp-g7">
-<h4><span class="id">G7</span> Une question à côté avec <code>/btw</code> <span class="lvl">manipulation · 20 min</span></h4>
+<div class="ex" id="gp-g8">
+<h4><span class="id">G8</span> Une question à côté avec <code>/btw</code> <span class="lvl">manipulation · 20 min</span></h4>
 <p>En plein travail, on a souvent une question rapide (« à quoi sert cette ligne ? ») sans vouloir l'ajouter à la conversation. Tapez par exemple : <code>/btw à quoi sert le bouton Ajouter dans le fichier ?</code></p>
 <details><summary>Ce qu'il faut observer</summary>
 <ul>
@@ -1783,9 +1806,9 @@ que tu repères dans le code.</code></pre>
 <thead><tr><th>Durée</th><th>Activité</th></tr></thead>
 <tbody>
 <tr><td class="t">0:00–0:30</td><td>Plusieurs assistants, plusieurs rôles</td></tr>
-<tr><td class="t">0:30–1:10</td><td>Exercice G8 : préparer avant d'agir</td></tr>
-<tr><td class="t">1:10–2:20</td><td>Exercice G9 : un assistant de recherche sur le web</td></tr>
-<tr><td class="t">2:20–3:00</td><td>G10 : démonstration, confier un calcul à une autre machine</td></tr>
+<tr><td class="t">0:30–1:10</td><td>Exercice G9 : préparer avant d'agir</td></tr>
+<tr><td class="t">1:10–2:20</td><td>Exercice G10 : un assistant de recherche sur le web</td></tr>
+<tr><td class="t">2:20–3:00</td><td>G11 : démonstration, confier un calcul à une autre machine</td></tr>
 </tbody></table></div>
 
 <h3>Plusieurs assistants, plusieurs rôles</h3>
@@ -1813,16 +1836,16 @@ que tu repères dans le code.</code></pre>
 <p>Exemple : <i>Lance 3 assistants pour comparer le prix des yaourts chez Auchan, Leclerc et Intermarché.</i> Chaque assistant cherche de son côté, en même temps, et l'assistant principal compare les trois résumés.</p>
 
 <h3>Exercices</h3>
-<div class="ex" id="gp-g8">
-<h4><span class="id">G8</span> Préparer avant d'agir <span class="lvl">manipulation · 40 min</span></h4>
+<div class="ex" id="gp-g9">
+<h4><span class="id">G9</span> Préparer avant d'agir <span class="lvl">manipulation · 40 min</span></h4>
 <p>Dans un nouveau dossier <code>convertisseur</code>, ouvrez opencode, appuyez sur <kbd>Tab</kbd> pour passer en mode <b>Plan</b> et demandez : <i>Prépare le plan d'une page web qui convertit des euros en dollars, avec un taux fixe de 1 € = 1,10 $.</i> Vérifiez qu'aucun fichier n'a été créé. Repassez en mode <b>Build</b> avec <kbd>Tab</kbd> et demandez : <i>Applique le plan.</i></p>
 <details><summary>Ce qu'il faut observer</summary>
 <p>En mode Plan, l'assistant décrit ce qu'il compte faire (un seul fichier, un champ en euros, le résultat en dollars, la formule) sans rien écrire. En mode Build, il garde le plan en mémoire et l'exécute. Relire le plan avant de dire « applique » permet de corriger un malentendu avant qu'il ne coûte du temps.</p>
 </details>
 </div>
 
-<div class="ex" id="gp-g9">
-<h4><span class="id">G9</span> Un assistant de recherche sur le web <span class="lvl">réglage · 70 min</span></h4>
+<div class="ex" id="gp-g10">
+<h4><span class="id">G10</span> Un assistant de recherche sur le web <span class="lvl">réglage · 70 min</span></h4>
 <p>Un assistant spécialisé se décrit dans un simple fichier texte. Demandez à l'assistant principal de créer le fichier <code>~/.config/opencode/agents/web-explore.md</code> avec ce contenu :</p>
 <pre><code>---
 description: Cherche et résume des pages web. Ne modifie aucun fichier.
@@ -1851,8 +1874,8 @@ Ne devine jamais le contenu d'une page que tu n'as pas lue.</code></pre>
 </details>
 </div>
 
-<div class="ex" id="gp-g10">
-<h4><span class="id">G10</span> Confier un calcul à une autre machine <span class="lvl">démonstration · 40 min</span></h4>
+<div class="ex" id="gp-g11">
+<h4><span class="id">G11</span> Confier un calcul à une autre machine <span class="lvl">démonstration · 40 min</span></h4>
 <p>Sur la machine de TP, l'assistant n'a pas le droit de lancer lui-même des programmes Python. Un assistant spécialisé, préparé par l'enseignant, envoie le programme au serveur de l'INSA, le lance là-bas et rapporte le résultat. Démonstration : à partir d'un fichier de notes, l'assistant écrit un petit programme de calcul de moyenne et le fait exécuter à distance.</p>
 <details><summary>Ce qu'il faut observer</summary>
 <p>Le travail se partage en trois temps : l'assistant principal écrit le programme, l'assistant de calcul l'exécute ailleurs sans pouvoir le modifier, puis le résultat revient. Si le calcul échoue, c'est l'assistant principal qui corrige. Ce partage des rôles est réutilisé dans le projet « emploi du temps ».</p>
@@ -1869,14 +1892,14 @@ Ne devine jamais le contenu d'une page que tu n'as pas lue.</code></pre>
 <div class="tbl"><table>
 <thead><tr><th>Durée</th><th>Activité</th></tr></thead>
 <tbody>
-<tr><td class="t">0:00–0:30</td><td>Exercice G11 : retrouver son travail</td></tr>
-<tr><td class="t">0:30–1:00</td><td>Exercice G12 : quand ça ne marche plus</td></tr>
+<tr><td class="t">0:00–0:30</td><td>Exercice G12 : retrouver son travail</td></tr>
+<tr><td class="t">0:30–1:00</td><td>Exercice G13 : quand ça ne marche plus</td></tr>
 <tr><td class="t">1:00–2:50</td><td>Projet au choix : boîte en papier ou emploi du temps</td></tr>
 <tr><td class="t">2:50–3:00</td><td>Bilan : au fil de la conversation ou avec un cahier des charges ?</td></tr>
 </tbody></table></div>
 
-<div class="ex" id="gp-g11">
-<h4><span class="id">G11</span> Retrouver son travail <span class="lvl">manipulation · 30 min</span></h4>
+<div class="ex" id="gp-g12">
+<h4><span class="id">G12</span> Retrouver son travail <span class="lvl">manipulation · 30 min</span></h4>
 <p>opencode enregistre chaque conversation et la range avec le dossier dans lequel vous l'avez ouverte. Retournez dans le dossier <code>courses</code>, ouvrez opencode et essayez :</p>
 <div class="tbl"><table><tbody>
 <tr><td><code>/sessions</code></td><td>Voir la liste des conversations de ce dossier</td></tr>
@@ -1889,8 +1912,8 @@ Ne devine jamais le contenu d'une page que tu n'as pas lue.</code></pre>
 </details>
 </div>
 
-<div class="ex" id="gp-g12">
-<h4><span class="id">G12</span> Quand ça ne marche plus <span class="lvl">réflexion · 30 min</span></h4>
+<div class="ex" id="gp-g13">
+<h4><span class="id">G13</span> Quand ça ne marche plus <span class="lvl">réflexion · 30 min</span></h4>
 <p>Pour chaque situation, choisissez la réaction la plus douce qui règle le problème.</p>
 <details><summary>Réponses</summary>
 <div class="tbl"><table>
@@ -2032,7 +2055,7 @@ Découpe = trait plein. Pli = trait pointillé.
 <ol>
 <li>Faites écrire par l'assistant un cahier des charges, <code>SPEC.md</code>, qui reprend les règles ci-dessus en phrases simples.</li>
 <li>Demandez <b>un programme</b> qui construit l'emploi du temps à partir des tableaux. Ne demandez pas à l'assistant de le construire de tête : il se tromperait.</li>
-<li>Faites exécuter ce programme par l'assistant de calcul (vu en G10).</li>
+<li>Faites exécuter ce programme par l'assistant de calcul (vu en G11).</li>
 <li>Démarrez une <b>nouvelle conversation</b> avec <code>/clear</code> et demandez un <b>second programme</b> qui vérifie chaque règle sur le résultat, à partir du seul <code>SPEC.md</code>.</li>
 <li>Demandez enfin une page web qui affiche l'emploi du temps de chaque groupe sous forme de grille.</li>
 </ol>
@@ -2058,7 +2081,7 @@ Découpe = trait plein. Pli = trait pointillé.
 </div>
 <div class="ex">
 <h4>Demandez des explications si besoin</h4>
-<p>Ne laissez pas l'assistant faire une chose que vous ne comprenez pas. Demandez-lui ce qu'il va faire avant de l'autoriser, ou pourquoi il a modifié une ligne. Pour une question rapide qui ne doit pas encombrer la conversation, utilisez <code>/btw</code> (exercice <a href="#gp-g7">G7</a>).</p>
+<p>Ne laissez pas l'assistant faire une chose que vous ne comprenez pas. Demandez-lui ce qu'il va faire avant de l'autoriser, ou pourquoi il a modifié une ligne. Pour une question rapide qui ne doit pas encombrer la conversation, utilisez <code>/btw</code> (exercice <a href="#gp-g8">G8</a>).</p>
 </div>
 
 <!-- ============ GP LEXIQUE ============ -->

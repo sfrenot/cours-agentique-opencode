@@ -7,7 +7,7 @@
 /* Layout : sommaire latéral collant (desktop) + colonne de lecture ; une section par séance, exercices repliables */
 :root{
   --bg:#f6f7f8; --surface:#ffffff; --fg:#17212b; --muted:#566370; --line:#d9dee3;
-  --accent:#0b6b73; --accent-soft:#e1f0f1; --code-bg:#eef1f3;
+  --blue:#1f5fd6; --accent:#0b6b73; --accent-soft:#e1f0f1; --code-bg:#eef1f3;
   --allow:#2c7a3f; --ask:#a86400; --deny:#b3261e;
   --f-display:"Space Grotesk","Segoe UI",system-ui,sans-serif;
   --f-body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;
@@ -15,11 +15,11 @@
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#11171c; --surface:#182129; --fg:#e4e9ee; --muted:#9aa7b3; --line:#2c3843;
-  --accent:#4fc1c9; --accent-soft:#16363a; --code-bg:#0d1317;
+  --blue:#6ea8ff; --accent:#4fc1c9; --accent-soft:#16363a; --code-bg:#0d1317;
   --allow:#6cc784; --ask:#e6a446; --deny:#f07a72; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#11171c; --surface:#182129; --fg:#e4e9ee; --muted:#9aa7b3; --line:#2c3843;
-  --accent:#4fc1c9; --accent-soft:#16363a; --code-bg:#0d1317;
+  --blue:#6ea8ff; --accent:#4fc1c9; --accent-soft:#16363a; --code-bg:#0d1317;
   --allow:#6cc784; --ask:#e6a446; --deny:#f07a72; color-scheme:dark}
 
 *{box-sizing:border-box}
@@ -77,6 +77,9 @@ svg .acc{fill:var(--accent)}
 svg .mono{font-family:var(--f-mono);font-size:11.5px}
 svg .arrowhead{fill:currentColor}
 svg .arrowhead-acc{fill:var(--accent)}
+svg .ln-blue{stroke:var(--blue);stroke-width:1.9;fill:none}
+svg .blue{fill:var(--blue)}
+svg .arrowhead-blue{fill:var(--blue)}
 
 .ex{border:1px solid var(--line);border-radius:8px;background:var(--surface);padding:4px 20px 16px;margin:20px 0}
 .ex h4{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
@@ -122,6 +125,7 @@ html{scroll-behavior:smooth}
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
     <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker>
+    <marker id="ahb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead-blue"/></marker>
     <marker id="aha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead-acc"/></marker>
   </defs>
 </svg>
@@ -1391,7 +1395,7 @@ Pourquoi as-tu modifié cette ligne ? Qu'est-ce qui casse si je l'enlève ?</cod
 
 <h3>Comment l'assistant travaille</h3>
 <figure>
-<svg viewBox="0 0 760 280" role="img" aria-label="Vous confiez une tâche à l'assistant. L'assistant transmet au modèle d'IA tout ce qu'il faut savoir. Le modèle répond soit par une demande d'action, que l'assistant exécute après vérification de l'autorisation avant de rapporter le résultat au modèle, soit par la réponse finale qui vous revient.">
+<svg viewBox="0 0 760 280" role="img" aria-label="Vous confiez une tâche à l'assistant. L'assistant transmet au modèle d'IA la tâche augmentée de ce qu'il faut savoir. Le modèle répond soit par une demande d'action, que l'assistant exécute après vérification de l'autorisation avant de rapporter le résultat au modèle, soit par la réponse finale qui vous revient.">
   <rect class="box" x="20" y="100" width="120" height="60" rx="6"/>
   <text class="ttl" x="80" y="135" text-anchor="middle">Vous</text>
   <rect class="box-acc" x="250" y="80" width="200" height="100" rx="6"/>
@@ -1409,17 +1413,17 @@ Pourquoi as-tu modifié cette ligne ? Qu'est-ce qui casse si je l'enlève ?</cod
   <text class="lbl" x="194" y="110" text-anchor="middle">une tâche</text>
   <line class="ln" x1="248" y1="146" x2="142" y2="146" marker-end="url(#ah)"/>
   <text class="lbl" x="194" y="164" text-anchor="middle">la réponse</text>
-  <line class="ln-acc" x1="450" y1="104" x2="588" y2="104" marker-end="url(#aha)"/>
-  <text class="lbl" x="519" y="96" text-anchor="middle">tout ce qu'il faut savoir</text>
-  <line class="ln-acc" x1="588" y1="132" x2="452" y2="132" marker-end="url(#aha)"/>
-  <text class="lbl acc" x="519" y="126" text-anchor="middle">« fais cette action »</text>
+  <line class="ln-blue" x1="450" y1="104" x2="588" y2="104" marker-end="url(#ahb)"/>
+  <text class="lbl" x="519" y="96" text-anchor="middle">Tâche augmentée</text>
+  <line class="ln-blue" x1="588" y1="132" x2="452" y2="132" marker-end="url(#ahb)"/>
+  <text class="lbl blue" x="519" y="126" text-anchor="middle">« fais cette action »</text>
   <line class="ln" x1="588" y1="156" x2="452" y2="156" marker-end="url(#ah)"/>
   <text class="lbl" x="519" y="172" text-anchor="middle">ou : « voici la réponse »</text>
-  <line class="ln-acc" x1="330" y1="180" x2="330" y2="218" marker-end="url(#aha)"/>
-  <line class="ln-acc" x1="370" y1="218" x2="370" y2="182" marker-end="url(#aha)"/>
-  <text class="lbl" x="322" y="204" text-anchor="end">fait</text>
-  <text class="lbl" x="378" y="204">résultat</text>
-  <text class="lbl acc" x="350" y="56" text-anchor="middle">le va-et-vient continue tant que le modèle demande une action</text>
+  <line class="ln-blue" x1="330" y1="180" x2="330" y2="218" marker-end="url(#ahb)"/>
+  <line class="ln-blue" x1="370" y1="218" x2="370" y2="182" marker-end="url(#ahb)"/>
+  <text class="lbl blue" x="322" y="204" text-anchor="end">fait</text>
+  <text class="lbl blue" x="378" y="204">résultat</text>
+  <text class="lbl blue" x="350" y="56" text-anchor="middle">le va-et-vient continue tant que le modèle demande une action</text>
 </svg>
 <figcaption>Le modèle d'IA n'agit jamais lui-même. Il demande une action, opencode l'exécute et lui rapporte le résultat, et ainsi de suite jusqu'à la réponse finale.</figcaption>
 </figure>

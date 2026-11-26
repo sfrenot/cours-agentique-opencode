@@ -34,7 +34,7 @@ Ici s'oppose deux visions extrêmes pour la recherche  de solutions :
 - Pour standardiser un projet de production, une démarche d'ingénierie est obligatoire. 
 - Dans un cours de 4séances, on déroulera une approche agile, en essayant de préciser les éléments d'ingénierie quand cela est possible.
 
-Bien évidemment toutes les solutions intermédiaires de documentation partielle sont valides, et les évolutions des LLM ne permettent pas de stabiliser une approche plus qu'une autre. 
+Bien évidemment toutes les approches intermédiaires de documentation partielle sont valides, et les évolutions des LLM ne permettent pas de stabiliser une approche plus qu'une autre. 
 # Installation d'opencode
 cf site web
 

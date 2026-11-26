@@ -147,12 +147,8 @@ Tu peux ajouter ce tableau sous le schéma :
 Pour comprendre cette différence, faite l'expérience comparative suivante :
 - Créez un répertoire vide, `mkdir test1` dans lequel vous lancez `opencode`. Puis lancez une discussion avec le LLM connecté. "Bonjour, qui es-tu ?". Une fois la réponse obtenue, lancez la commande /export
 - Dans une autre session, 'mkdir test2', écrivez dans un fichier le même prompt : echo "Bonjour, qui es-tu" > greeting.md. Lancez opencode, puis tapez la commande @greeting.md. Si vous exportez la session vous verrez qu'elle devient plus dense. 
+#note #tous 
 
-#note #tous  la liste des llm, vous trouverez au moins trois moteurs différents : 
-1. LL Wired Qwen3 8:27b MLX *LiteLLM*
-2. Ll Ge Gwen3 5:9 8B *LiteLLM*
-3. Big Pickle *OpenCode*
-Qwen 
 
 # Les briques de construction d'opencode
 ## 1 La boucle agentique

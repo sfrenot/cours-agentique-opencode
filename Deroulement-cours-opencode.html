@@ -354,8 +354,8 @@ html{scroll-behavior:smooth}
 <div class="tbl"><table>
 <thead><tr><th>Identifiant</th><th>Fournisseur</th><th>Où il tourne</th><th>Usage dans le cours</th></tr></thead>
 <tbody>
-<tr><td><code>litellm/ll_wired-qwen3.8:27b-mlx</code></td><td><code>litellm</code>, déclaré dans <code>opencode.json</code></td><td><code>serveurllm</code>, via <code>gatewayllm</code></td><td>Raisonnement, agent principal (fenêtre de 110 k tokens)</td></tr>
-<tr><td><code>litellm/ll_wired-qwen3.5:0.8b</code></td><td><code>litellm</code></td><td><code>serveurllm</code>, via <code>gatewayllm</code></td><td>Sous-agents légers (<code>web-explore</code>)</td></tr>
+<tr><td><code>litellm/ll_wired-qwen3.8:27b-mlx</code></td><td><code>litellm</code>, déclaré dans <code>opencode.json</code></td><td><code>serveurllm</code>, via <code>gatewayllm</code></td><td>Raisonnement, agent principal (fenêtre de 110 k tokens, 16 Go en mémoire)</td></tr>
+<tr><td><code>litellm/ll_wired-qwen3.5:0.8b</code></td><td><code>litellm</code></td><td><code>serveurllm</code>, via <code>gatewayllm</code></td><td>Sous-agents légers (<code>web-explore</code>, 500 Mo en mémoire)</td></tr>
 <tr><td><code>opencode/big-pickle</code></td><td><code>opencode</code>, intégré (OpenCode Zen)</td><td>Service en ligne, hors INSA</td><td>Modèle gratuit proposé par défaut au premier lancement. Pratique pour tester, mais les questions et les fichiers lus quittent le réseau de l'école.</td></tr>
 </tbody></table></div>
 <p>Pour chercher un modèle :</p>
@@ -1417,7 +1417,7 @@ Pourquoi as-tu modifié cette ligne ? Qu'est-ce qui casse si je l'enlève ?</cod
 </svg>
 <figcaption>Trois ordinateurs, trois rôles. Vos questions et vos fichiers restent dans le réseau de l'école, contrairement à ce qui se passe avec ChatGPT ou Claude.</figcaption>
 </figure>
-<p>Deux modèles sont disponibles. Le grand (27 milliards de réglages internes) sert à réfléchir. Le tout petit (0,8 milliard) montre ce qu'on peut faire avec très peu de moyens. Tous deux sont bien moins puissants que les IA du commerce : on leur confie des tâches courtes et précises, et on vérifie le résultat.</p>
+<p>Deux modèles sont disponibles. Le grand (27 milliards de réglages internes, 16 Go en mémoire) sert à réfléchir. Le tout petit (0,8 milliard, 500 Mo en mémoire) montre ce qu'on peut faire avec très peu de moyens. Tous deux sont bien moins puissants que les IA du commerce : on leur confie des tâches courtes et précises, et on vérifie le résultat.</p>
 
 <h3 id="gp-modeles">Choisir un modèle</h3>
 <p>Dans opencode, chaque modèle a un nom en deux parties, par exemple <code>litellm/ll_wired-qwen3.5:0.8b</code>. La première partie indique <b>par où passer</b> pour joindre le modèle, la seconde <b>quel modèle</b> utiliser. Pour en choisir un, tapez <code>/models</code> dans l'assistant, puis quelques lettres (« qwen », « pickle ») : la liste se réduit aux modèles dont le nom contient ces lettres.</p>
@@ -1438,8 +1438,8 @@ Pourquoi as-tu modifié cette ligne ? Qu'est-ce qui casse si je l'enlève ?</cod
   <text class="lbl" x="524" y="83" text-anchor="middle">aiguille</text>
   <rect class="box" x="610" y="36" width="128" height="88" rx="6"/>
   <text class="ttl" x="674" y="58" text-anchor="middle">Serveur</text>
-  <text class="lbl" x="674" y="80" text-anchor="middle">Qwen 3.8 (grand)</text>
-  <text class="lbl" x="674" y="98" text-anchor="middle">Qwen 3.5 (petit)</text>
+  <text class="lbl" x="674" y="80" text-anchor="middle">Qwen 3.8 · 16 Go</text>
+  <text class="lbl" x="674" y="98" text-anchor="middle">Qwen 3.5 · 500 Mo</text>
   <line class="ln" x1="584" y1="69" x2="608" y2="69" marker-end="url(#ah)"/>
   <rect class="box" x="464" y="166" width="274" height="54" rx="6"/>
   <text class="ttl" x="601" y="189" text-anchor="middle">Service en ligne OpenCode</text>
@@ -1455,8 +1455,8 @@ Pourquoi as-tu modifié cette ligne ? Qu'est-ce qui casse si je l'enlève ?</cod
 <div class="tbl"><table>
 <thead><tr><th>Modèle</th><th>Où il tourne</th><th>À quoi il sert ici</th></tr></thead>
 <tbody>
-<tr><td><b>Qwen 3.8</b> (grand)<br><code>litellm/ll_wired-qwen3.8:27b-mlx</code></td><td>Serveur de l'INSA</td><td>Le modèle principal du cours : il réfléchit et agit.</td></tr>
-<tr><td><b>Qwen 3.5</b> (tout petit)<br><code>litellm/ll_wired-qwen3.5:0.8b</code></td><td>Serveur de l'INSA</td><td>Les tâches simples, comme l'assistant de recherche de la séance 3.</td></tr>
+<tr><td><b>Qwen 3.8</b> (grand, 16 Go en mémoire)<br><code>litellm/ll_wired-qwen3.8:27b-mlx</code></td><td>Serveur de l'INSA</td><td>Le modèle principal du cours : il réfléchit et agit.</td></tr>
+<tr><td><b>Qwen 3.5</b> (tout petit, 500 Mo en mémoire)<br><code>litellm/ll_wired-qwen3.5:0.8b</code></td><td>Serveur de l'INSA</td><td>Les tâches simples, comme l'assistant de recherche de la séance 3.</td></tr>
 <tr><td><b>Big Pickle</b><br><code>opencode/big-pickle</code></td><td>Service en ligne, sur internet</td><td>Gratuit et proposé par défaut au premier lancement. Pratique pour essayer, mais vos questions et vos fichiers quittent l'école : choisissez plutôt un modèle Qwen.</td></tr>
 </tbody></table></div>
 

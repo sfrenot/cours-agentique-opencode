@@ -85,7 +85,7 @@ Il est important de noter que la réponse finale peut arriver tout de suite, com
    └──────────────────────┘
 ```
 
-Cette boucle d'action est le point clé de la programmation agentique. Elle est entièrement pilotable, pilotée, configurable et autonome. Il est impossible d'en donner un comportement exact et formel, car son déclenchement dépend de votre `demande initiale` et du moteur LLM utilisé. Elle est subie. 
+Cette boucle d'action est le point clé de la programmation agentique. Elle est entièrement pilotable, pilotée, configurable et autonome. Il est impossible d'en donner un comportement exact et formel, car son déclenchement dépend de votre `demande initiale` et du moteur LLM utilisé. Elle est subie. #note Il est possible de limiter le nombre de tours *steps* afin d'éviter qu'un agent ou un sous-agent ne parte en boucle.
 
 ## Entrons dans le détail des choses cachées
 La demande utilisateur n'est pas si directe que cela, elle est accompagnée d'informations ajoutées par le CLI local. Cela s'appelle un *Harnais* pour le CLI, et un *Contexte* pour le LLM. La différence entre les deux concepts est que le `Harnais` est normalement peuplé des intentions de l'utilisateur et du CLI, alors que le `contexte`est peuplé de l'historique des interactions avec le LLM. Le harnais est quasiment fixe, le `contexte` ne cesse de grossir. Le harnais se pilote et se configure le `contexte` est subi. 

@@ -41,6 +41,8 @@ Stéphane corrige directement `Cours - Développement d'une application par la v
 - `#informaticien` → à reporter dans la version « Informaticien » (`data-v="expert"`) ;
 - `#tous` → à reporter dans les deux versions.
 
+Balise `#note` en ligne : le texte qui la suit est une remarque à ajouter dans un encadré `<div class="note">` à l'endroit correspondant de la page, dans les deux versions (rédigée simplement pour la version Généraliste), sauf si une autre balise restreint la version.
+
 Une balise placée sous un titre vaut pour toute la section, jusqu'au titre suivant de même niveau ou de niveau supérieur. Une balise en fin de ligne ne vaut que pour cette ligne. Un passage sans balise reste sans effet sur la page, sauf demande explicite. Relire le HTML avant de l'éditer, puis republier.
 
 ## Dépôt public : noms de machines

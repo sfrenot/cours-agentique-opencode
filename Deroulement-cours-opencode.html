@@ -418,6 +418,7 @@ html{scroll-behavior:smooth}
 </svg>
 <figcaption>Le modèle n'agit jamais lui-même. Il demande une action, le harnais l'exécute et réinjecte le résultat. La boucle s'arrête quand le modèle répond par du texte, parfois dès le premier tour.</figcaption>
 </figure>
+<div class="note"><p><b>Note.</b> On peut limiter le nombre de tours de la boucle avec le paramètre <code>steps</code> d'un agent ou d'un sous-agent (par exemple <code>steps: 25</code>). Cela évite qu'il parte en boucle : une fois la limite atteinte, il doit répondre. Voir les fichiers d'agents de la séance 3.</p></div>
 
 <h3>Exercices</h3>
 <div class="ex" id="e1">
@@ -1428,6 +1429,7 @@ Pourquoi as-tu modifié cette ligne ? Qu'est-ce qui casse si je l'enlève ?</cod
 <figcaption>Le modèle d'IA n'agit jamais lui-même. Il demande une action, opencode l'exécute et lui rapporte le résultat, et ainsi de suite jusqu'à la réponse finale.</figcaption>
 </figure>
 <p>Le nombre d'allers-retours change d'une fois à l'autre : on ne peut pas prévoir exactement ce que fera l'assistant. C'est pourquoi on vérifie toujours le résultat.</p>
+<div class="note"><p><b>Note.</b> On peut limiter le nombre d'allers-retours, grâce à un réglage appelé <i>steps</i> (« étapes »). Cela évite qu'un assistant, ou un assistant spécialisé, tourne en rond sans fin. On le retrouve en séance 3.</p></div>
 
 <h3>Exercices</h3>
 <div class="ex" id="gp-g1">

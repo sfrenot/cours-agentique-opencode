@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 230" role="img" aria-label="L'assistant principal confie une tâche à un assistant de recherche web, qui utilise le petit modèle, et à un assistant de calcul, qui travaille sur le serveur de l'INSA. Chacun ne rapporte qu'un résumé.">
+<style>
+svg{font-family:"IBM Plex Sans","Segoe UI",system-ui,sans-serif}
+text{fill:#17212b;font-size:13px}
+.box{fill:#ffffff;stroke:currentColor;stroke-width:1.3}
+.box-acc{fill:#e1f0f1;stroke:#0b6b73;stroke-width:1.6}
+.zone{fill:none;stroke:#d9dee3;stroke-width:1.3;stroke-dasharray:5 4}
+.ln{stroke:currentColor;stroke-width:1.4;fill:none}
+.ln-acc{stroke:#0b6b73;stroke-width:1.8;fill:none}
+.dash{stroke-dasharray:5 4}
+text{fill:currentColor;font-size:13px}
+.lbl{font-size:11.5px;fill:#566370}
+.ttl{font-family:"Space Grotesk","Segoe UI",system-ui,sans-serif;font-weight:600;font-size:13.5px}
+.acc{fill:#0b6b73}
+.mono{font-family:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;font-size:11.5px}
+.arrowhead{fill:currentColor}
+.arrowhead-acc{fill:#0b6b73}
+.ln-blue{stroke:#1f5fd6;stroke-width:1.9;fill:none}
+.blue{fill:#1f5fd6}
+.arrowhead-blue{fill:#1f5fd6}
+.deny{fill:#b3261e}
+text{font-size:5.5px}
+.cut{fill:#e1f0f1;stroke:currentColor;stroke-width:.6}
+.erase{stroke:#e1f0f1;stroke-width:1.2}
+.fold{stroke:#0b6b73;stroke-width:.6;stroke-dasharray:2 1.5}
+.dim{stroke:currentColor;stroke-width:.4}
+.face{fill:#ffffff;stroke:currentColor;stroke-width:1.3;stroke-linejoin:round}
+.face-in{fill:#d9dee3;stroke:currentColor;stroke-width:1.3;stroke-linejoin:round}
+.face-acc{fill:#e1f0f1;stroke:#0b6b73;stroke-width:1.5;stroke-linejoin:round}
+
+</style>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker>
+    <marker id="ahb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead-blue"/></marker>
+    <marker id="aha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead-acc"/></marker>
+  </defs>
+
+  <rect class="box-acc" x="270" y="20" width="220" height="60" rx="6"/>
+  <text class="ttl" x="380" y="46" text-anchor="middle">Assistant principal</text>
+  <text class="lbl" x="380" y="64" text-anchor="middle">grand modèle</text>
+  <rect class="box" x="80" y="150" width="240" height="60" rx="6"/>
+  <text class="ttl" x="200" y="176" text-anchor="middle">Assistant de recherche web</text>
+  <text class="lbl" x="200" y="194" text-anchor="middle">petit modèle · lit les pages</text>
+  <rect class="box" x="440" y="150" width="240" height="60" rx="6"/>
+  <text class="ttl" x="560" y="176" text-anchor="middle">Assistant de calcul</text>
+  <text class="lbl" x="560" y="194" text-anchor="middle">lance les calculs sur le serveur</text>
+  <line class="ln" x1="320" y1="80" x2="210" y2="148" marker-end="url(#ah)"/>
+  <line class="ln" x1="440" y1="80" x2="550" y2="148" marker-end="url(#ah)"/>
+  <text class="lbl" x="200" y="112">confie une tâche</text>
+  <line class="ln-acc dash" x1="240" y1="150" x2="345" y2="82" marker-end="url(#aha)"/>
+  <line class="ln-acc dash" x1="520" y1="150" x2="415" y2="82" marker-end="url(#aha)"/>
+  <text class="lbl acc" x="500" y="112">rapporte un résumé</text>
+</svg>

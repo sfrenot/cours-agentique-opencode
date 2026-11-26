@@ -8,10 +8,12 @@ Auteur : Stéphane Frénot, avec Claude (Anthropic).
 
 | Fichier | Rôle |
 |---|---|
-| `Cours - Développement d'une application par la voie agentique.md` | Source du cours (notes Obsidian), balisée `#généraliste`, `#informaticien`, `#tous` |
+| `Deroulement-cours-opencode.html` | Support de cours : deux versions (informaticien / généraliste) avec un bouton de bascule, schémas, exercices corrigés, mini-projets |
+| `Cours - Développement d'une application par la voie agentique.md` | Le même cours en markdown (Obsidian), balisé `#informaticien`, `#généraliste`, `#tous`, généré à partir de la page |
+| `outils/html_vers_md.py` | Régénère le markdown et les schémas à partir de la page : `python3 outils/html_vers_md.py` |
+| `schemas/` | Schémas du cours en SVG |
+| `images/` | Capture d'écran d'opencode |
 | `Instruction.md` | Cahier des charges de la préparation du cours |
-| `Deroulement-cours-opencode.html` | Support de cours à ouvrir dans un navigateur : deux versions (informaticien / généraliste) avec un bouton de bascule, schémas, exercices corrigés, mini-projets |
-| `Capture d’écran 2026-11-19 à 11.26.11.png` | Capture citée par le markdown |
 | `CLAUDE.md` | Consignes pour Claude Code dans ce dépôt |
 
 ## Consulter le cours

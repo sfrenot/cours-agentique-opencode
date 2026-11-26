@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 240" role="img" aria-label="Vous choisissez un modèle ; opencode regarde le début de son nom. Les modèles qui commencent par litellm passent par la passerelle de l'INSA vers le serveur de modèles, où tournent Qwen 3.8 et Qwen 3.5. Les modèles qui commencent par opencode partent vers un service en ligne sur internet, où tourne Big Pickle.">
+<style>
+svg{font-family:"IBM Plex Sans","Segoe UI",system-ui,sans-serif}
+text{fill:#17212b;font-size:13px}
+.box{fill:#ffffff;stroke:currentColor;stroke-width:1.3}
+.box-acc{fill:#e1f0f1;stroke:#0b6b73;stroke-width:1.6}
+.zone{fill:none;stroke:#d9dee3;stroke-width:1.3;stroke-dasharray:5 4}
+.ln{stroke:currentColor;stroke-width:1.4;fill:none}
+.ln-acc{stroke:#0b6b73;stroke-width:1.8;fill:none}
+.dash{stroke-dasharray:5 4}
+text{fill:currentColor;font-size:13px}
+.lbl{font-size:11.5px;fill:#566370}
+.ttl{font-family:"Space Grotesk","Segoe UI",system-ui,sans-serif;font-weight:600;font-size:13.5px}
+.acc{fill:#0b6b73}
+.mono{font-family:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;font-size:11.5px}
+.arrowhead{fill:currentColor}
+.arrowhead-acc{fill:#0b6b73}
+.ln-blue{stroke:#1f5fd6;stroke-width:1.9;fill:none}
+.blue{fill:#1f5fd6}
+.arrowhead-blue{fill:#1f5fd6}
+.deny{fill:#b3261e}
+text{font-size:5.5px}
+.cut{fill:#e1f0f1;stroke:currentColor;stroke-width:.6}
+.erase{stroke:#e1f0f1;stroke-width:1.2}
+.fold{stroke:#0b6b73;stroke-width:.6;stroke-dasharray:2 1.5}
+.dim{stroke:currentColor;stroke-width:.4}
+.face{fill:#ffffff;stroke:currentColor;stroke-width:1.3;stroke-linejoin:round}
+.face-in{fill:#d9dee3;stroke:currentColor;stroke-width:1.3;stroke-linejoin:round}
+.face-acc{fill:#e1f0f1;stroke:#0b6b73;stroke-width:1.5;stroke-linejoin:round}
+
+</style>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker>
+    <marker id="ahb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead-blue"/></marker>
+    <marker id="aha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead-acc"/></marker>
+  </defs>
+
+  <rect class="box" x="20" y="90" width="150" height="60" rx="6"/>
+  <text class="ttl" x="95" y="115" text-anchor="middle">Vous choisissez</text>
+  <text class="lbl" x="95" y="134" text-anchor="middle">avec /models</text>
+  <line class="ln" x1="170" y1="120" x2="228" y2="120" marker-end="url(#ah)"/>
+  <rect class="box-acc" x="230" y="80" width="170" height="80" rx="6"/>
+  <text class="ttl" x="315" y="106" text-anchor="middle">opencode</text>
+  <text class="lbl" x="315" y="126" text-anchor="middle">regarde le début</text>
+  <text class="lbl" x="315" y="144" text-anchor="middle">du nom</text>
+  <rect class="zone" x="450" y="12" width="300" height="122" rx="10"/>
+  <text class="lbl" x="464" y="30">réseau de l'INSA</text>
+  <rect class="box" x="464" y="42" width="120" height="54" rx="6"/>
+  <text class="ttl" x="524" y="65" text-anchor="middle">Passerelle</text>
+  <text class="lbl" x="524" y="83" text-anchor="middle">aiguille</text>
+  <rect class="box" x="610" y="36" width="128" height="88" rx="6"/>
+  <text class="ttl" x="674" y="58" text-anchor="middle">Serveur</text>
+  <text class="lbl" x="674" y="80" text-anchor="middle">Qwen 3.8 · 16 Go</text>
+  <text class="lbl" x="674" y="98" text-anchor="middle">Qwen 3.5 · 500 Mo</text>
+  <line class="ln" x1="584" y1="69" x2="608" y2="69" marker-end="url(#ah)"/>
+  <rect class="box" x="464" y="158" width="274" height="70" rx="6"/>
+  <text class="ttl" x="601" y="179" text-anchor="middle">Service en ligne OpenCode</text>
+  <text class="lbl" x="601" y="197" text-anchor="middle">Big Pickle</text>
+  <text class="lbl deny" x="601" y="216" text-anchor="middle">vos questions sortent de l'INSA</text>
+  <path class="ln-acc" d="M400,104 L428,104 L428,69 L462,69" marker-end="url(#aha)"/>
+  <text class="lbl mono acc" x="416" y="60">litellm/…</text>
+  <path class="ln" d="M400,140 L428,140 L428,193 L462,193" marker-end="url(#ah)"/>
+  <text class="lbl mono" x="416" y="234">opencode/…</text>
+</svg>

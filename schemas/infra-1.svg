@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 330" role="img" aria-label="Le poste étudiant se connecte en SSH à la machine de TP ; le TUI opencode parle au service de fond qui stocke les sessions dans opencode.db et appelle LiteLLM, qui route vers les modèles Qwen du Mac Studio serveurllm ; le sous-agent remote-python envoie le code en SSH vers serveurllm.">
+<style>
+svg{font-family:"IBM Plex Sans","Segoe UI",system-ui,sans-serif}
+text{fill:#17212b;font-size:13px}
+.box{fill:#ffffff;stroke:currentColor;stroke-width:1.3}
+.box-acc{fill:#e1f0f1;stroke:#0b6b73;stroke-width:1.6}
+.zone{fill:none;stroke:#d9dee3;stroke-width:1.3;stroke-dasharray:5 4}
+.ln{stroke:currentColor;stroke-width:1.4;fill:none}
+.ln-acc{stroke:#0b6b73;stroke-width:1.8;fill:none}
+.dash{stroke-dasharray:5 4}
+text{fill:currentColor;font-size:13px}
+.lbl{font-size:11.5px;fill:#566370}
+.ttl{font-family:"Space Grotesk","Segoe UI",system-ui,sans-serif;font-weight:600;font-size:13.5px}
+.acc{fill:#0b6b73}
+.mono{font-family:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;font-size:11.5px}
+.arrowhead{fill:currentColor}
+.arrowhead-acc{fill:#0b6b73}
+.ln-blue{stroke:#1f5fd6;stroke-width:1.9;fill:none}
+.blue{fill:#1f5fd6}
+.arrowhead-blue{fill:#1f5fd6}
+.deny{fill:#b3261e}
+text{font-size:5.5px}
+.cut{fill:#e1f0f1;stroke:currentColor;stroke-width:.6}
+.erase{stroke:#e1f0f1;stroke-width:1.2}
+.fold{stroke:#0b6b73;stroke-width:.6;stroke-dasharray:2 1.5}
+.dim{stroke:currentColor;stroke-width:.4}
+.face{fill:#ffffff;stroke:currentColor;stroke-width:1.3;stroke-linejoin:round}
+.face-in{fill:#d9dee3;stroke:currentColor;stroke-width:1.3;stroke-linejoin:round}
+.face-acc{fill:#e1f0f1;stroke:#0b6b73;stroke-width:1.5;stroke-linejoin:round}
+
+</style>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead"/></marker>
+    <marker id="ahb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead-blue"/></marker>
+    <marker id="aha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="arrowhead-acc"/></marker>
+  </defs>
+
+  <rect class="zone" x="150" y="20" width="330" height="290" rx="10"/>
+  <text class="lbl" x="164" y="40">machine d'accès (TP)</text>
+  <rect class="box" x="14" y="120" width="110" height="56" rx="6"/>
+  <text class="ttl" x="69" y="144" text-anchor="middle">Poste</text>
+  <text class="lbl" x="69" y="162" text-anchor="middle">terminal</text>
+  <line class="ln" x1="124" y1="148" x2="178" y2="148" marker-end="url(#ah)"/>
+  <text class="lbl" x="151" y="140" text-anchor="middle">ssh</text>
+
+  <rect class="box" x="180" y="60" width="130" height="56" rx="6"/>
+  <text class="ttl" x="245" y="84" text-anchor="middle">TUI opencode</text>
+  <text class="lbl mono" x="245" y="102" text-anchor="middle">opencode · run</text>
+
+  <rect class="box-acc" x="180" y="150" width="130" height="66" rx="6"/>
+  <text class="ttl" x="245" y="174" text-anchor="middle">Service de fond</text>
+  <text class="lbl mono" x="245" y="192" text-anchor="middle">opencode service</text>
+  <text class="lbl" x="245" y="207" text-anchor="middle">boucle + outils</text>
+  <line class="ln" x1="245" y1="116" x2="245" y2="148" marker-end="url(#ah)"/>
+
+  <rect class="box" x="340" y="60" width="126" height="56" rx="6"/>
+  <text class="ttl" x="403" y="84" text-anchor="middle">Configuration</text>
+  <text class="lbl mono" x="403" y="102" text-anchor="middle">~/.config/opencode</text>
+  <line class="ln dash" x1="340" y1="98" x2="312" y2="160" marker-end="url(#ah)"/>
+  <text class="lbl" x="352" y="138">lit</text>
+
+  <rect class="box" x="180" y="244" width="130" height="50" rx="6"/>
+  <text class="ttl" x="245" y="266" text-anchor="middle">opencode.db</text>
+  <text class="lbl" x="245" y="283" text-anchor="middle">sessions, messages</text>
+  <line class="ln" x1="245" y1="216" x2="245" y2="242" marker-end="url(#ah)"/>
+
+  <rect class="box" x="340" y="160" width="126" height="56" rx="6"/>
+  <text class="ttl" x="403" y="184" text-anchor="middle">Projet</text>
+  <text class="lbl" x="403" y="202" text-anchor="middle">fichiers, AGENTS.md</text>
+  <line class="ln" x1="310" y1="188" x2="338" y2="188" marker-end="url(#ah)"/>
+
+  <rect class="box-acc" x="520" y="60" width="120" height="56" rx="6"/>
+  <text class="ttl" x="580" y="84" text-anchor="middle">LiteLLM</text>
+  <text class="lbl mono" x="580" y="102" text-anchor="middle">gatewayllm:4000</text>
+  <path class="ln-acc" d="M310,170 L490,170 L490,88 L518,88" marker-end="url(#aha)"/>
+  <text class="lbl" x="496" y="134">/v1 HTTP</text>
+
+  <rect class="zone" x="520" y="150" width="246" height="160" rx="10"/>
+  <text class="lbl" x="534" y="170">serveurllm · Mac Studio M2 Ultra 192 Go</text>
+  <rect class="box" x="534" y="182" width="104" height="48" rx="6"/>
+  <text class="ttl" x="586" y="202" text-anchor="middle">qwen3.8 27b</text>
+  <text class="lbl" x="586" y="219" text-anchor="middle">raisonnement</text>
+  <rect class="box" x="650" y="182" width="104" height="48" rx="6"/>
+  <text class="ttl" x="702" y="202" text-anchor="middle">qwen3.5 0.8b</text>
+  <text class="lbl" x="702" y="219" text-anchor="middle">agent léger</text>
+  <line class="ln-acc" x1="580" y1="116" x2="586" y2="180" marker-end="url(#aha)"/>
+  <line class="ln-acc" x1="600" y1="116" x2="690" y2="180" marker-end="url(#aha)"/>
+  <rect class="box" x="534" y="246" width="220" height="48" rx="6"/>
+  <text class="ttl" x="644" y="266" text-anchor="middle">~/opencode-runs/</text>
+  <text class="lbl" x="644" y="283" text-anchor="middle">exécution Python (uv)</text>
+  <path class="ln dash" d="M466,200 L500,200 L500,270 L532,270" marker-end="url(#ah)"/>
+  <text class="lbl" x="400" y="240">remote-python</text>
+  <text class="lbl" x="400" y="254">ssh + tar</text>
+</svg>

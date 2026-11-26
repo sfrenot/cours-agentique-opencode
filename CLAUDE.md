@@ -4,53 +4,51 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Nature du dépôt
 
-Ce n'est pas un dépôt de code : c'est un dépôt git de supports de cours, servant à préparer un cours/TP de l'INSA de Lyon sur le **développement agentique avec opencode** (4 séances). Pas de build, lint ni tests. Le dépôt est `/Users/sfrenot/cours/Agentique`. Le dossier Obsidian `~/Documents/Obsidian Vault/IA/Cours Agentique` est un lien symbolique vers ce dépôt, pour que Stéphane continue à éditer le markdown dans Obsidian. Stéphane a demandé (26/11/2026) que chaque modification validée soit **commitée et poussée automatiquement** sur `main` (GitHub Pages se met à jour tout seul) : après chaque changement de la page ou des fichiers du dépôt, faire `git commit` puis `git push` sans redemander. Exception : jamais de réécriture d'historique ni de `push --force` sans son accord explicite.
+Ce n'est pas un dépôt de code : c'est un dépôt git de supports de cours, servant à préparer un cours/TP de l'INSA de Lyon sur le **développement agentique avec opencode** (4 séances). Pas de build, lint ni tests. Le dépôt est `/Users/sfrenot/cours/Agentique`, public sur GitHub (`sfrenot/cours-agentique-opencode`) et servi par GitHub Pages (https://sfrenot.github.io/cours-agentique-opencode/, `index.html` redirige vers la page du cours). Le dossier Obsidian `~/Documents/Obsidian Vault/IA/Cours Agentique` est un lien symbolique vers ce dépôt, pour que Stéphane édite le markdown dans Obsidian.
 
-## Fichiers sources (NE PAS MODIFIER)
+Stéphane a demandé (26/11/2026) que chaque modification validée soit **commitée et poussée automatiquement** sur `main` : après chaque changement, faire `git commit` puis `git push` sans redemander. Exception : jamais de réécriture d'historique ni de `push --force` sans son accord explicite.
 
-- `Instruction.md` — la commande de travail : rôle (enseignant-chercheur INSA), objectifs, moyens, plan attendu.
-- `Cours - Développement d'une application par la voie agentique.md` — le contenu de référence du cours (niveaux d'interaction prompt → prompt engineering → RAG → harness/context engineering, boucle agentique, harnais vs contexte, briques d'opencode : outils, contexte, mémoire, permissions, undo/redo, orchestration par agents).
+## Fichiers
 
-Consigne explicite : **ne jamais modifier ces fichiers initiaux**. Toute production va dans de nouveaux fichiers.
+| Fichier | Rôle |
+|---|---|
+| `Deroulement-cours-opencode.html` | **Référence** : la page du cours, deux versions basculées par un bouton : « Informaticien » (éléments `data-v="expert"`) et « Généraliste », pour les non-informaticiens (éléments `data-v="gp"`, ids préfixés `gp-`). Publiée aussi comme artifact : https://claude.ai/artifact/Rx2FmVLM7Y9pthaLLGaowN (republier avec le même `file_path`, en joignant `images/opencode-lancement.png` via `files`). |
+| `Cours - Développement d'une application par la voie agentique.md` | **Miroir de la page**, généré par `python3 outils/html_vers_md.py` (exercices en callouts Obsidian, schémas dans `schemas/*.svg`). |
+| `outils/html_vers_md.py` | Régénère le markdown et `schemas/` à partir de la page. |
+| `images/`, `schemas/` | Capture d'écran d'opencode ; schémas SVG exportés de la page (ne pas éditer à la main). |
+| `Instruction.md` | Commande de travail de Stéphane. Ne pas modifier. |
+
+## Règle de synchronisation markdown ↔ page (depuis le 26/11/2026)
+
+Le markdown doit **toujours être en phase** avec la page HTML. Claude le maintient à jour.
+
+1. **Stéphane corrige le markdown** (dans Obsidian) et le signale. Lire `git diff` sur le markdown, reporter chaque changement dans la page selon les balises ci-dessous, republier la page, **puis régénérer** le markdown avec `python3 outils/html_vers_md.py`. Vérifier par `git diff` que rien de ce qu'il a écrit n'a disparu dans la régénération (sinon, c'est que le report dans la page est incomplet).
+2. **Claude modifie la page** (demande directe) : régénérer le markdown dans la foulée.
+3. Dans les deux cas : commit + push des deux fichiers (et de `schemas/`).
+
+Balises du markdown :
+- `#généraliste` (ou `#generaliste`, anciennes `#autre`, `#grandpublic`) → version « Généraliste » ;
+- `#informaticien` → version « Informaticien » ;
+- `#tous` → les deux versions ;
+- `#note` en ligne → remarque à ajouter en encadré `<div class="note">` à l'endroit correspondant, dans les deux versions (rédigée simplement pour la Généraliste), sauf autre balise.
+
+Dans le markdown généré, chaque section `##` contient deux sous-sections `###` suivies de leur balise ; la balise vaut pour toute la sous-section `###`. Un texte ajouté sans balise sous une sous-section suit la balise de cette sous-section.
 
 ## Livrables attendus (d'après `Instruction.md`)
 
-1. Un plan précis du cours sur 4 séances.
-2. Des schémas explicatifs, en réutilisant ceux déjà présents dans le cours (diagrammes Mermaid `sequenceDiagram`/`flowchart`, schéma ASCII de la boucle, tableau Harnais vs Contexte).
-3. Un document **HTML autonome** visualisable dans un navigateur, décrivant le déroulé des séances avec exercices d'appui et **liste d'exercices types avec corrections**.
-
-Objectifs pédagogiques à couvrir : programmer des applications simples mais démonstratives par la voie agentique ; interagir avec le CLI opencode ; comprendre l'architecture fonctionnelle d'opencode ; comprendre la maintenance et la réinitialisation d'opencode (sessions, `/resume`, `/sessions`, `/fork`, `/clear`, `/compact`, `/undo`, `/redo`, base de sessions en tâche de fond).
+Un plan précis du cours sur 4 séances ; des schémas explicatifs ; un document HTML autonome avec le déroulé des séances, des exercices d'appui et une liste d'exercices types avec corrections. Objectifs pédagogiques : programmer des applications simples par la voie agentique ; interagir avec le CLI opencode ; comprendre l'architecture fonctionnelle d'opencode ; comprendre sa maintenance et sa réinitialisation.
 
 ## Contraintes techniques du cours
 
-- Outil : **opencode**, sur une machine distante (la machine d'accès). Pour la préparation, Stéphane donne le compte et le nom de la machine (voir `Instruction.md`).
-- LLM disponibles uniquement via un serveur **LiteLLM** (réseau INSA) :
-  - `ll-qwen3.8:27b-mlx` pour le raisonnement (fenêtre déclarée 110k tokens dans opencode, sortie max 8 192) ;
-  - `litellm/ll_wired-qwen3.5:0.8b` pour démontrer des agents/sous-agents légers.
-- Ces modèles sont peu puissants : **exemples et exercices doivent rester simples** (petits scripts, petites tâches, peu d'étapes).
-- Les exercices prévus dans le cours incluent : comparaison `test1`/`test2` (prompt direct vs `@greeting.md` + `/export`), un sous-agent d'exécution Python distante (machine indiquée dans le fichier de description de l'agent), un fichier agent d'exploration web utilisant le modèle 0.8b.
-
-## Page HTML produite
-
-`Deroulement-cours-opencode.html` contient deux versions du cours, basculées par un bouton : version « Informaticien » (éléments `data-v="expert"`) et version « Généraliste », destinée aux non-informaticiens (éléments `data-v="gp"`, ids préfixés `gp-`). Elle est publiée comme artifact : https://claude.ai/artifact/Rx2FmVLM7Y9pthaLLGaowN (republier avec le même `file_path` après chaque modification).
-
-## Corrections de Stéphane : balises dans le markdown source
-
-Stéphane corrige directement `Cours - Développement d'une application par la voie agentique.md` (lui seul le modifie, Claude ne le modifie jamais) et signale chaque correction. Le texte est balisé :
-- `#generaliste` (ou `#généraliste`) → à reporter dans la version « Généraliste » (`data-v="gp"`) ; les anciennes balises `#autre` et `#grandpublic` ont le même sens ;
-- `#informaticien` → à reporter dans la version « Informaticien » (`data-v="expert"`) ;
-- `#tous` → à reporter dans les deux versions.
-
-Balise `#note` en ligne : le texte qui la suit est une remarque à ajouter dans un encadré `<div class="note">` à l'endroit correspondant de la page, dans les deux versions (rédigée simplement pour la version Généraliste), sauf si une autre balise restreint la version.
-
-Une balise placée sous un titre vaut pour toute la section, jusqu'au titre suivant de même niveau ou de niveau supérieur. Une balise en fin de ligne ne vaut que pour cette ligne. Un passage sans balise reste sans effet sur la page, sauf demande explicite. Relire le HTML avant de l'éditer, puis republier.
+- Outil : **opencode** (v2.4.1), sur une machine distante (la machine d'accès). Pour la préparation, Stéphane donne le compte et le nom de la machine.
+- Modèles via **LiteLLM** (réseau INSA) : `litellm/ll_wired-qwen3.8:27b-mlx` (raisonnement, 110k tokens, sortie 8 192, 16 Go en mémoire) et `litellm/ll_wired-qwen3.5:0.8b` (agents légers, 500 Mo). `opencode/big-pickle` (OpenCode Zen, hors INSA) est le modèle proposé par défaut.
+- Modèles peu puissants : **exemples et exercices simples** (petits scripts, petites tâches, peu d'étapes).
 
 ## Dépôt public : noms de machines
 
-Le dépôt est public. Ne jamais écrire les vrais noms des machines internes dans la page HTML ni dans les fichiers produits : la passerelle LiteLLM s'appelle `gatewayllm` (port 4000), le serveur des modèles (Mac Studio) s'appelle `serveurllm`. La machine de TP n'est pas nommée non plus : on écrit « la machine d'accès » et `<machine-acces>` dans les commandes (son nom est communiqué aux participants avec leur accès), et le bureau virtuel est cité sans son adresse. Les noms de modèles `litellm/ll_wired-…` sont des identifiants réels et restent inchangés.
+Ne jamais écrire les vrais noms des machines internes : la passerelle LiteLLM s'appelle `gatewayllm` (port 4000), le serveur des modèles (Mac Studio) `serveurllm`. La machine de TP n'est pas nommée : « la machine d'accès » et `<machine-acces>` dans les commandes ; le bureau virtuel est cité sans son adresse. Les noms de modèles `litellm/ll_wired-…` restent inchangés. Vérifier toute image ajoutée (barres de titre, invites de shell).
 
 ## Conventions de réponse
 
 - Rédiger en français.
 - Inclure le prénom **Stéphane** dans les réponses.
-- La capture citée par le markdown (`![[Capture d’écran 2026-11-19 à 11.26.11.png]]`) a été copiée à la racine du dépôt ; elle n'est pas utilisée dans le HTML.

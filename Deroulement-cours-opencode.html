@@ -222,6 +222,7 @@ html{scroll-behavior:smooth}
       <li><b>Bureau virtuel</b> : la machine « opencode » du bureau virtuel de l'INSA.</li>
     </ul>
     <p>On peut aussi travailler depuis son éditeur, par exemple VS Code avec l'extension Remote-SSH : terminal, fichiers et éditeur sur la machine d'accès dans la même fenêtre. Vérification : <code>ssh &lt;login&gt;@&lt;machine-acces&gt;</code>, puis <code>opencode models | grep wired</code>.</p>
+    <p>Installation d'opencode sur un autre poste : voir le site <a href="https://opencode.ai">opencode.ai</a>. Il est déjà installé sur la machine d'accès et sur le bureau virtuel.</p>
   </div>
 </header>
 
@@ -435,6 +436,14 @@ opencode run -m opencode/big-pickle "Dis bonjour en une phrase."</code></pre>
 </tbody></table></div>
 <p><b>Dans ce cours</b>, sur 4 séances, on déroule une approche agile, en précisant les éléments d'ingénierie quand c'est possible : <code>AGENTS.md</code> en S2, fichiers d'agents en S3, <code>SPEC.md</code> des mini-projets en S4. Toutes les solutions intermédiaires, avec une documentation partielle, sont valides, et l'évolution des modèles ne permet pas de stabiliser une approche plus qu'une autre.</p>
 
+<h3>Qu'est-ce qu'un CLI comme opencode ?</h3>
+<p>Un CLI (<i>Command Line Interface</i>) ou TUI (<i>Terminal User Interface</i>) est un interpréteur de commandes transmises par un terminal. On lance la commande <code>opencode</code> (ou <code>claude</code>) dans sa fenêtre.</p>
+<figure>
+<img src="images/opencode-lancement.png" alt="Fenêtre de terminal avec opencode au lancement : logo opencode, zone de saisie, agent Build et modèle Big Pickle, raccourcis shift+tab agents et ctrl+p commands." width="1812" height="1140" style="width:100%;height:auto;border-radius:6px">
+<figcaption>opencode au lancement : l'agent courant (Build), le modèle (Big Pickle), le dossier de travail et les raccourcis <kbd>Shift</kbd>+<kbd>Tab</kbd> (agents) et <kbd>Ctrl</kbd>+<kbd>P</kbd> (commandes).</figcaption>
+</figure>
+<p>Cette fenêtre est l'équivalent strict du shell qui dialogue avec le système d'exploitation, sauf que ce shell-ci dialogue avec un LLM, et éventuellement avec le système. C'est un agent qui tourne sur la boucle d'action suivante.</p>
+
 <h3>La boucle agentique</h3>
 <figure>
 <svg viewBox="0 0 760 290" role="img" aria-label="L'utilisateur donne une tâche au harnais ; le harnais envoie contexte et liste d'outils au LLM ; si le LLM demande un outil, le harnais vérifie la permission, exécute l'outil, ajoute le résultat au contexte et rappelle le LLM ; sinon la réponse texte revient à l'utilisateur.">
@@ -476,6 +485,7 @@ opencode run -m opencode/big-pickle "Dis bonjour en une phrase."</code></pre>
 </svg>
 <figcaption>Le modèle n'agit jamais lui-même. Il demande une action, le harnais l'exécute et réinjecte le résultat. La boucle s'arrête quand le modèle répond par du texte, parfois dès le premier tour.</figcaption>
 </figure>
+<p>La réponse finale peut arriver tout de suite, comme lorsqu'on interroge un moteur de recherche ou qu'on reste au niveau du prompt. Cette boucle est le point clé de la programmation agentique : elle est pilotable, configurable et autonome. Il est pourtant impossible de lui donner un comportement exact et formel, car son déroulement dépend de la demande initiale et du modèle utilisé. Elle est subie.</p>
 <div class="note"><p><b>Note.</b> On peut limiter le nombre de tours de la boucle avec le paramètre <code>steps</code> d'un agent ou d'un sous-agent (par exemple <code>steps: 25</code>). Cela évite qu'il parte en boucle : une fois la limite atteinte, il doit répondre. Voir les fichiers d'agents de la séance 3.</p></div>
 
 <h3>Exercices</h3>
@@ -631,7 +641,39 @@ et deux boutons : "+1" et "Remise à zéro". Moins de 60 lignes.</code></pre>
 <tr><td><b>Limite</b></td><td>Ce que le programme sait faire</td><td>La fenêtre : 110 000 tokens déclarés pour le 27b</td></tr>
 <tr><td><b>On agit dessus via</b></td><td>Config, plugins, agents, permissions</td><td>Ce qu'on écrit, les fichiers lus, <code>/compact</code></td></tr>
 </tbody></table></div>
-<div class="note"><p><b>Repères.</b> 1 token ≈ 0,65 mot en français ≈ 3,8 caractères. 110 000 tokens représentent environ 230 pages de livre, dont 10 à 20 k sont consommés avant le premier message (prompt système, outils, <code>AGENTS.md</code>). La sortie est limitée à 8 192 tokens : un fichier long ne peut pas être écrit d'un seul coup.</p></div>
+<div class="note"><p><b>Repères.</b> 1 token ≈ 0,65 mot en français ≈ 3,8 caractères. 110 000 tokens représentent environ 230 pages de livre, dont 10 à 20 k sont consommés avant le premier message (prompt système, outils, <code>AGENTS.md</code>). La sortie est limitée à 8 192 tokens : un fichier long ne peut pas être écrit d'un seul coup.</p><p>Autres repères : 1 page de livre ≈ 300 mots, 1 page Word ≈ 500 mots, 1 feuillet = 1 500 signes. Les tokenizers diffèrent d'un modèle à l'autre : ce sont des ordres de grandeur.</p></div>
+<p>Le contexte est la zone de rappel que le harnais transmet au LLM à chaque appel, complétée des nouveaux faits significatifs. Sa taille fait le coût d'une session et s'ajoute à la mémoire dont le modèle a besoin pour produire une réponse. Pour aller plus vite, il peut être mis en cache sur le serveur afin de ne pas être rechargé à chaque appel. La taille de la fenêtre pèse beaucoup sur les capacités de raisonnement : avec 110 k tokens, le Qwen 3.8 peut recevoir à chaque requête l'équivalent d'environ 230 pages. Lors d'un compactage, la fenêtre est réduite et une partie de l'information précédente est perdue. Le compactage peut être problématique sur certains modèles.</p>
+<h4>Claude et Qwen : fenêtre de contexte</h4>
+<div class="tbl"><table>
+<thead><tr><th></th><th>Claude (Opus 5.5)</th><th>ll-qwen3.8:27b-mlx</th></tr></thead>
+<tbody>
+<tr><td><b>Harnais</b></td><td>Claude Code</td><td>opencode</td></tr>
+<tr><td><b>Fenêtre de contexte</b></td><td>1 000 000 tokens</td><td>262 144 au maximum (modèle), 110 000 déclarés dans opencode</td></tr>
+<tr><td><b>En pages de livre (~300 mots)</b></td><td>~2 200 pages</td><td>~600 au maximum, ~230 avec la limite d'opencode</td></tr>
+<tr><td><b>En pages Word (~500 mots)</b></td><td>~1 300 pages</td><td>~140 pages (limite d'opencode)</td></tr>
+<tr><td><b>Réservé avant la conversation</b></td><td>~31 k (prompt, outils, skills, MCP)</td><td>~10 à 20 k (prompt, outils, <code>AGENTS.md</code>)</td></tr>
+<tr><td><b>Marge de compaction / sortie</b></td><td>33 k (compaction automatique)</td><td>8 192 (sortie maximale)</td></tr>
+<tr><td><b>Taille du modèle</b></td><td>Non publiée</td><td>27,8 milliards de paramètres, NVFP4 (4 bits)</td></tr>
+<tr><td><b>Où il tourne</b></td><td>Cloud Anthropic</td><td>Local : <code>serveurllm</code> (Mac Studio M2 Ultra, 192 Go), via LiteLLM</td></tr>
+<tr><td><b>Coût</b></td><td>Payant</td><td>Gratuit (hors électricité)</td></tr>
+<tr><td><b>Confidentialité</b></td><td>Données envoyées à Anthropic</td><td>Rien ne sort du réseau INSA</td></tr>
+</tbody></table></div>
+<h4>Exemple : occupation d'une session Claude (<code>/context</code>)</h4>
+<div class="tbl"><table>
+<thead><tr><th>Catégorie</th><th>Tokens</th><th>%</th></tr></thead>
+<tbody>
+<tr><td>Prompt système</td><td class="t">3 k</td><td class="t">0,3 %</td></tr>
+<tr><td>Outils système</td><td class="t">18,3 k</td><td class="t">1,8 %</td></tr>
+<tr><td>Outils différés (système + MCP)</td><td class="t">30,2 k</td><td class="t">3,0 %</td></tr>
+<tr><td>Skills</td><td class="t">6,2 k</td><td class="t">0,6 %</td></tr>
+<tr><td>Instructions MCP</td><td class="t">0,7 k</td><td class="t">0,1 %</td></tr>
+<tr><td>Messages (la conversation)</td><td class="t">122,4 k</td><td class="t">12,2 %</td></tr>
+<tr><td>Marge d'autocompaction</td><td class="t">33 k</td><td class="t">3,3 %</td></tr>
+<tr><td><b>Espace libre</b></td><td class="t"><b>816,4 k</b></td><td class="t"><b>81,6 %</b></td></tr>
+<tr><td><b>Total utilisé</b></td><td class="t"><b>150,7 k / 1 M</b></td><td class="t"><b>15 %</b></td></tr>
+</tbody></table></div>
+<p>Le fichier <code>AGENTS.md</code> pilote ce contexte : il indique les informations pertinentes et peut déclencher certaines actions. Le contexte peut aussi être manipulé par les fichiers de configuration du CLI, et certaines actions produisent une information qui y est ajoutée.</p>
+
 
 <h3>Exercices</h3>
 <div class="ex" id="e5">
@@ -724,7 +766,29 @@ et deux boutons : "+1" et "Remise à zéro". Moins de 60 lignes.</code></pre>
 <tr><td class="t">2:45–3:00</td><td>Extensions : skills, MCP, plugins. Comment choisir ?</td><td>Discussion</td></tr>
 </tbody></table></div>
 
+<h3>Les outils d'opencode et leur statut</h3>
+<p>Dans la boucle, le LLM demande implicitement des actions au CLI. Leur nombre est limité : il n'est pas nécessaire de savoir faire beaucoup de choses pour pouvoir tout faire. Exemple sur la machine de préparation, pour l'agent Build :</p>
+<div class="tbl"><table>
+<thead><tr><th>Outil</th><th>Catégorie</th><th>Rôle</th><th>Statut (agent <code>build</code>)</th></tr></thead>
+<tbody>
+<tr><td><code>read</code></td><td>Fichiers</td><td>Lire un fichier</td><td><span class="pill allow">autorisé</span> (<code>*.env</code> : <span class="pill ask">demande</span>)</td></tr>
+<tr><td><code>edit</code></td><td>Fichiers</td><td>Modifier ou créer un fichier</td><td><span class="pill allow">autorisé</span></td></tr>
+<tr><td><code>glob</code></td><td>Recherche</td><td>Trouver des fichiers par motif (<code>**/*.py</code>)</td><td><span class="pill allow">autorisé</span></td></tr>
+<tr><td><code>grep</code></td><td>Recherche</td><td>Chercher dans le contenu des fichiers</td><td><span class="pill allow">autorisé</span></td></tr>
+<tr><td><code>shell</code></td><td>Exécution</td><td>Exécuter une commande bash</td><td><span class="pill allow">autorisé</span> (sauf <code>python*</code>, <code>pip*</code>, <code>uv *</code>, <code>pytest*</code>, <code>ipython*</code> : <span class="pill deny">interdit</span>)</td></tr>
+<tr><td><code>webfetch</code></td><td>Web</td><td>Lire une page web</td><td><span class="pill allow">autorisé</span></td></tr>
+<tr><td><code>websearch</code></td><td>Web</td><td>Faire une recherche web</td><td><span class="pill allow">autorisé</span></td></tr>
+<tr><td><code>browser</code></td><td>Web</td><td>Piloter un navigateur</td><td><span class="pill deny">interdit</span></td></tr>
+<tr><td><code>todowrite</code></td><td>Organisation</td><td>Écrire la liste de tâches de la session</td><td><span class="pill allow">autorisé</span></td></tr>
+<tr><td><code>todoread</code></td><td>Organisation</td><td>Lire la liste de tâches</td><td><span class="pill allow">autorisé</span></td></tr>
+<tr><td><code>question</code></td><td>Interaction</td><td>Poser une question à l'utilisateur</td><td><span class="pill allow">autorisé</span></td></tr>
+<tr><td><code>skill</code></td><td>Extension</td><td>Charger une skill</td><td><span class="pill allow">autorisé</span></td></tr>
+<tr><td><code>subagent</code></td><td>Délégation</td><td>Déléguer à un sous-agent (<code>explore</code>, <code>general</code>…)</td><td><span class="pill allow">autorisé</span></td></tr>
+<tr><td><code>external_directory</code></td><td>Permission</td><td>Accès aux fichiers hors du projet</td><td><span class="pill allow">autorisé</span></td></tr>
+</tbody></table></div>
+
 <h3>Orchestration par sous-agents</h3>
+<p>La boucle tourne avec un agent principal, dans le TUI ou sans interface avec <code>opencode run</code>. Elle peut lancer plusieurs agents qui s'occupent chacun d'une tâche, par exemple : <i>Lance 3 agents pour vérifier le prix des yaourts chez Auchan, Leclerc et Intermarché.</i> L'agent <code>explore</code> analyse du code ou un répertoire à plusieurs niveaux de profondeur (<code>quick</code>, <code>medium</code>, <code>thorough</code>). L'agent <code>general</code> peut lancer d'autres agents.</p>
 <figure>
 <svg viewBox="0 0 760 300" role="img" aria-label="L'agent principal Build, sur le modèle 27b, délègue avec l'outil task à trois sous-agents : explore, web-explore sur le modèle 0,8b et remote-python qui exécute en SSH sur serveurllm. Chaque sous-agent a son propre contexte et ne renvoie qu'un résumé. Un sous-agent ne peut pas relancer de sous-agent.">
   <rect class="box-acc" x="280" y="20" width="200" height="64" rx="6"/>
@@ -1493,6 +1557,13 @@ Pourquoi as-tu modifié cette ligne ? Qu'est-ce qui casse si je l'enlève ?</cod
 </ul>
 <p>Dans ce cours, on travaille surtout au fil de la conversation, en ajoutant des éléments de cahier des charges quand c'est possible : la fiche de consignes en séance 2, puis le cahier des charges des projets en séance 4. Les solutions intermédiaires sont toutes valables.</p>
 
+<h3>À quoi ressemble opencode</h3>
+<p>opencode s'utilise dans une fenêtre de commande : on tape <code>opencode</code>, et une zone de saisie apparaît. On y écrit ses demandes comme dans un chat, mais l'assistant peut aussi agir sur les fichiers du dossier où on l'a ouvert.</p>
+<figure>
+<img src="images/opencode-lancement.png" alt="Fenêtre de terminal avec opencode au lancement : logo opencode, zone de saisie, agent Build et modèle Big Pickle, raccourcis shift+tab agents et ctrl+p commands." width="1812" height="1140" style="width:100%;height:auto;border-radius:6px">
+<figcaption>opencode au lancement. En bas de la zone de saisie : le mode (Build) et le modèle utilisé (Big Pickle). En dessous : le dossier de travail.</figcaption>
+</figure>
+
 <h3>Comment l'assistant travaille</h3>
 <figure>
 <svg viewBox="0 0 760 280" role="img" aria-label="Vous confiez une tâche à l'assistant. L'assistant transmet au modèle d'IA la tâche augmentée de ce qu'il faut savoir. Le modèle répond soit par une demande d'action, que l'assistant exécute après vérification de l'autorisation avant de rapporter le résultat au modèle, soit par la réponse finale qui vous revient.">
@@ -1616,6 +1687,15 @@ Tout dans un seul fichier, sans rien télécharger d'internet. Moins de 60 ligne
 <tr><td><b>Il change</b></td><td>Rarement : on le règle une fois</td><td>À chaque échange : il grossit</td></tr>
 <tr><td><b>On agit dessus</b></td><td>En réglant les autorisations et les assistants</td><td>Par ce qu'on écrit et les fichiers qu'on joint</td></tr>
 </tbody></table></div>
+<p>Notre modèle comparé à une IA du commerce :</p>
+<div class="tbl"><table>
+<thead><tr><th></th><th>Claude (Anthropic)</th><th>Qwen 3.8 (INSA)</th></tr></thead>
+<tbody>
+<tr><td><b>Mémoire de travail</b></td><td>Environ 2 200 pages de livre</td><td>Environ 230 pages</td></tr>
+<tr><td><b>Où il tourne</b></td><td>Sur les serveurs d'Anthropic</td><td>Sur un serveur de l'INSA</td></tr>
+<tr><td><b>Coût</b></td><td>Payant</td><td>Gratuit (hors électricité)</td></tr>
+<tr><td><b>Vos données</b></td><td>Envoyées à Anthropic</td><td>Restent dans le réseau de l'INSA</td></tr>
+</tbody></table></div>
 
 <h3>Exercices</h3>
 <div class="ex" id="gp-g3">
@@ -1710,6 +1790,7 @@ Tout dans un seul fichier, sans rien télécharger d'internet. Moins de 60 ligne
 </svg>
 <figcaption>Chaque assistant spécialisé travaille dans sa propre mémoire et ne rapporte qu'un résumé. La page web lue par l'assistant de recherche n'encombre pas la mémoire de l'assistant principal.</figcaption>
 </figure>
+<p>Exemple : <i>Lance 3 assistants pour comparer le prix des yaourts chez Auchan, Leclerc et Intermarché.</i> Chaque assistant cherche de son côté, en même temps, et l'assistant principal compare les trois résumés.</p>
 
 <h3>Exercices</h3>
 <div class="ex" id="gp-g7">

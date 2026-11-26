@@ -32,13 +32,13 @@ Objectifs pédagogiques à couvrir : programmer des applications simples mais d�
 
 ## Page HTML produite
 
-`Deroulement-cours-opencode.html` contient deux versions du cours, basculées par un bouton : version informatique (éléments `data-v="expert"`) et version « Autre », destinée aux non-informaticiens (éléments `data-v="gp"`, ids préfixés `gp-`). Elle est publiée comme artifact : https://claude.ai/artifact/Rx2FmVLM7Y9pthaLLGaowN (republier avec le même `file_path` après chaque modification).
+`Deroulement-cours-opencode.html` contient deux versions du cours, basculées par un bouton : version « Informaticien » (éléments `data-v="expert"`) et version « Généraliste », destinée aux non-informaticiens (éléments `data-v="gp"`, ids préfixés `gp-`). Elle est publiée comme artifact : https://claude.ai/artifact/Rx2FmVLM7Y9pthaLLGaowN (republier avec le même `file_path` après chaque modification).
 
 ## Corrections de Stéphane : balises dans le markdown source
 
 Stéphane corrige directement `Cours - Développement d'une application par la voie agentique.md` (lui seul le modifie, Claude ne le modifie jamais) et signale chaque correction. Le texte est balisé :
-- `#autre` → à reporter dans la version « Autre » (`data-v="gp"`) ; l'ancienne balise `#grandpublic` a le même sens ;
-- `#informaticien` → à reporter dans la version informatique (`data-v="expert"`) ;
+- `#generaliste` (ou `#généraliste`) → à reporter dans la version « Généraliste » (`data-v="gp"`) ; les anciennes balises `#autre` et `#grandpublic` ont le même sens ;
+- `#informaticien` → à reporter dans la version « Informaticien » (`data-v="expert"`) ;
 - `#tous` → à reporter dans les deux versions.
 
 Une balise placée sous un titre vaut pour toute la section, jusqu'au titre suivant de même niveau ou de niveau supérieur. Une balise en fin de ligne ne vaut que pour cette ligne. Un passage sans balise reste sans effet sur la page, sauf demande explicite. Relire le HTML avant de l'éditer, puis republier.

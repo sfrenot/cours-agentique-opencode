@@ -1,6 +1,6 @@
 Nous allons développer une application en utilisant des outils internes qui seront utilisés pour l'exécution. Certaines tâches peuvent être demandées via un chat indépendant gratuit. 
 # Prérequis 
-#autre 
+#généraliste 
 Pour réaliser ce tp, il faut vous connecter à un environnement opencode. Il existe deux alternatives : 
  - Passer par un ssh vers la machine d'accès, qui s'accède via le vpn INSA
  - Passer par une machine du `opencode` du bureau virtuel.

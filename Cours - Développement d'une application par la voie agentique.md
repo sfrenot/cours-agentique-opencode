@@ -664,7 +664,9 @@ Notre modèle comparé à une IA du commerce :
 > }
 > ```
 >
-> Quittez opencode et rouvrez-le. Demandez ensuite : *Change la couleur du titre en bleu*, puis *Supprime le fichier index.html*.
+> Quittez opencode. Dans la fenêtre de commande, toujours dans le dossier `courses`, vérifiez que la configuration est valide avec la commande `opencode debug config`. Si vos modifications s'affichent (les lignes `"edit": "ask"` et `"rm *": "deny"`), c'est que la configuration est prise en compte.
+>
+> Rouvrez opencode. Demandez ensuite : *Change la couleur du titre en bleu*, puis *Supprime le fichier index.html*.
 >
 > > [!success]- Ce qu'il faut observer
 > > - `"edit": "ask"` : avant de modifier le fichier, l'assistant affiche la modification et attend votre accord.

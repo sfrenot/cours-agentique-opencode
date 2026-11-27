@@ -1787,7 +1787,8 @@ que tu repères dans le code.</code></pre>
     "bash": { "*": "ask", "rm *": "deny" }
   }
 }</code></pre>
-<p>Quittez opencode et rouvrez-le. Demandez ensuite : <i>Change la couleur du titre en bleu</i>, puis <i>Supprime le fichier index.html</i>.</p>
+<p>Quittez opencode. Dans la fenêtre de commande, toujours dans le dossier <code>courses</code>, vérifiez que la configuration est valide avec la commande <code>opencode debug config</code>. Si vos modifications s'affichent (les lignes <code>"edit": "ask"</code> et <code>"rm *": "deny"</code>), c'est que la configuration est prise en compte.</p>
+<p>Rouvrez opencode. Demandez ensuite : <i>Change la couleur du titre en bleu</i>, puis <i>Supprime le fichier index.html</i>.</p>
 <details><summary>Ce qu'il faut observer</summary>
 <ul>
 <li><code>"edit": "ask"</code> : avant de modifier le fichier, l'assistant affiche la modification et attend votre accord.</li>

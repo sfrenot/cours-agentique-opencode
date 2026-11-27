@@ -912,7 +912,7 @@ Exemple : *Lance 3 assistants pour comparer le prix des yaourts chez Auchan, Lec
 > ```
 > Crée un agent web-explore qui permet de chercher et résumer des pages web
 > sans modifier les fichiers. Pose-moi les questions de permission et choisis
-> un modèle léger. Mets-lui ces instructions :
+> un modèle léger local. Mets-lui ces instructions :
 > 1. Si tu ne connais pas l'adresse de la page, cherche-la d'abord.
 > 2. Lis la page.
 > 3. Réponds en trois phrases au plus, avec l'adresse de la page.

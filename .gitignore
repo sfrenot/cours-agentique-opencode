@@ -8,3 +8,8 @@
 
 # Claude Code (réglages locaux)
 .claude/settings.local.json
+
+# Fichiers d’échange des éditeurs
+*.swp
+*.swo
+*~

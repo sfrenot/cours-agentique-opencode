@@ -1092,7 +1092,8 @@ Exemple : *Lance 3 assistants pour comparer le prix des yaourts chez Auchan, Lec
 |---|---|
 | 0:00–0:30 | Exercice G13 : retrouver son travail |
 | 0:30–1:00 | Exercice G14 : quand ça ne marche plus |
-| 1:00–2:50 | Projet au choix : boîte en papier ou emploi du temps |
+| 1:00–1:15 | Faire du ménage : sessions, serveur de fond, `/pair` |
+| 1:15–2:50 | Projet au choix : boîte en papier ou emploi du temps |
 | 2:50–3:00 | Bilan : au fil de la conversation ou avec un cahier des charges ? |
 
 > [!question] G13 · Retrouver son travail (manipulation · 30 min)
@@ -1120,6 +1121,33 @@ Exemple : *Lance 3 assistants pour comparer le prix des yaourts chez Auchan, Lec
 > > | Rien ne fonctionne | Prévenir Stéphane Frénot | — |
 > >
 > > Deux réflexes : **faire une copie** d'un fichier de réglages avant de le modifier (vous pouvez demander à l'assistant de le faire), et **ne jamais supprimer** vous-même les dossiers d'opencode, car vos conversations y sont rangées.
+
+#### Faire du ménage
+
+Au fil des séances, opencode accumule des conversations et laisse tourner un programme en arrière-plan. Voici comment repartir proprement. Ces commandes se tapent dans la fenêtre de commande, pas dans opencode.
+
+##### Supprimer des conversations enregistrées
+
+```
+opencode session list                   # liste les conversations du dossier, avec leur identifiant
+opencode session delete <sessionId>     # supprime la conversation qui porte cet identifiant
+```
+
+Remplacez `<sessionId>` par l'identifiant affiché par la première commande. Comme pour `/sessions`, la liste ne montre que les conversations du dossier dans lequel vous êtes.
+
+##### Repartir de zéro
+
+À chaque démarrage, opencode lance un serveur qui continue de tourner en arrière-plan, même quand on a fermé la fenêtre. Pour être sûr de repartir de zéro, arrêtez tous les programmes opencode :
+
+```
+pkill -f opencode
+```
+
+Cette commande ferme aussi toutes vos fenêtres opencode encore ouvertes : enregistrez votre travail avant. Elle n'arrête que vos propres programmes, pas ceux des autres utilisateurs de la machine. Le serveur redémarre tout seul au prochain lancement d'`opencode`, et vos conversations enregistrées sont conservées.
+
+##### La commande `/pair`
+
+Dans opencode, `/pair` (ou `/web`) sert à **relier un autre appareil** au serveur d'opencode. Elle affiche une adresse de connexion qui contient un code. En l'ouvrant dans un navigateur, on retrouve ses conversations ailleurs que dans la fenêtre de commande. Cette adresse donne accès à votre opencode : ne la partagez pas.
 
 ## Mini-projets
 

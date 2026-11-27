@@ -178,6 +178,7 @@ html{scroll-behavior:smooth}
     <li><a href="#gp-s2">2 · Ce qu'il voit et retient</a></li>
     <li><a href="#gp-s3">3 · Assistants spécialisés</a></li>
     <li><a href="#gp-s4">4 · Reprendre et réparer</a></li>
+    <li><a href="#gp-menage">Faire du ménage</a></li>
   </ol>
   <p>Projets</p>
   <ol>
@@ -1931,7 +1932,8 @@ Ne devine jamais le contenu d'une page que tu n'as pas lue.</code></pre>
 <tbody>
 <tr><td class="t">0:00–0:30</td><td>Exercice G13 : retrouver son travail</td></tr>
 <tr><td class="t">0:30–1:00</td><td>Exercice G14 : quand ça ne marche plus</td></tr>
-<tr><td class="t">1:00–2:50</td><td>Projet au choix : boîte en papier ou emploi du temps</td></tr>
+<tr><td class="t">1:00–1:15</td><td>Faire du ménage : sessions, serveur de fond, <code>/pair</code></td></tr>
+<tr><td class="t">1:15–2:50</td><td>Projet au choix : boîte en papier ou emploi du temps</td></tr>
 <tr><td class="t">2:50–3:00</td><td>Bilan : au fil de la conversation ou avec un cahier des charges ?</td></tr>
 </tbody></table></div>
 
@@ -1964,6 +1966,19 @@ Ne devine jamais le contenu d'une page que tu n'as pas lue.</code></pre>
 <p>Deux réflexes : <b>faire une copie</b> d'un fichier de réglages avant de le modifier (vous pouvez demander à l'assistant de le faire), et <b>ne jamais supprimer</b> vous-même les dossiers d'opencode, car vos conversations y sont rangées.</p>
 </details>
 </div>
+
+<h3 id="gp-menage">Faire du ménage</h3>
+<p>Au fil des séances, opencode accumule des conversations et laisse tourner un programme en arrière-plan. Voici comment repartir proprement. Ces commandes se tapent dans la fenêtre de commande, pas dans opencode.</p>
+<h4>Supprimer des conversations enregistrées</h4>
+<pre><code>opencode session list                   # liste les conversations du dossier, avec leur identifiant
+opencode session delete &lt;sessionId&gt;     # supprime la conversation qui porte cet identifiant</code></pre>
+<p>Remplacez <code>&lt;sessionId&gt;</code> par l'identifiant affiché par la première commande. Comme pour <code>/sessions</code>, la liste ne montre que les conversations du dossier dans lequel vous êtes.</p>
+<h4>Repartir de zéro</h4>
+<p>À chaque démarrage, opencode lance un serveur qui continue de tourner en arrière-plan, même quand on a fermé la fenêtre. Pour être sûr de repartir de zéro, arrêtez tous les programmes opencode :</p>
+<pre><code>pkill -f opencode</code></pre>
+<p>Cette commande ferme aussi toutes vos fenêtres opencode encore ouvertes : enregistrez votre travail avant. Elle n'arrête que vos propres programmes, pas ceux des autres utilisateurs de la machine. Le serveur redémarre tout seul au prochain lancement d'<code>opencode</code>, et vos conversations enregistrées sont conservées.</p>
+<h4>La commande <code>/pair</code></h4>
+<p>Dans opencode, <code>/pair</code> (ou <code>/web</code>) sert à <b>relier un autre appareil</b> au serveur d'opencode. Elle affiche une adresse de connexion qui contient un code. En l'ouvrant dans un navigateur, on retrouve ses conversations ailleurs que dans la fenêtre de commande. Cette adresse donne accès à votre opencode : ne la partagez pas.</p>
 
 <!-- ============ GP PROJETS ============ -->
 <h2 id="gp-projets">Projets</h2>

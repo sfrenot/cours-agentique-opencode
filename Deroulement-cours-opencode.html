@@ -803,6 +803,22 @@ Coefficient appliqué : × 2,5</code></pre>
 </details>
 </div>
 
+<div class="ex" id="e9b">
+<h4><span class="id">E9b</span> Trouver et installer une skill existante <span class="lvl">pour aller plus loin · 25 min</span></h4>
+<p>Avec le Qwen 3.8, demander simplement :</p>
+<pre><code>find a skill for png processing</code></pre>
+<p>Suivre ce que fait l'agent, puis, <b>avant d'accepter l'installation</b>, lui faire afficher le <code>SKILL.md</code> trouvé. Une fois la skill installée, vérifier avec <code>/skills</code>, puis demander : <i>Redimensionne photo.png à 50 %.</i></p>
+<details><summary>Correction</summary>
+<ul>
+<li>La demande déclenche la skill <code>find-skills</code>, si elle est installée (c'est le cas sur la machine d'accès, dans <code>~/.agents/skills/</code>). Elle décrit l'écosystème des skills (<a href="https://skills.sh/">skills.sh</a>) et son CLI <code>npx skills find</code> / <code>npx skills add</code>.</li>
+<li><code>npx</code> n'est pas installé sur la machine d'accès : l'agent se rabat sur GitHub et trouve <code>github/awesome-copilot@image-manipulation-image-magick</code> (format <code>propriétaire/dépôt@skill</code>). Il l'installe dans <code>~/.agents/skills/image-manipulation-image-magick/SKILL.md</code>.</li>
+<li>L'en-tête de la skill contient : <code>compatibility: Requires ImageMagick installed and available as magick on PATH</code>. Or ImageMagick n'est pas installé sur la machine d'accès : la demande de redimensionnement échoue (<code>magick</code> introuvable). Une skill apporte un savoir-faire, pas les outils qu'il utilise.</li>
+<li>Deux issues : demander l'installation d'ImageMagick à l'administrateur, ou faire exécuter les commandes sur une autre machine, comme le sous-agent <code>remote-python</code> de la séance 3.</li>
+<li><b>Sécurité.</b> Une skill trouvée sur internet est écrite par un inconnu, et elle entre dans le contexte avec autorité. Elle peut faire lancer des commandes. On la lit avant de l'installer, comme un script, et les permissions (<code>"*": "ask"</code>) restent le filet de sécurité.</li>
+</ul>
+</details>
+</div>
+
 <!-- ============ S3 ============ -->
 <h2 id="s3">Séance 3 · Outils, agents et orchestration</h2>
 <div class="goals"><h4>À la fin de la séance, l'étudiant sait</h4><ul>
@@ -1449,6 +1465,7 @@ Pourquoi as-tu modifié cette ligne ? Qu'est-ce qui casse si je l'enlève ?</cod
 <tr><td class="t"><a href="#e7">E7</a></td><td><code>/undo</code>, <code>/redo</code></td><td>Vérification et retours</td><td>Manipulation</td></tr>
 <tr><td class="t"><a href="#e8">E8</a></td><td>Gros fichier et compaction</td><td>Fenêtre de contexte</td><td>Observation</td></tr>
 <tr><td class="t"><a href="#e9">E9</a></td><td>Skill <code>recette-ajustee</code></td><td>Skills, chargement à la demande</td><td>Configuration</td></tr>
+<tr><td class="t"><a href="#e9b">E9b</a></td><td>Trouver et installer une skill existante</td><td>Écosystème des skills, prérequis, sécurité</td><td>Pour aller plus loin</td></tr>
 <tr><td class="t"><a href="#e10">E10</a></td><td>Plan puis Build</td><td>Agents primaires</td><td>Manipulation</td></tr>
 <tr><td class="t"><a href="#e11">E11</a></td><td>Sous-agent <code>web-explore</code> (0,8b)</td><td>Sous-agents, modèle léger</td><td>Agent</td></tr>
 <tr><td class="t"><a href="#e12">E12</a></td><td>Sous-agent <code>remote-python</code></td><td>Exécution déportée</td><td>Agent</td></tr>
@@ -1922,6 +1939,20 @@ Coefficient appliqué : × 2,5</code></pre>
 <li>Les règles de la fiche sont respectées : 8 œufs et non 7,5, la farine arrondie à 630 g, les courses rangées par rayon, et la ligne finale du coefficient.</li>
 <li>Faites la même demande dans un autre dossier, sans la fiche : la présentation change, et des « 7,5 œufs » peuvent apparaître.</li>
 <li>Si l'assistant n'utilise pas la fiche, demandez-le explicitement : <i>Utilise la skill recette-ajustee.</i> La phrase de description est essentielle : c'est elle qui permet à l'assistant de savoir quand sortir la fiche.</li>
+</ul>
+</details>
+</div>
+
+<div class="ex" id="gp-g10b">
+<h4><span class="id">G10b</span> Trouver une fiche de savoir-faire toute faite <span class="lvl">pour aller plus loin · 25 min</span></h4>
+<p>Des fiches de savoir-faire écrites par d'autres sont partagées sur internet. Avec le Qwen 3.8, demandez (la demande se fait en anglais, la langue de ces fiches) :</p>
+<pre><code>find a skill for png processing</code></pre>
+<p>Regardez ce que fait l'assistant. <b>Avant d'accepter l'installation</b>, demandez-lui : <i>Montre-moi le contenu de cette skill et explique-moi ce qu'elle fait.</i> Une fois la fiche installée, tapez <code>/skills</code>, puis demandez : <i>Réduis l'image photo.png de moitié.</i></p>
+<details><summary>Ce qu'il faut observer</summary>
+<ul>
+<li>L'assistant utilise une fiche déjà installée, <code>find-skills</code>, qui sait chercher d'autres fiches. Il cherche sur GitHub, un grand site de partage, et trouve <code>image-manipulation-image-magick</code>, qui retouche des images.</li>
+<li>En lisant la fiche, on découvre qu'elle a besoin d'un logiciel, ImageMagick. Il n'est pas installé sur la machine d'accès : la réduction de l'image échoue. Une fiche explique comment faire, mais elle n'apporte pas l'outil.</li>
+<li>Une fiche trouvée sur internet a été écrite par un inconnu, et l'assistant suivra ses instructions. Lisez-la toujours avant de l'installer, et gardez les autorisations « demander » de l'exercice G7 : elles vous laissent le dernier mot.</li>
 </ul>
 </details>
 </div>

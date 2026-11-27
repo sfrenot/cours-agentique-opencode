@@ -658,6 +658,22 @@ On range donc dans une skill un savoir-faire précis et occasionnel. La descript
 > > - Sans la skill, le format change d'une fois à l'autre, et l'on voit souvent « 7,5 œufs » ou une liste de courses non classée.
 > > - Si le modèle ne charge pas la skill, deux réglages : enrichir la description avec les mots de la demande (« recette », « personnes », « courses »), ou demander explicitement *Utilise la skill recette-ajustee*.
 
+> [!question] E9b · Trouver et installer une skill existante (pour aller plus loin · 25 min)
+> Avec le Qwen 3.8, demander simplement :
+>
+> ```
+> find a skill for png processing
+> ```
+>
+> Suivre ce que fait l'agent, puis, **avant d'accepter l'installation**, lui faire afficher le `SKILL.md` trouvé. Une fois la skill installée, vérifier avec `/skills`, puis demander : *Redimensionne photo.png à 50 %.*
+>
+> > [!success]- Correction
+> > - La demande déclenche la skill `find-skills`, si elle est installée (c'est le cas sur la machine d'accès, dans `~/.agents/skills/`). Elle décrit l'écosystème des skills ([skills.sh](https://skills.sh/)) et son CLI `npx skills find` / `npx skills add`.
+> > - `npx` n'est pas installé sur la machine d'accès : l'agent se rabat sur GitHub et trouve `github/awesome-copilot@image-manipulation-image-magick` (format `propriétaire/dépôt@skill`). Il l'installe dans `~/.agents/skills/image-manipulation-image-magick/SKILL.md`.
+> > - L'en-tête de la skill contient : `compatibility: Requires ImageMagick installed and available as magick on PATH`. Or ImageMagick n'est pas installé sur la machine d'accès : la demande de redimensionnement échoue (`magick` introuvable). Une skill apporte un savoir-faire, pas les outils qu'il utilise.
+> > - Deux issues : demander l'installation d'ImageMagick à l'administrateur, ou faire exécuter les commandes sur une autre machine, comme le sous-agent `remote-python` de la séance 3.
+> > - **Sécurité.** Une skill trouvée sur internet est écrite par un inconnu, et elle entre dans le contexte avec autorité. Elle peut faire lancer des commandes. On la lit avant de l'installer, comme un script, et les permissions (`"*": "ask"`) restent le filet de sécurité.
+
 ### Séance 2 · Ce que l'assistant voit et retient
 #généraliste
 
@@ -812,6 +828,20 @@ La fiche de consignes (G6) est relue à chaque étape : elle occupe toujours de 
 > > - Les règles de la fiche sont respectées : 8 œufs et non 7,5, la farine arrondie à 630 g, les courses rangées par rayon, et la ligne finale du coefficient.
 > > - Faites la même demande dans un autre dossier, sans la fiche : la présentation change, et des « 7,5 œufs » peuvent apparaître.
 > > - Si l'assistant n'utilise pas la fiche, demandez-le explicitement : *Utilise la skill recette-ajustee.* La phrase de description est essentielle : c'est elle qui permet à l'assistant de savoir quand sortir la fiche.
+
+> [!question] G10b · Trouver une fiche de savoir-faire toute faite (pour aller plus loin · 25 min)
+> Des fiches de savoir-faire écrites par d'autres sont partagées sur internet. Avec le Qwen 3.8, demandez (la demande se fait en anglais, la langue de ces fiches) :
+>
+> ```
+> find a skill for png processing
+> ```
+>
+> Regardez ce que fait l'assistant. **Avant d'accepter l'installation**, demandez-lui : *Montre-moi le contenu de cette skill et explique-moi ce qu'elle fait.* Une fois la fiche installée, tapez `/skills`, puis demandez : *Réduis l'image photo.png de moitié.*
+>
+> > [!success]- Ce qu'il faut observer
+> > - L'assistant utilise une fiche déjà installée, `find-skills`, qui sait chercher d'autres fiches. Il cherche sur GitHub, un grand site de partage, et trouve `image-manipulation-image-magick`, qui retouche des images.
+> > - En lisant la fiche, on découvre qu'elle a besoin d'un logiciel, ImageMagick. Il n'est pas installé sur la machine d'accès : la réduction de l'image échoue. Une fiche explique comment faire, mais elle n'apporte pas l'outil.
+> > - Une fiche trouvée sur internet a été écrite par un inconnu, et l'assistant suivra ses instructions. Lisez-la toujours avant de l'installer, et gardez les autorisations « demander » de l'exercice G7 : elles vous laissent le dernier mot.
 
 ## Séance 3
 
@@ -1675,6 +1705,7 @@ Trois habitudes qui comptent plus que la connaissance des commandes, parce que l
 | E7 | `/undo`, `/redo` | Vérification et retours | Manipulation |
 | E8 | Gros fichier et compaction | Fenêtre de contexte | Observation |
 | E9 | Skill `recette-ajustee` | Skills, chargement à la demande | Configuration |
+| E9b | Trouver et installer une skill existante | Écosystème des skills, prérequis, sécurité | Pour aller plus loin |
 | E10 | Plan puis Build | Agents primaires | Manipulation |
 | E11 | Sous-agent `web-explore` (0,8b) | Sous-agents, modèle léger | Agent |
 | E12 | Sous-agent `remote-python` | Exécution déportée | Agent |

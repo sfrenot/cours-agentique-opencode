@@ -610,7 +610,7 @@ Une skill est un dossier qui contient un fichier `SKILL.md` : un en-tête (`name
 On range donc dans une skill un savoir-faire précis et occasionnel. La description fait tout le travail de déclenchement : elle doit reprendre les mots que l'utilisateur emploiera. Pour charger les skills de façon fiable, on utilise le Qwen 3.8 (27b).
 
 > [!question] E9 · Une skill de cuisine : `recette-ajustee` (configuration · 30 min)
-> Dans un dossier `cuisine/`, créer le fichier `.opencode/skills/recette-ajustee/SKILL.md` :
+> Dans un dossier `cuisine/`, créer le fichier `.agents/skills/recette-ajustee/SKILL.md` :
 >
 > ```
 > ---
@@ -782,7 +782,7 @@ La fiche de consignes (G6) est relue à chaque étape : elle occupe toujours de 
 >
 > ```
 > Crée une skill recette-ajustee dans le projet, dans le fichier
-> .opencode/skills/recette-ajustee/SKILL.md, avec exactement ce contenu :
+> .agents/skills/recette-ajustee/SKILL.md, avec exactement ce contenu :
 > ```
 >
 > ```

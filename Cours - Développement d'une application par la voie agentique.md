@@ -907,34 +907,48 @@ Exemple : *Lance 3 assistants pour comparer le prix des yaourts chez Auchan, Lec
 > > En mode Plan, l'assistant décrit ce qu'il compte faire (un seul fichier, un champ en euros, le résultat en dollars, la formule) sans rien écrire. En mode Build, il garde le plan en mémoire et l'exécute. Relire le plan avant de dire « applique » permet de corriger un malentendu avant qu'il ne coûte du temps.
 
 > [!question] G11 · Un assistant de recherche sur le web (réglage · 70 min)
-> Un assistant spécialisé se décrit dans un simple fichier texte. Demandez à l'assistant principal de créer le fichier `~/.config/opencode/agents/web-explore.md` avec ce contenu :
+> Un assistant spécialisé se décrit dans un simple fichier texte. Plutôt que de l'écrire vous-même, demandez à l'assistant principal de le créer :
 >
 > ```
-> ---
-> description: Cherche et résume des pages web. Ne modifie aucun fichier.
-> mode: subagent
-> steps: 25
-> model: litellm/ll_wired-qwen3.5:0.8b
-> permission:
->   task: deny
->   edit: deny
->   shell: deny
->   webfetch: allow
->   websearch: allow
-> ---
-> Tu cherches et tu résumes de l'information sur le web.
+> Crée un agent web-explore qui permet de chercher et résumer des pages web
+> sans modifier les fichiers. Pose-moi les questions de permission et choisis
+> un modèle léger. Mets-lui ces instructions :
 > 1. Si tu ne connais pas l'adresse de la page, cherche-la d'abord.
 > 2. Lis la page.
 > 3. Réponds en trois phrases au plus, avec l'adresse de la page.
 > Ne devine jamais le contenu d'une page que tu n'as pas lue.
 > ```
 >
-> Quittez et rouvrez opencode, puis demandez : *Utilise web-explore pour trouver le nombre d'habitants de Lyon sur fr.wikipedia.org.*
+> Répondez à ses questions sur les permissions : l'assistant de recherche doit pouvoir lire le web, mais ni modifier des fichiers ni lancer des commandes. Quittez et rouvrez opencode, puis demandez : *Utilise web-explore pour trouver le nombre d'habitants de Lyon sur fr.wikipedia.org.*
 >
 > > [!success]- Ce qu'il faut observer
-> > - Le haut du fichier, entre les deux lignes `---`, contient les réglages : le petit modèle, et le droit de lire le web mais ni de modifier des fichiers ni de lancer des commandes. Le bas contient les consignes, en langage courant.
+> > L'assistant crée un fichier `web-explore.md` dans un dossier d'agents (par exemple `~/.config/opencode/agents/`). Faites-le-vous afficher. Il doit ressembler à ceci :
+> >
+> > ```
+> > ---
+> > description: Cherche et résume des pages web. Ne modifie aucun fichier.
+> > mode: subagent
+> > steps: 25
+> > model: litellm/ll_wired-qwen3.5:0.8b
+> > permission:
+> >   task: deny
+> >   edit: deny
+> >   shell: deny
+> >   webfetch: allow
+> >   websearch: allow
+> > ---
+> > Tu cherches et tu résumes de l'information sur le web.
+> > 1. Si tu ne connais pas l'adresse de la page, cherche-la d'abord.
+> > 2. Lis la page.
+> > 3. Réponds en trois phrases au plus, avec l'adresse de la page.
+> > Ne devine jamais le contenu d'une page que tu n'as pas lue.
+> > ```
+> >
+> > - Le haut du fichier, entre les deux lignes `---`, contient les réglages : le modèle choisi et les permissions que vous avez accordées (lire le web : oui ; modifier des fichiers, lancer des commandes : non). Le bas contient les consignes, en langage courant.
+> > - Vérifiez que le modèle choisi est bien un modèle léger, comme **Qwen 3.5** (`litellm/ll_wired-qwen3.5:0.8b`). Sinon, demandez à l'assistant de le changer.
+> > - Si une ligne `steps` manque, demandez-la : `steps: 25` oblige l'assistant à répondre au bout de 25 étapes s'il tourne en rond.
 > > - L'assistant principal confie la recherche à `web-explore` et reçoit seulement sa réponse courte.
-> > - Le petit modèle se trompe plus souvent. Il faut lui donner des étapes numérotées, simples et peu nombreuses. La ligne `steps: 25` l'oblige à répondre au bout de 25 étapes s'il tourne en rond.
+> > - Le petit modèle se trompe plus souvent. Il faut lui donner des étapes numérotées, simples et peu nombreuses : c'est pourquoi on garde vos instructions 1, 2 et 3.
 
 > [!question] G12 · Confier un calcul à une autre machine (démonstration · 40 min)
 > Sur la machine de TP, l'assistant n'a pas le droit de lancer lui-même des programmes Python. Un assistant spécialisé, préparé par l'enseignant, envoie le programme au serveur de l'INSA, le lance là-bas et rapporte le résultat. Démonstration : à partir d'un fichier de notes, l'assistant écrit un petit programme de calcul de moyenne et le fait exécuter à distance.

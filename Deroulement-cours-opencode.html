@@ -1873,7 +1873,17 @@ que tu repères dans le code.</code></pre>
 
 <div class="ex" id="gp-g11">
 <h4><span class="id">G11</span> Un assistant de recherche sur le web <span class="lvl">réglage · 70 min</span></h4>
-<p>Un assistant spécialisé se décrit dans un simple fichier texte. Demandez à l'assistant principal de créer le fichier <code>~/.config/opencode/agents/web-explore.md</code> avec ce contenu :</p>
+<p>Un assistant spécialisé se décrit dans un simple fichier texte. Plutôt que de l'écrire vous-même, demandez à l'assistant principal de le créer :</p>
+<pre><code>Crée un agent web-explore qui permet de chercher et résumer des pages web
+sans modifier les fichiers. Pose-moi les questions de permission et choisis
+un modèle léger. Mets-lui ces instructions :
+1. Si tu ne connais pas l'adresse de la page, cherche-la d'abord.
+2. Lis la page.
+3. Réponds en trois phrases au plus, avec l'adresse de la page.
+Ne devine jamais le contenu d'une page que tu n'as pas lue.</code></pre>
+<p>Répondez à ses questions sur les permissions : l'assistant de recherche doit pouvoir lire le web, mais ni modifier des fichiers ni lancer des commandes. Quittez et rouvrez opencode, puis demandez : <i>Utilise web-explore pour trouver le nombre d'habitants de Lyon sur fr.wikipedia.org.</i></p>
+<details><summary>Ce qu'il faut observer</summary>
+<p>L'assistant crée un fichier <code>web-explore.md</code> dans un dossier d'agents (par exemple <code>~/.config/opencode/agents/</code>). Faites-le-vous afficher. Il doit ressembler à ceci :</p>
 <pre><code>---
 description: Cherche et résume des pages web. Ne modifie aucun fichier.
 mode: subagent
@@ -1891,12 +1901,12 @@ Tu cherches et tu résumes de l'information sur le web.
 2. Lis la page.
 3. Réponds en trois phrases au plus, avec l'adresse de la page.
 Ne devine jamais le contenu d'une page que tu n'as pas lue.</code></pre>
-<p>Quittez et rouvrez opencode, puis demandez : <i>Utilise web-explore pour trouver le nombre d'habitants de Lyon sur fr.wikipedia.org.</i></p>
-<details><summary>Ce qu'il faut observer</summary>
 <ul>
-<li>Le haut du fichier, entre les deux lignes <code>---</code>, contient les réglages : le petit modèle, et le droit de lire le web mais ni de modifier des fichiers ni de lancer des commandes. Le bas contient les consignes, en langage courant.</li>
+<li>Le haut du fichier, entre les deux lignes <code>---</code>, contient les réglages : le modèle choisi et les permissions que vous avez accordées (lire le web : oui ; modifier des fichiers, lancer des commandes : non). Le bas contient les consignes, en langage courant.</li>
+<li>Vérifiez que le modèle choisi est bien un modèle léger, comme <b>Qwen 3.5</b> (<code>litellm/ll_wired-qwen3.5:0.8b</code>). Sinon, demandez à l'assistant de le changer.</li>
+<li>Si une ligne <code>steps</code> manque, demandez-la : <code>steps: 25</code> oblige l'assistant à répondre au bout de 25 étapes s'il tourne en rond.</li>
 <li>L'assistant principal confie la recherche à <code>web-explore</code> et reçoit seulement sa réponse courte.</li>
-<li>Le petit modèle se trompe plus souvent. Il faut lui donner des étapes numérotées, simples et peu nombreuses. La ligne <code>steps: 25</code> l'oblige à répondre au bout de 25 étapes s'il tourne en rond.</li>
+<li>Le petit modèle se trompe plus souvent. Il faut lui donner des étapes numérotées, simples et peu nombreuses : c'est pourquoi on garde vos instructions 1, 2 et 3.</li>
 </ul>
 </details>
 </div>

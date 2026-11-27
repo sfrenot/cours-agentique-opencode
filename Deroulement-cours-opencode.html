@@ -1800,8 +1800,11 @@ que tu repères dans le code.</code></pre>
 
 <div class="ex" id="gp-g8">
 <h4><span class="id">G8</span> Revenir en arrière <span class="lvl">manipulation · 30 min</span></h4>
-<p>Demandez : <i>Mets le fond de la page en bleu foncé et le texte en blanc.</i> Récupérez la page et regardez-la. Tapez ensuite <code>/undo</code>, récupérez de nouveau la page, puis tapez <code>/redo</code>.</p>
+<p><b>Sauvegarder les versions des fichiers.</b> Pour revenir en arrière, il faut avoir gardé une trace des états successifs des fichiers, un peu comme les versions successives d'un document. Un outil appelé <b>git</b> s'en charge : il enregistre ces versions dans le dossier du projet. opencode s'appuie dessus pour annuler une modification. Sans dépôt git, <code>/undo</code> ne remet pas forcément les fichiers dans leur état précédent.</p>
+<p>Dans le dossier <code>courses</code>, commencez par demander : <i>Ajoute un dépôt git à la racine du projet.</i></p>
+<p>Demandez ensuite : <i>Mets le fond de la page en bleu foncé et le texte en blanc.</i> Récupérez la page et regardez-la. Tapez ensuite <code>/undo</code>, récupérez de nouveau la page, puis tapez <code>/redo</code>.</p>
 <details><summary>Ce qu'il faut observer</summary>
+<p>À la première demande, l'assistant lance la commande <code>git init</code>. Le dossier contient désormais un dossier caché <code>.git</code>, où seront rangées les versions. Vous n'avez pas besoin d'y toucher.</p>
 <p><code>/undo</code> annule le dernier échange <b>et</b> remet les fichiers dans leur état précédent : le fond redevient clair. Votre demande réapparaît dans la zone de saisie, prête à être reformulée. <code>/redo</code> rétablit l'échange et la modification. Attention : seules les modifications de fichiers sont annulées. Une recherche web ou un message envoyé ne peuvent pas être « dé-faits ».</p>
 </details>
 </div>

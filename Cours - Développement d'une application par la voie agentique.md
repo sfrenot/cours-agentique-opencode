@@ -674,9 +674,15 @@ Notre modèle comparé à une IA du commerce :
 > > - `"*": "ask"` : toutes les autres commandes demandent votre accord. Si l'assistant cherche un autre moyen d'effacer le fichier, il doit vous le demander.
 
 > [!question] G8 · Revenir en arrière (manipulation · 30 min)
-> Demandez : *Mets le fond de la page en bleu foncé et le texte en blanc.* Récupérez la page et regardez-la. Tapez ensuite `/undo`, récupérez de nouveau la page, puis tapez `/redo`.
+> **Sauvegarder les versions des fichiers.** Pour revenir en arrière, il faut avoir gardé une trace des états successifs des fichiers, un peu comme les versions successives d'un document. Un outil appelé **git** s'en charge : il enregistre ces versions dans le dossier du projet. opencode s'appuie dessus pour annuler une modification. Sans dépôt git, `/undo` ne remet pas forcément les fichiers dans leur état précédent.
+>
+> Dans le dossier `courses`, commencez par demander : *Ajoute un dépôt git à la racine du projet.*
+>
+> Demandez ensuite : *Mets le fond de la page en bleu foncé et le texte en blanc.* Récupérez la page et regardez-la. Tapez ensuite `/undo`, récupérez de nouveau la page, puis tapez `/redo`.
 >
 > > [!success]- Ce qu'il faut observer
+> > À la première demande, l'assistant lance la commande `git init`. Le dossier contient désormais un dossier caché `.git`, où seront rangées les versions. Vous n'avez pas besoin d'y toucher.
+> >
 > > `/undo` annule le dernier échange **et** remet les fichiers dans leur état précédent : le fond redevient clair. Votre demande réapparaît dans la zone de saisie, prête à être reformulée. `/redo` rétablit l'échange et la modification. Attention : seules les modifications de fichiers sont annulées. Une recherche web ou un message envoyé ne peuvent pas être « dé-faits ».
 
 > [!question] G9 · Une question à côté avec `/btw` (manipulation · 20 min)

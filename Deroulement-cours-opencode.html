@@ -759,7 +759,7 @@ et deux boutons : "+1" et "Remise à zéro". Moins de 60 lignes.</code></pre>
 <thead><tr><th>Durée</th><th>Activité</th><th>Support</th></tr></thead>
 <tbody>
 <tr><td class="t">0:00–0:20</td><td>Retour sur E3 : la liste des outils d'opencode et leur statut</td><td>Tableau des outils du cours</td></tr>
-<tr><td class="t">0:20–0:45</td><td>Agents primaires (<kbd>Tab</kbd> / <kbd>Shift</kbd>+<kbd>Tab</kbd>) et sous-agents (<code>explore</code>, <code>general</code>, puis les nôtres)</td><td>Schéma 4, E9</td></tr>
+<tr><td class="t">0:20–0:45</td><td>Agents primaires (<kbd>Shift</kbd>+<kbd>Tab</kbd>) et sous-agents (<code>explore</code>, <code>general</code>, puis les nôtres)</td><td>Schéma 4, E9</td></tr>
 <tr><td class="t">0:45–1:30</td><td>TP : E10, sous-agent d'exploration web sur le 0,8b</td><td>Exercice E10</td></tr>
 <tr><td class="t">1:30–2:20</td><td>TP : E11, sous-agent d'exécution Python distante</td><td>Exercice E11</td></tr>
 <tr><td class="t">2:20–2:45</td><td>TP : E12, orchestration complète</td><td>Exercice E12</td></tr>
@@ -822,7 +822,7 @@ et deux boutons : "+1" et "Remise à zéro". Moins de 60 lignes.</code></pre>
 <h3>Exercices</h3>
 <div class="ex" id="e9">
 <h4><span class="id">E9</span> Plan puis Build <span class="lvl">manipulation · 20 min</span></h4>
-<p>Dans un dossier <code>convertisseur/</code>, passer en agent <b>Plan</b> avec <kbd>Tab</kbd> et demander : <i>Prépare le plan d'une page HTML autonome qui convertit des °C en °F et inversement.</i> Constater que rien n'est écrit. Repasser en <b>Build</b> et demander : <i>Applique le plan.</i></p>
+<p>Dans un dossier <code>convertisseur/</code>, passer en agent <b>Plan</b> avec <kbd>Shift</kbd>+<kbd>Tab</kbd> et demander : <i>Prépare le plan d'une page HTML autonome qui convertit des °C en °F et inversement.</i> Constater que rien n'est écrit. Repasser en <b>Build</b> et demander : <i>Applique le plan.</i></p>
 <details><summary>Correction</summary>
 <p>L'agent Plan a les modifications de fichiers désactivées ou soumises à demande : il propose un plan (fichier unique, deux champs, formule <code>F = C × 9/5 + 32</code>, mise à jour à la saisie) sans toucher au disque. Le passage en Build garde l'historique : le plan est dans le contexte et Build l'exécute. <code>opencode debug agents</code> montre les permissions effectives de chacun.</p>
 <p>Ce qu'il faut retenir : un « agent » d'opencode est surtout un jeu de permissions, un prompt et un modèle appliqués à la même boucle.</p>
@@ -1410,7 +1410,7 @@ Pourquoi as-tu modifié cette ligne ? Qu'est-ce qui casse si je l'enlève ?</cod
 <tr><td><code>/models</code></td><td>Choisir le modèle</td></tr>
 <tr><td><code>/init</code></td><td>Générer <code>AGENTS.md</code></td></tr>
 <tr><td><code>@fichier</code></td><td>Joindre un fichier au message</td></tr>
-<tr><td><kbd>Tab</kbd></td><td>Changer d'agent primaire (Plan / Build)</td></tr>
+<tr><td><kbd>Shift</kbd>+<kbd>Tab</kbd></td><td>Changer d'agent primaire (Plan / Build)</td></tr>
 <tr><td><code>/undo</code> · <code>/redo</code></td><td>Annuler ou rétablir un tour et ses fichiers</td></tr>
 <tr><td><code>/compact</code></td><td>Résumer l'historique</td></tr>
 <tr><td><code>/sessions</code> · <code>/resume</code></td><td>Lister ou reprendre</td></tr>
@@ -1838,7 +1838,7 @@ que tu repères dans le code.</code></pre>
 </tbody></table></div>
 
 <h3>Plusieurs assistants, plusieurs rôles</h3>
-<p>opencode a deux modes principaux, que l'on change avec la touche <kbd>Tab</kbd> : <b>Plan</b> réfléchit et propose sans rien toucher, <b>Build</b> agit. Il peut aussi confier une partie du travail à des <b>assistants spécialisés</b>. Chacun a sa propre mémoire de travail et ses propres autorisations, et il peut utiliser un autre modèle.</p>
+<p>opencode a deux modes principaux, que l'on change avec les touches <kbd>Shift</kbd>+<kbd>Tab</kbd> : <b>Plan</b> réfléchit et propose sans rien toucher, <b>Build</b> agit. Il peut aussi confier une partie du travail à des <b>assistants spécialisés</b>. Chacun a sa propre mémoire de travail et ses propres autorisations, et il peut utiliser un autre modèle.</p>
 <figure id="fig-g6">
 <svg viewBox="0 0 760 230" role="img" aria-label="L'assistant principal confie une tâche à un assistant de recherche web, qui utilise le petit modèle, et à un assistant de calcul, qui travaille sur le serveur de l'INSA. Chacun ne rapporte qu'un résumé.">
   <rect class="box-acc" x="270" y="20" width="220" height="60" rx="6"/>
@@ -1864,7 +1864,7 @@ que tu repères dans le code.</code></pre>
 <h3>Exercices</h3>
 <div class="ex" id="gp-g10">
 <h4><span class="id">G10</span> Préparer avant d'agir <span class="lvl">manipulation · 40 min</span></h4>
-<p>Dans un nouveau dossier <code>convertisseur</code>, ouvrez opencode, appuyez sur <kbd>Tab</kbd> pour passer en mode <b>Plan</b> et demandez : <i>Prépare le plan d'une page web qui convertit des euros en dollars, avec un taux fixe de 1 € = 1,10 $.</i> Vérifiez qu'aucun fichier n'a été créé. Repassez en mode <b>Build</b> avec <kbd>Tab</kbd> et demandez : <i>Applique le plan.</i></p>
+<p>Dans un nouveau dossier <code>convertisseur</code>, ouvrez opencode, appuyez sur <kbd>Shift</kbd>+<kbd>Tab</kbd> (touche majuscule et touche tabulation) pour passer en mode <b>Plan</b> et demandez : <i>Prépare le plan d'une page web qui convertit des euros en dollars, avec un taux fixe de 1 € = 1,10 $.</i> Vérifiez qu'aucun fichier n'a été créé. Repassez en mode <b>Build</b> avec <kbd>Shift</kbd>+<kbd>Tab</kbd> et demandez : <i>Applique le plan.</i></p>
 <details><summary>Ce qu'il faut observer</summary>
 <p>En mode Plan, l'assistant décrit ce qu'il compte faire (un seul fichier, un champ en euros, le résultat en dollars, la formule) sans rien écrire. En mode Build, il garde le plan en mémoire et l'exécute. Relire le plan avant de dire « applique » permet de corriger un malentendu avant qu'il ne coûte du temps.</p>
 </details>
@@ -2155,7 +2155,7 @@ Découpe = trait plein. Pli = trait pointillé.
 <div class="tbl"><table><tbody>
 <tr><td><code>/models</code></td><td>Choisir le modèle</td></tr>
 <tr><td><code>@fichier</code></td><td>Joindre un fichier à la question</td></tr>
-<tr><td><kbd>Tab</kbd></td><td>Passer de Plan (préparer) à Build (agir)</td></tr>
+<tr><td><kbd>Shift</kbd>+<kbd>Tab</kbd></td><td>Passer de Plan (préparer) à Build (agir)</td></tr>
 <tr><td><code>/undo</code> · <code>/redo</code></td><td>Annuler ou rétablir</td></tr>
 <tr><td><code>/btw …</code></td><td>Question à côté, sans effet sur la conversation</td></tr>
 <tr><td><code>/sessions</code> · <code>/resume</code></td><td>Retrouver ou reprendre une conversation</td></tr>

@@ -709,7 +709,7 @@ Notre modèle comparé à une IA du commerce :
 | Durée | Activité | Support |
 |---|---|---|
 | 0:00–0:20 | Retour sur E3 : la liste des outils d'opencode et leur statut | Tableau des outils du cours |
-| 0:20–0:45 | Agents primaires (<kbd>Tab</kbd> / <kbd>Shift</kbd>+<kbd>Tab</kbd>) et sous-agents (`explore`, `general`, puis les nôtres) | Schéma 4, E9 |
+| 0:20–0:45 | Agents primaires (<kbd>Shift</kbd>+<kbd>Tab</kbd>) et sous-agents (`explore`, `general`, puis les nôtres) | Schéma 4, E9 |
 | 0:45–1:30 | TP : E10, sous-agent d'exploration web sur le 0,8b | Exercice E10 |
 | 1:30–2:20 | TP : E11, sous-agent d'exécution Python distante | Exercice E11 |
 | 2:20–2:45 | TP : E12, orchestration complète | Exercice E12 |
@@ -746,7 +746,7 @@ La boucle tourne avec un agent principal, dans le TUI ou sans interface avec `op
 #### Exercices
 
 > [!question] E9 · Plan puis Build (manipulation · 20 min)
-> Dans un dossier `convertisseur/`, passer en agent **Plan** avec <kbd>Tab</kbd> et demander : *Prépare le plan d'une page HTML autonome qui convertit des °C en °F et inversement.* Constater que rien n'est écrit. Repasser en **Build** et demander : *Applique le plan.*
+> Dans un dossier `convertisseur/`, passer en agent **Plan** avec <kbd>Shift</kbd>+<kbd>Tab</kbd> et demander : *Prépare le plan d'une page HTML autonome qui convertit des °C en °F et inversement.* Constater que rien n'est écrit. Repasser en **Build** et demander : *Applique le plan.*
 >
 > > [!success]- Correction
 > > L'agent Plan a les modifications de fichiers désactivées ou soumises à demande : il propose un plan (fichier unique, deux champs, formule `F = C × 9/5 + 32`, mise à jour à la saisie) sans toucher au disque. Le passage en Build garde l'historique : le plan est dans le contexte et Build l'exécute. `opencode debug agents` montre les permissions effectives de chacun.
@@ -891,7 +891,7 @@ Le vocabulaire n'est pas normalisé. Ce qui distingue les mécanismes, c'est le 
 
 #### Plusieurs assistants, plusieurs rôles
 
-opencode a deux modes principaux, que l'on change avec la touche <kbd>Tab</kbd> : **Plan** réfléchit et propose sans rien toucher, **Build** agit. Il peut aussi confier une partie du travail à des **assistants spécialisés**. Chacun a sa propre mémoire de travail et ses propres autorisations, et il peut utiliser un autre modèle.
+opencode a deux modes principaux, que l'on change avec les touches <kbd>Shift</kbd>+<kbd>Tab</kbd> : **Plan** réfléchit et propose sans rien toucher, **Build** agit. Il peut aussi confier une partie du travail à des **assistants spécialisés**. Chacun a sa propre mémoire de travail et ses propres autorisations, et il peut utiliser un autre modèle.
 
 ![[schemas/figure-g6.svg]]
 **Figure G6 · Les assistants spécialisés.** Chaque assistant spécialisé travaille dans sa propre mémoire et ne rapporte qu'un résumé. La page web lue par l'assistant de recherche n'encombre pas la mémoire de l'assistant principal.
@@ -901,7 +901,7 @@ Exemple : *Lance 3 assistants pour comparer le prix des yaourts chez Auchan, Lec
 #### Exercices
 
 > [!question] G10 · Préparer avant d'agir (manipulation · 40 min)
-> Dans un nouveau dossier `convertisseur`, ouvrez opencode, appuyez sur <kbd>Tab</kbd> pour passer en mode **Plan** et demandez : *Prépare le plan d'une page web qui convertit des euros en dollars, avec un taux fixe de 1 € = 1,10 $.* Vérifiez qu'aucun fichier n'a été créé. Repassez en mode **Build** avec <kbd>Tab</kbd> et demandez : *Applique le plan.*
+> Dans un nouveau dossier `convertisseur`, ouvrez opencode, appuyez sur <kbd>Shift</kbd>+<kbd>Tab</kbd> (touche majuscule et touche tabulation) pour passer en mode **Plan** et demandez : *Prépare le plan d'une page web qui convertit des euros en dollars, avec un taux fixe de 1 € = 1,10 $.* Vérifiez qu'aucun fichier n'a été créé. Repassez en mode **Build** avec <kbd>Shift</kbd>+<kbd>Tab</kbd> et demandez : *Applique le plan.*
 >
 > > [!success]- Ce qu'il faut observer
 > > En mode Plan, l'assistant décrit ce qu'il compte faire (un seul fichier, un champ en euros, le résultat en dollars, la formule) sans rien écrire. En mode Build, il garde le plan en mémoire et l'exécute. Relire le plan avant de dire « applique » permet de corriger un malentendu avant qu'il ne coûte du temps.
@@ -1563,7 +1563,7 @@ Les mots utilisés dans cette version, avec leur équivalent dans le métier, ce
 | `/models` | Choisir le modèle |
 | `/init` | Générer `AGENTS.md` |
 | `@fichier` | Joindre un fichier au message |
-| <kbd>Tab</kbd> | Changer d'agent primaire (Plan / Build) |
+| <kbd>Shift</kbd>+<kbd>Tab</kbd> | Changer d'agent primaire (Plan / Build) |
 | `/undo` · `/redo` | Annuler ou rétablir un tour et ses fichiers |
 | `/compact` | Résumer l'historique |
 | `/sessions` · `/resume` | Lister ou reprendre |
@@ -1605,7 +1605,7 @@ Les mots utilisés dans cette version, avec leur équivalent dans le métier, ce
 |---|---|
 | `/models` | Choisir le modèle |
 | `@fichier` | Joindre un fichier à la question |
-| <kbd>Tab</kbd> | Passer de Plan (préparer) à Build (agir) |
+| <kbd>Shift</kbd>+<kbd>Tab</kbd> | Passer de Plan (préparer) à Build (agir) |
 | `/undo` · `/redo` | Annuler ou rétablir |
 | `/btw …` | Question à côté, sans effet sur la conversation |
 | `/sessions` · `/resume` | Retrouver ou reprendre une conversation |

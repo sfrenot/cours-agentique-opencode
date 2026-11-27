@@ -150,13 +150,14 @@ html{scroll-behavior:smooth}
   <ol>
     <li><a href="#s1">1 · Du prompt à l'agent</a></li>
     <li><a href="#s2">2 · Harnais et contexte</a></li>
+    <li><a href="#skills">Les skills</a></li>
     <li><a href="#s3">3 · Outils et agents</a></li>
     <li><a href="#s4">4 · État, maintenance, projet</a></li>
   </ol>
   <p>Mini-projets</p>
   <ol>
-    <li><a href="#e17">P1 · Boîte en papier</a></li>
-    <li><a href="#e18">P2 · Emploi du temps</a></li>
+    <li><a href="#e18">P1 · Boîte en papier</a></li>
+    <li><a href="#e19">P2 · Emploi du temps</a></li>
     <li><a href="#retenir">Points à retenir</a></li>
   </ol>
   <p>Annexes</p>
@@ -176,6 +177,7 @@ html{scroll-behavior:smooth}
   <ol>
     <li><a href="#gp-s1">1 · Découvrir l'assistant</a></li>
     <li><a href="#gp-s2">2 · Ce qu'il voit et retient</a></li>
+    <li><a href="#gp-skills">Fiches de savoir-faire</a></li>
     <li><a href="#gp-s3">3 · Assistants spécialisés</a></li>
     <li><a href="#gp-s4">4 · Reprendre et réparer</a></li>
     <li><a href="#gp-menage">Faire du ménage</a></li>
@@ -236,7 +238,7 @@ html{scroll-behavior:smooth}
 <thead><tr><th>Séance</th><th>Thème</th><th>Notions clés</th><th>Livrable de fin de séance</th></tr></thead>
 <tbody>
 <tr><td class="t">S1</td><td><b>Du prompt à l'agent</b></td><td>4 niveaux d'interaction, approche agile / ingénierie, boucle agentique, TUI et mode headless</td><td>Page HTML « compteur » générée par l'agent</td></tr>
-<tr><td class="t">S2</td><td><b>Harnais et contexte</b></td><td>Ce que voit le LLM, tokens et fenêtre, compaction, <code>AGENTS.md</code>, permissions, <code>/undo</code></td><td><code>AGENTS.md</code> et <code>opencode.json</code> de projet</td></tr>
+<tr><td class="t">S2</td><td><b>Harnais et contexte</b></td><td>Ce que voit le LLM, tokens et fenêtre, compaction, <code>AGENTS.md</code>, permissions, <code>/undo</code>, skills</td><td><code>AGENTS.md</code> et <code>opencode.json</code> de projet</td></tr>
 <tr><td class="t">S3</td><td><b>Outils et agents</b></td><td>Outils minimaux, agents Plan/Build, sous-agents, modèle léger, extensions (skills, MCP, plugins)</td><td>Deux sous-agents : <code>web-explore</code> et <code>remote-python</code></td></tr>
 <tr><td class="t">S4</td><td><b>État, maintenance, projet</b></td><td>Sessions et base, service de fond, diagnostic, réinitialisation graduée</td><td>Mini-projet au choix (quiz, boîte en papier, emploi du temps) réalisé à partir d'une spécification</td></tr>
 </tbody></table></div>
@@ -588,12 +590,13 @@ et deux boutons : "+1" et "Remise à zéro". Moins de 60 lignes.</code></pre>
 <div class="tbl"><table>
 <thead><tr><th>Durée</th><th>Activité</th><th>Support</th></tr></thead>
 <tbody>
-<tr><td class="t">0:00–0:30</td><td>Les choses cachées : harnais et contexte</td><td>Schéma 3 et tableau</td></tr>
-<tr><td class="t">0:30–0:50</td><td>Tokens, fenêtre, compaction : ordres de grandeur entre Claude et Qwen</td><td>Tableaux du cours</td></tr>
-<tr><td class="t">0:50–1:30</td><td>TP : E5, écrire un <code>AGENTS.md</code></td><td>Exercice E5</td></tr>
-<tr><td class="t">1:30–2:10</td><td>TP : E6, permissions de projet</td><td>Exercice E6</td></tr>
-<tr><td class="t">2:10–2:30</td><td>TP : E7, <code>/undo</code> et <code>/redo</code></td><td>Exercice E7</td></tr>
-<tr><td class="t">2:30–3:00</td><td>TP : E8, mesurer et compacter le contexte</td><td>Exercice E8</td></tr>
+<tr><td class="t">0:00–0:25</td><td>Les choses cachées : harnais et contexte</td><td>Schéma 3 et tableau</td></tr>
+<tr><td class="t">0:25–0:40</td><td>Tokens, fenêtre, compaction : ordres de grandeur entre Claude et Qwen</td><td>Tableaux du cours</td></tr>
+<tr><td class="t">0:40–1:15</td><td>TP : E5, écrire un <code>AGENTS.md</code></td><td>Exercice E5</td></tr>
+<tr><td class="t">1:15–1:50</td><td>TP : E6, permissions de projet</td><td>Exercice E6</td></tr>
+<tr><td class="t">1:50–2:05</td><td>TP : E7, <code>/undo</code> et <code>/redo</code></td><td>Exercice E7</td></tr>
+<tr><td class="t">2:05–2:30</td><td>TP : E8, mesurer et compacter le contexte</td><td>Exercice E8</td></tr>
+<tr><td class="t">2:30–3:00</td><td>Les skills. TP : E9, une skill de cuisine</td><td>Exercice E9</td></tr>
 </tbody></table></div>
 
 <h3>Harnais et contexte</h3>
@@ -747,6 +750,59 @@ et deux boutons : "+1" et "Remise à zéro". Moins de 60 lignes.</code></pre>
 </ul>
 <p>C'est l'outil adapté pour demander une explication en cours de travail. Le contexte ne grossit pas, et l'agent ne se met pas à modifier le code à partir d'une simple question. S'il faut lire un fichier qui n'est pas encore dans le contexte, posez une question normale.</p>
 
+<h3 id="skills">Les skills : un savoir-faire chargé à la demande</h3>
+<p>Une skill est un dossier qui contient un fichier <code>SKILL.md</code> : un en-tête (<code>name</code>, <code>description</code>) suivi d'instructions. Au démarrage, opencode ne place dans le contexte que le <b>nom et la description</b> de chaque skill. Quand une demande correspond à la description, le modèle appelle l'outil <code>skill</code>, et c'est seulement à ce moment que les instructions entrent dans le contexte.</p>
+<div class="tbl"><table>
+<thead><tr><th></th><th><code>AGENTS.md</code></th><th>Skill</th></tr></thead>
+<tbody>
+<tr><td><b>Chargé</b></td><td>À chaque appel</td><td>À la demande, quand le modèle le décide</td></tr>
+<tr><td><b>Contenu</b></td><td>Règles générales du projet</td><td>Procédure précise pour une tâche donnée</td></tr>
+<tr><td><b>Coût en contexte</b></td><td>Tout le texte, tout le temps</td><td>La description seule, puis le texte quand la skill sert</td></tr>
+<tr><td><b>Déclenchement</b></td><td>Automatique</td><td>Par le modèle, d'après la description</td></tr>
+</tbody></table></div>
+<p>On range donc dans une skill un savoir-faire précis et occasionnel. La description fait tout le travail de déclenchement : elle doit reprendre les mots que l'utilisateur emploiera. Pour charger les skills de façon fiable, on utilise le Qwen 3.8 (27b).</p>
+
+<div class="ex" id="e9">
+<h4><span class="id">E9</span> Une skill de cuisine : <code>recette-ajustee</code> <span class="lvl">configuration · 30 min</span></h4>
+<p>Dans un dossier <code>cuisine/</code>, créer le fichier <code>.opencode/skills/recette-ajustee/SKILL.md</code> :</p>
+<pre><code>---
+name: recette-ajustee
+description: Adapte une recette de cuisine à un nombre de personnes et produit la liste de courses. À utiliser dès qu'on demande d'ajuster une recette, de changer le nombre de personnes ou de préparer les courses d'un repas.
+---
+1. Calcule le coefficient : personnes voulues ÷ personnes de la recette.
+2. Multiplie chaque quantité. Arrondis à l'unité ce qui ne se coupe pas
+   (œufs, citrons, pincées) ; arrondis les grammes à 10 g près.
+3. Écris la recette ajustée, puis la liste de courses regroupée par rayon :
+   frais, épicerie, fruits et légumes.
+4. Termine par une ligne : « Coefficient appliqué : × … ».</code></pre>
+<p>Lancer <code>opencode</code> avec le modèle <code>litellm/ll_wired-qwen3.8:27b-mlx</code> et vérifier avec <code>/skills</code> que la skill est reconnue. Demander ensuite :</p>
+<pre><code>Voici ma recette de crêpes pour 4 personnes : 250 g de farine, 3 œufs,
+50 cl de lait, 1 pincée de sel. Adapte-la pour 10 personnes et fais-moi
+la liste de courses.</code></pre>
+<p>Refaire la même demande dans un dossier sans la skill, puis comparer les deux exports (<code>/export</code>).</p>
+<details><summary>Correction</summary>
+<p>Résultat attendu avec la skill :</p>
+<pre><code>Crêpes pour 10 personnes
+- 630 g de farine
+- 8 œufs
+- 125 cl de lait (1,25 l)
+- 3 pincées de sel
+
+Liste de courses
+- Frais : 8 œufs, 1,25 l de lait
+- Épicerie : 630 g de farine, sel
+- Fruits et légumes : rien
+
+Coefficient appliqué : × 2,5</code></pre>
+<ul>
+<li>Dans l'export, un appel à l'outil <code>skill</code> (avec <code>recette-ajustee</code>) précède la réponse : les instructions sont entrées dans le contexte à ce moment-là, pas avant.</li>
+<li>Les règles sont appliquées : 7,5 œufs arrondis à 8, 625 g de farine arrondis à 630 g, liste rangée par rayon, ligne finale du coefficient.</li>
+<li>Sans la skill, le format change d'une fois à l'autre, et l'on voit souvent « 7,5 œufs » ou une liste de courses non classée.</li>
+<li>Si le modèle ne charge pas la skill, deux réglages : enrichir la description avec les mots de la demande (« recette », « personnes », « courses »), ou demander explicitement <i>Utilise la skill recette-ajustee</i>.</li>
+</ul>
+</details>
+</div>
+
 <!-- ============ S3 ============ -->
 <h2 id="s3">Séance 3 · Outils, agents et orchestration</h2>
 <div class="goals"><h4>À la fin de la séance, l'étudiant sait</h4><ul>
@@ -761,10 +817,10 @@ et deux boutons : "+1" et "Remise à zéro". Moins de 60 lignes.</code></pre>
 <thead><tr><th>Durée</th><th>Activité</th><th>Support</th></tr></thead>
 <tbody>
 <tr><td class="t">0:00–0:20</td><td>Retour sur E3 : la liste des outils d'opencode et leur statut</td><td>Tableau des outils du cours</td></tr>
-<tr><td class="t">0:20–0:45</td><td>Agents primaires (<kbd>Shift</kbd>+<kbd>Tab</kbd>) et sous-agents (<code>explore</code>, <code>general</code>, puis les nôtres)</td><td>Schéma 4, E9</td></tr>
-<tr><td class="t">0:45–1:30</td><td>TP : E10, sous-agent d'exploration web sur le 0,8b</td><td>Exercice E10</td></tr>
-<tr><td class="t">1:30–2:20</td><td>TP : E11, sous-agent d'exécution Python distante</td><td>Exercice E11</td></tr>
-<tr><td class="t">2:20–2:45</td><td>TP : E12, orchestration complète</td><td>Exercice E12</td></tr>
+<tr><td class="t">0:20–0:45</td><td>Agents primaires (<kbd>Shift</kbd>+<kbd>Tab</kbd>) et sous-agents (<code>explore</code>, <code>general</code>, puis les nôtres)</td><td>Schéma 4, E10</td></tr>
+<tr><td class="t">0:45–1:30</td><td>TP : E11, sous-agent d'exploration web sur le 0,8b</td><td>Exercice E11</td></tr>
+<tr><td class="t">1:30–2:20</td><td>TP : E12, sous-agent d'exécution Python distante</td><td>Exercice E12</td></tr>
+<tr><td class="t">2:20–2:45</td><td>TP : E13, orchestration complète</td><td>Exercice E13</td></tr>
 <tr><td class="t">2:45–3:00</td><td>Extensions : skills, MCP, plugins. Comment choisir ?</td><td>Discussion</td></tr>
 </tbody></table></div>
 
@@ -822,8 +878,8 @@ et deux boutons : "+1" et "Remise à zéro". Moins de 60 lignes.</code></pre>
 </figure>
 
 <h3>Exercices</h3>
-<div class="ex" id="e9">
-<h4><span class="id">E9</span> Plan puis Build <span class="lvl">manipulation · 20 min</span></h4>
+<div class="ex" id="e10">
+<h4><span class="id">E10</span> Plan puis Build <span class="lvl">manipulation · 20 min</span></h4>
 <p>Dans un dossier <code>convertisseur/</code>, passer en agent <b>Plan</b> avec <kbd>Shift</kbd>+<kbd>Tab</kbd> et demander : <i>Prépare le plan d'une page HTML autonome qui convertit des °C en °F et inversement.</i> Constater que rien n'est écrit. Repasser en <b>Build</b> et demander : <i>Applique le plan.</i></p>
 <details><summary>Correction</summary>
 <p>L'agent Plan a les modifications de fichiers désactivées ou soumises à demande : il propose un plan (fichier unique, deux champs, formule <code>F = C × 9/5 + 32</code>, mise à jour à la saisie) sans toucher au disque. Le passage en Build garde l'historique : le plan est dans le contexte et Build l'exécute. <code>opencode debug agents</code> montre les permissions effectives de chacun.</p>
@@ -831,8 +887,8 @@ et deux boutons : "+1" et "Remise à zéro". Moins de 60 lignes.</code></pre>
 </details>
 </div>
 
-<div class="ex" id="e10">
-<h4><span class="id">E10</span> Sous-agent d'exploration web sur le modèle 0,8b <span class="lvl">agent · 45 min</span></h4>
+<div class="ex" id="e11">
+<h4><span class="id">E11</span> Sous-agent d'exploration web sur le modèle 0,8b <span class="lvl">agent · 45 min</span></h4>
 <p>Écrire le fichier agent d'un sous-agent <code>web-explore</code> qui fonctionne avec <code>litellm/ll_wired-qwen3.5:0.8b</code>, en lecture seule, avec uniquement les outils web et de lecture. Le tester depuis Build : <i>Utilise web-explore pour trouver la commande d'installation d'opencode sur opencode.ai.</i></p>
 <details><summary>Correction</summary>
 <p>Fichier <code>~/.config/opencode/agents/web-explore.md</code> (ou <code>.opencode/agents/</code> dans le projet) :</p>
@@ -869,8 +925,8 @@ et tu n'exécutes aucune commande.
 </details>
 </div>
 
-<div class="ex" id="e11">
-<h4><span class="id">E11</span> Sous-agent d'exécution Python distante <span class="lvl">agent · 50 min</span></h4>
+<div class="ex" id="e12">
+<h4><span class="id">E12</span> Sous-agent d'exécution Python distante <span class="lvl">agent · 50 min</span></h4>
 <p>La configuration globale interdit <code>python*</code>, <code>pip*</code>, <code>uv *</code> et <code>pytest*</code> en local. Écrire un sous-agent <code>remote-python</code> qui copie le projet sur la machine indiquée dans sa description, y exécute le script avec <code>uv</code> et rapporte la sortie. Il ne modifie aucun fichier.</p>
 <details><summary>Correction</summary>
 <p>Squelette de <code>~/.config/opencode/agents/remote-python.md</code>. Remplacer <code>LOGIN</code> par son identifiant sur <code>serveurllm</code>, après avoir installé sa clé SSH avec <code>ssh-copy-id</code> pour que <code>BatchMode</code> fonctionne.</p>
@@ -921,8 +977,8 @@ La commande exécutée, le code de sortie, les dernières lignes de la sortie.</
 </details>
 </div>
 
-<div class="ex" id="e12">
-<h4><span class="id">E12</span> Orchestration : écrire en local, exécuter à distance <span class="lvl">application · 25 min</span></h4>
+<div class="ex" id="e13">
+<h4><span class="id">E13</span> Orchestration : écrire en local, exécuter à distance <span class="lvl">application · 25 min</span></h4>
 <p>Dans un dossier <code>stats/</code>, fournir <code>notes.csv</code> (colonnes <code>nom,note</code>, 10 lignes). Demander à Build : <i>Écris stats.py qui affiche la moyenne, le minimum et le maximum de notes.csv avec le module csv uniquement, puis fais-le exécuter par remote-python.</i></p>
 <details><summary>Correction</summary>
 <pre><code>import csv
@@ -962,18 +1018,18 @@ print(f"min = {min(notes)}  max = {max(notes)}")</code></pre>
 <thead><tr><th>Durée</th><th>Activité</th><th>Support</th></tr></thead>
 <tbody>
 <tr><td class="t">0:00–0:20</td><td>Mémoire et état : le service de fond, la base, les sessions</td><td>Schéma de l'infrastructure</td></tr>
-<tr><td class="t">0:20–0:45</td><td>TP : E13, sessions</td><td>Exercice E13</td></tr>
-<tr><td class="t">0:45–1:20</td><td>TP : E14, diagnostic d'une configuration cassée</td><td>Exercice E14</td></tr>
-<tr><td class="t">1:20–1:40</td><td>E15 : l'échelle de réinitialisation</td><td>Tableau E15</td></tr>
-<tr><td class="t">1:40–2:50</td><td>Mini-projet au choix : E16 (quiz), E17 (boîte en papier) ou E18 (emploi du temps)</td><td>Exercices E16 à E18</td></tr>
+<tr><td class="t">0:20–0:45</td><td>TP : E14, sessions</td><td>Exercice E14</td></tr>
+<tr><td class="t">0:45–1:20</td><td>TP : E15, diagnostic d'une configuration cassée</td><td>Exercice E15</td></tr>
+<tr><td class="t">1:20–1:40</td><td>E16 : l'échelle de réinitialisation</td><td>Tableau E16</td></tr>
+<tr><td class="t">1:40–2:50</td><td>Mini-projet au choix : E17 (quiz), E18 (boîte en papier) ou E19 (emploi du temps)</td><td>Exercices E17 à E19</td></tr>
 <tr><td class="t">2:50–3:00</td><td>Bilan : agile ou ingénierie ?</td><td>Discussion</td></tr>
 </tbody></table></div>
 
 <div class="note"><p><b>Où sont les choses</b> (<code>opencode debug paths</code>). Configuration : <code>~/.config/opencode</code>. Données et base des sessions : <code>~/.local/share/opencode/opencode.db</code>. Journaux : <code>~/.local/share/opencode/log</code>. Cache : <code>~/.cache/opencode</code>. État : <code>~/.local/state/opencode</code>.</p></div>
 
 <h3>Exercices</h3>
-<div class="ex" id="e13">
-<h4><span class="id">E13</span> Manipuler les sessions <span class="lvl">manipulation · 25 min</span></h4>
+<div class="ex" id="e14">
+<h4><span class="id">E14</span> Manipuler les sessions <span class="lvl">manipulation · 25 min</span></h4>
 <p>Retrouver la session de E4 et la reprendre. La dupliquer pour tester une variante (thème sombre) sans toucher l'originale. Exporter la session en JSON depuis le shell.</p>
 <details><summary>Correction</summary>
 <pre><code># dans le TUI
@@ -992,8 +1048,8 @@ opencode session import compteur-session.json</code></pre>
 </details>
 </div>
 
-<div class="ex" id="e14">
-<h4><span class="id">E14</span> Diagnostiquer une configuration cassée <span class="lvl">maintenance · 35 min</span></h4>
+<div class="ex" id="e15">
+<h4><span class="id">E15</span> Diagnostiquer une configuration cassée <span class="lvl">maintenance · 35 min</span></h4>
 <p>Sauvegarder la configuration, puis la casser volontairement en retirant une virgule dans <code>opencode.json</code> du projet <code>compteur/</code>. Lancer opencode, observer, diagnostiquer et réparer. Faire de même avec un nom de modèle erroné dans un agent.</p>
 <details><summary>Correction</summary>
 <pre><code>cp opencode.json opencode.json.bak-$(date +%Y%m%d)   # toujours avant de modifier
@@ -1011,8 +1067,8 @@ opencode service restart  # recharger après un changement de config globale</co
 </details>
 </div>
 
-<div class="ex" id="e15">
-<h4><span class="id">E15</span> L'échelle de réinitialisation <span class="lvl">maintenance · 20 min</span></h4>
+<div class="ex" id="e16">
+<h4><span class="id">E16</span> L'échelle de réinitialisation <span class="lvl">maintenance · 20 min</span></h4>
 <p>Pour chaque symptôme, choisir le niveau de réinitialisation <b>le plus bas</b> qui le règle.</p>
 <p>Symptômes : (a) l'agent tourne en rond depuis 20 tours ; (b) le TUI ne répond plus mais les autres sessions fonctionnent ; (c) <code>opencode</code> ne démarre plus du tout après une mise à jour ; (d) un plugin récemment installé fait échouer chaque appel ; (e) on veut rendre une machine de TP propre pour le groupe suivant.</p>
 <details><summary>Correction</summary>
@@ -1030,8 +1086,8 @@ opencode service restart  # recharger après un changement de config globale</co
 </details>
 </div>
 
-<div class="ex" id="e16">
-<h4><span class="id">E16</span> Mini-projet : un quiz en approche ingénierie <span class="lvl">projet · 70 min</span></h4>
+<div class="ex" id="e17">
+<h4><span class="id">E17</span> Mini-projet : un quiz en approche ingénierie <span class="lvl">projet · 70 min</span></h4>
 <p>Par binôme, dans un dossier <code>quiz/</code> vierge :</p>
 <ol>
 <li>Écrire à la main <code>SPEC.md</code> (une demi-page au plus) et <code>AGENTS.md</code>, en reprenant E5.</li>
@@ -1075,8 +1131,8 @@ Les questions sont aussi recopiées dans index.html (ouverture sans serveur).
 <p>Deux projets plus longs, à mener en binôme en S4 à la place du quiz ou en travail personnel. Ils suivent la même démarche : une spécification écrite à la main, un plan validé en agent Plan, une réalisation par petites étapes, puis une vérification qui ne dépend pas du modèle (une règle graduée, un script de contrôle).</p>
 <div class="note"><p><b>Règle commune.</b> Le modèle est mauvais en géométrie et en combinatoire. On ne lui demande donc ni de « calculer » un patron ni de « trouver » un emploi du temps de tête. On lui fait écrire le fichier ou le programme qui le fait, et on vérifie le résultat avec un outil.</p></div>
 
-<div class="ex" id="e17">
-<h4><span class="id">E17</span> Boîte en papier de 5 cm × 5 cm avec couvercle lié <span class="lvl">projet · 70 à 90 min</span></h4>
+<div class="ex" id="e18">
+<h4><span class="id">E18</span> Boîte en papier de 5 cm × 5 cm avec couvercle lié <span class="lvl">projet · 70 à 90 min</span></h4>
 <p>Produire un patron imprimable, à l'échelle réelle, d'une boîte cubique de 5 cm de côté, dont le couvercle est attaché au dos de la boîte et fermé par un rabat glissé à l'avant. On découpe le patron, on le plie et on le colle : la boîte doit se fermer.</p>
 <figure class="duo" id="fig-i8">
 <svg viewBox="0 0 260 250" role="img" aria-label="Boîte cubique de 5 cm assemblée, couvercle ouvert, attaché au bord arrière de l'ouverture, avec son rabat de fermeture en haut.">
@@ -1202,8 +1258,8 @@ Plis : toutes les arêtes communes entre deux pièces.</code></pre>
 </details>
 </div>
 
-<div class="ex" id="e18">
-<h4><span class="id">E18</span> Emploi du temps d'un département de formation <span class="lvl">projet · 2 × 90 min</span></h4>
+<div class="ex" id="e19">
+<h4><span class="id">E19</span> Emploi du temps d'un département de formation <span class="lvl">projet · 2 × 90 min</span></h4>
 <p>Produire l'emploi du temps d'une semaine pour plusieurs groupes d'un département, à partir de fichiers de données (cours, salles, indisponibilités des enseignants), avec un contrôle automatique des contraintes.</p>
 <div class="note"><p><b>Jeu de données d'exemple.</b> Les contraintes et les fichiers ci-dessous servent d'exemple. Ils seront remplacés par les contraintes réelles du département fournies par l'enseignant. La démarche et la structure des fichiers restent les mêmes.</p></div>
 <h4>Contraintes (exemple)</h4>
@@ -1392,16 +1448,17 @@ Pourquoi as-tu modifié cette ligne ? Qu'est-ce qui casse si je l'enlève ?</cod
 <tr><td class="t"><a href="#e6">E6</a></td><td>Permissions de projet</td><td>Harnais</td><td>Configuration</td></tr>
 <tr><td class="t"><a href="#e7">E7</a></td><td><code>/undo</code>, <code>/redo</code></td><td>Vérification et retours</td><td>Manipulation</td></tr>
 <tr><td class="t"><a href="#e8">E8</a></td><td>Gros fichier et compaction</td><td>Fenêtre de contexte</td><td>Observation</td></tr>
-<tr><td class="t"><a href="#e9">E9</a></td><td>Plan puis Build</td><td>Agents primaires</td><td>Manipulation</td></tr>
-<tr><td class="t"><a href="#e10">E10</a></td><td>Sous-agent <code>web-explore</code> (0,8b)</td><td>Sous-agents, modèle léger</td><td>Agent</td></tr>
-<tr><td class="t"><a href="#e11">E11</a></td><td>Sous-agent <code>remote-python</code></td><td>Exécution déportée</td><td>Agent</td></tr>
-<tr><td class="t"><a href="#e12">E12</a></td><td>Écrire en local, exécuter à distance</td><td>Orchestration</td><td>Application</td></tr>
-<tr><td class="t"><a href="#e13">E13</a></td><td>Sessions</td><td>Mémoire et état</td><td>Manipulation</td></tr>
-<tr><td class="t"><a href="#e14">E14</a></td><td>Configuration cassée</td><td>Diagnostic</td><td>Maintenance</td></tr>
-<tr><td class="t"><a href="#e15">E15</a></td><td>Échelle de réinitialisation</td><td>Réinitialisation</td><td>Maintenance</td></tr>
-<tr><td class="t"><a href="#e16">E16</a></td><td>Quiz en approche ingénierie</td><td>Synthèse</td><td>Projet</td></tr>
-<tr><td class="t"><a href="#e17">E17</a></td><td>Boîte en papier de 5 cm avec couvercle lié</td><td>Spécification géométrique, vérification physique</td><td>Mini-projet</td></tr>
-<tr><td class="t"><a href="#e18">E18</a></td><td>Emploi du temps d'un département</td><td>Solveur et vérificateur séparés, exécution distante</td><td>Mini-projet</td></tr>
+<tr><td class="t"><a href="#e9">E9</a></td><td>Skill <code>recette-ajustee</code></td><td>Skills, chargement à la demande</td><td>Configuration</td></tr>
+<tr><td class="t"><a href="#e10">E10</a></td><td>Plan puis Build</td><td>Agents primaires</td><td>Manipulation</td></tr>
+<tr><td class="t"><a href="#e11">E11</a></td><td>Sous-agent <code>web-explore</code> (0,8b)</td><td>Sous-agents, modèle léger</td><td>Agent</td></tr>
+<tr><td class="t"><a href="#e12">E12</a></td><td>Sous-agent <code>remote-python</code></td><td>Exécution déportée</td><td>Agent</td></tr>
+<tr><td class="t"><a href="#e13">E13</a></td><td>Écrire en local, exécuter à distance</td><td>Orchestration</td><td>Application</td></tr>
+<tr><td class="t"><a href="#e14">E14</a></td><td>Sessions</td><td>Mémoire et état</td><td>Manipulation</td></tr>
+<tr><td class="t"><a href="#e15">E15</a></td><td>Configuration cassée</td><td>Diagnostic</td><td>Maintenance</td></tr>
+<tr><td class="t"><a href="#e16">E16</a></td><td>Échelle de réinitialisation</td><td>Réinitialisation</td><td>Maintenance</td></tr>
+<tr><td class="t"><a href="#e17">E17</a></td><td>Quiz en approche ingénierie</td><td>Synthèse</td><td>Projet</td></tr>
+<tr><td class="t"><a href="#e18">E18</a></td><td>Boîte en papier de 5 cm avec couvercle lié</td><td>Spécification géométrique, vérification physique</td><td>Mini-projet</td></tr>
+<tr><td class="t"><a href="#e19">E19</a></td><td>Emploi du temps d'un département</td><td>Solveur et vérificateur séparés, exécution distante</td><td>Mini-projet</td></tr>
 </tbody></table></div>
 
 <h2 id="memo">Mémo des commandes</h2>
@@ -1451,7 +1508,7 @@ Pourquoi as-tu modifié cette ligne ? Qu'est-ce qui casse si je l'enlève ?</cod
 <thead><tr><th>Séance</th><th>Thème</th><th>Ce que vous apprenez</th><th>Ce que vous emportez</th></tr></thead>
 <tbody>
 <tr><td class="t">1</td><td><b>Découvrir l'assistant</b></td><td>Poser une question ou confier une tâche, voir l'assistant travailler</td><td>Une petite page web créée par l'assistant</td></tr>
-<tr><td class="t">2</td><td><b>Ce que l'assistant voit et retient</b></td><td>La mémoire de travail, la fiche de consignes, les autorisations, le retour en arrière</td><td>Votre fiche de consignes</td></tr>
+<tr><td class="t">2</td><td><b>Ce que l'assistant voit et retient</b></td><td>La mémoire de travail, la fiche de consignes, les autorisations, le retour en arrière, les fiches de savoir-faire</td><td>Votre fiche de consignes</td></tr>
 <tr><td class="t">3</td><td><b>Des assistants spécialisés</b></td><td>Préparer avant d'agir, confier une recherche à un petit assistant</td><td>Un assistant de recherche sur le web</td></tr>
 <tr><td class="t">4</td><td><b>Reprendre et réparer</b></td><td>Retrouver une conversation, redémarrer proprement, mener un projet</td><td>Une boîte en papier ou un emploi du temps</td></tr>
 </tbody></table></div>
@@ -1720,11 +1777,12 @@ que tu repères dans le code.</code></pre>
 <div class="tbl"><table>
 <thead><tr><th>Durée</th><th>Activité</th></tr></thead>
 <tbody>
-<tr><td class="t">0:00–0:35</td><td>La mémoire de travail du modèle</td></tr>
-<tr><td class="t">0:35–1:15</td><td>Exercice G6 : votre fiche de consignes</td></tr>
-<tr><td class="t">1:15–1:50</td><td>Exercice G7 : demander la permission</td></tr>
-<tr><td class="t">1:50–2:20</td><td>Exercice G8 : revenir en arrière</td></tr>
-<tr><td class="t">2:20–3:00</td><td>Exercice G9 : une question à côté avec <code>/btw</code></td></tr>
+<tr><td class="t">0:00–0:30</td><td>La mémoire de travail du modèle</td></tr>
+<tr><td class="t">0:30–1:05</td><td>Exercice G6 : votre fiche de consignes</td></tr>
+<tr><td class="t">1:05–1:35</td><td>Exercice G7 : demander la permission</td></tr>
+<tr><td class="t">1:35–2:00</td><td>Exercice G8 : revenir en arrière</td></tr>
+<tr><td class="t">2:00–2:25</td><td>Exercice G9 : une question à côté avec <code>/btw</code></td></tr>
+<tr><td class="t">2:25–3:00</td><td>Les fiches de savoir-faire. Exercice G10 : une recette sur mesure</td></tr>
 </tbody></table></div>
 
 <h3>Ce que le modèle reçoit à chaque fois</h3>
@@ -1823,6 +1881,51 @@ que tu repères dans le code.</code></pre>
 </details>
 </div>
 
+<h3 id="gp-skills">Les fiches de savoir-faire (skills)</h3>
+<p>La fiche de consignes (G6) est relue à chaque étape : elle occupe toujours de la place dans la mémoire de travail. Pour un savoir-faire dont on ne se sert que de temps en temps, opencode propose des <b>fiches de savoir-faire</b>, appelées <i>skills</i>. L'assistant ne garde en mémoire que leur titre et une phrase qui dit à quoi elles servent. Il ne sort la fiche complète que lorsqu'une demande correspond à cette phrase, comme on ouvre un livre de recettes à la bonne page seulement quand on cuisine.</p>
+
+<div class="ex" id="gp-g10">
+<h4><span class="id">G10</span> Une recette sur mesure <span class="lvl">réglage · 35 min</span></h4>
+<p>Créez un dossier <code>cuisine</code>, ouvrez opencode et choisissez le modèle <b>Qwen 3.8</b> avec <code>/models</code>. Demandez-lui de créer la fiche de savoir-faire :</p>
+<pre><code>Crée une skill recette-ajustee dans le projet, dans le fichier
+.opencode/skills/recette-ajustee/SKILL.md, avec exactement ce contenu :</code></pre>
+<pre><code>---
+name: recette-ajustee
+description: Adapte une recette de cuisine à un nombre de personnes et produit la liste de courses. À utiliser dès qu'on demande d'ajuster une recette, de changer le nombre de personnes ou de préparer les courses d'un repas.
+---
+1. Calcule le coefficient : personnes voulues ÷ personnes de la recette.
+2. Multiplie chaque quantité. Arrondis à l'unité ce qui ne se coupe pas
+   (œufs, citrons, pincées) ; arrondis les grammes à 10 g près.
+3. Écris la recette ajustée, puis la liste de courses regroupée par rayon :
+   frais, épicerie, fruits et légumes.
+4. Termine par une ligne : « Coefficient appliqué : × … ».</code></pre>
+<p>Quittez et rouvrez opencode, puis tapez <code>/skills</code> : la fiche <code>recette-ajustee</code> doit apparaître. Demandez ensuite :</p>
+<pre><code>Voici ma recette de crêpes pour 4 personnes : 250 g de farine, 3 œufs,
+50 cl de lait, 1 pincée de sel. Adapte-la pour 10 personnes et fais-moi
+la liste de courses.</code></pre>
+<details><summary>Ce qu'il faut observer</summary>
+<p>Vous devez obtenir à peu près ceci :</p>
+<pre><code>Crêpes pour 10 personnes
+- 630 g de farine
+- 8 œufs
+- 125 cl de lait (1,25 l)
+- 3 pincées de sel
+
+Liste de courses
+- Frais : 8 œufs, 1,25 l de lait
+- Épicerie : 630 g de farine, sel
+- Fruits et légumes : rien
+
+Coefficient appliqué : × 2,5</code></pre>
+<ul>
+<li>L'assistant a reconnu une demande de cuisine et a sorti la fiche au bon moment. Dans l'enregistrement de la conversation (<code>/export</code>), on voit l'action <code>skill</code> juste avant la réponse.</li>
+<li>Les règles de la fiche sont respectées : 8 œufs et non 7,5, la farine arrondie à 630 g, les courses rangées par rayon, et la ligne finale du coefficient.</li>
+<li>Faites la même demande dans un autre dossier, sans la fiche : la présentation change, et des « 7,5 œufs » peuvent apparaître.</li>
+<li>Si l'assistant n'utilise pas la fiche, demandez-le explicitement : <i>Utilise la skill recette-ajustee.</i> La phrase de description est essentielle : c'est elle qui permet à l'assistant de savoir quand sortir la fiche.</li>
+</ul>
+</details>
+</div>
+
 <!-- ============ GP S3 ============ -->
 <h2 id="gp-s3">Séance 3 · Des assistants spécialisés</h2>
 <div class="goals"><h4>À la fin de la séance, vous savez</h4><ul>
@@ -1834,9 +1937,9 @@ que tu repères dans le code.</code></pre>
 <thead><tr><th>Durée</th><th>Activité</th></tr></thead>
 <tbody>
 <tr><td class="t">0:00–0:30</td><td>Plusieurs assistants, plusieurs rôles</td></tr>
-<tr><td class="t">0:30–1:10</td><td>Exercice G10 : préparer avant d'agir</td></tr>
-<tr><td class="t">1:10–2:20</td><td>Exercice G11 : un assistant de recherche sur le web</td></tr>
-<tr><td class="t">2:20–3:00</td><td>G12 : démonstration, confier un calcul à une autre machine</td></tr>
+<tr><td class="t">0:30–1:10</td><td>Exercice G11 : préparer avant d'agir</td></tr>
+<tr><td class="t">1:10–2:20</td><td>Exercice G12 : un assistant de recherche sur le web</td></tr>
+<tr><td class="t">2:20–3:00</td><td>G13 : démonstration, confier un calcul à une autre machine</td></tr>
 </tbody></table></div>
 
 <h3>Plusieurs assistants, plusieurs rôles</h3>
@@ -1864,16 +1967,16 @@ que tu repères dans le code.</code></pre>
 <p>Exemple : <i>Lance 3 assistants pour comparer le prix des yaourts chez Auchan, Leclerc et Intermarché.</i> Chaque assistant cherche de son côté, en même temps, et l'assistant principal compare les trois résumés.</p>
 
 <h3>Exercices</h3>
-<div class="ex" id="gp-g10">
-<h4><span class="id">G10</span> Préparer avant d'agir <span class="lvl">manipulation · 40 min</span></h4>
+<div class="ex" id="gp-g11">
+<h4><span class="id">G11</span> Préparer avant d'agir <span class="lvl">manipulation · 40 min</span></h4>
 <p>Dans un nouveau dossier <code>convertisseur</code>, ouvrez opencode, appuyez sur <kbd>Shift</kbd>+<kbd>Tab</kbd> (touche majuscule et touche tabulation) pour passer en mode <b>Plan</b> et demandez : <i>Prépare le plan d'une page web qui convertit des euros en dollars, avec un taux fixe de 1 € = 1,10 $.</i> Vérifiez qu'aucun fichier n'a été créé. Repassez en mode <b>Build</b> avec <kbd>Shift</kbd>+<kbd>Tab</kbd> et demandez : <i>Applique le plan.</i></p>
 <details><summary>Ce qu'il faut observer</summary>
 <p>En mode Plan, l'assistant décrit ce qu'il compte faire (un seul fichier, un champ en euros, le résultat en dollars, la formule) sans rien écrire. En mode Build, il garde le plan en mémoire et l'exécute. Relire le plan avant de dire « applique » permet de corriger un malentendu avant qu'il ne coûte du temps.</p>
 </details>
 </div>
 
-<div class="ex" id="gp-g11">
-<h4><span class="id">G11</span> Un assistant de recherche sur le web <span class="lvl">réglage · 70 min</span></h4>
+<div class="ex" id="gp-g12">
+<h4><span class="id">G12</span> Un assistant de recherche sur le web <span class="lvl">réglage · 70 min</span></h4>
 <p>Un assistant spécialisé se décrit dans un simple fichier texte. Plutôt que de l'écrire vous-même, demandez à l'assistant principal de le créer :</p>
 <pre><code>Crée un agent web-explore qui permet de chercher et résumer des pages web
 sans modifier les fichiers. Pose-moi les questions de permission et choisis
@@ -1912,8 +2015,8 @@ Ne devine jamais le contenu d'une page que tu n'as pas lue.</code></pre>
 </details>
 </div>
 
-<div class="ex" id="gp-g12">
-<h4><span class="id">G12</span> Confier un calcul à une autre machine <span class="lvl">démonstration · 40 min</span></h4>
+<div class="ex" id="gp-g13">
+<h4><span class="id">G13</span> Confier un calcul à une autre machine <span class="lvl">démonstration · 40 min</span></h4>
 <p>Sur la machine de TP, l'assistant n'a pas le droit de lancer lui-même des programmes Python. Un assistant spécialisé, préparé par l'enseignant, envoie le programme au serveur de l'INSA, le lance là-bas et rapporte le résultat. Démonstration : à partir d'un fichier de notes, l'assistant écrit un petit programme de calcul de moyenne et le fait exécuter à distance.</p>
 <details><summary>Ce qu'il faut observer</summary>
 <p>Le travail se partage en trois temps : l'assistant principal écrit le programme, l'assistant de calcul l'exécute ailleurs sans pouvoir le modifier, puis le résultat revient. Si le calcul échoue, c'est l'assistant principal qui corrige. Ce partage des rôles est réutilisé dans le projet « emploi du temps ».</p>
@@ -1930,15 +2033,15 @@ Ne devine jamais le contenu d'une page que tu n'as pas lue.</code></pre>
 <div class="tbl"><table>
 <thead><tr><th>Durée</th><th>Activité</th></tr></thead>
 <tbody>
-<tr><td class="t">0:00–0:30</td><td>Exercice G13 : retrouver son travail</td></tr>
-<tr><td class="t">0:30–1:00</td><td>Exercice G14 : quand ça ne marche plus</td></tr>
+<tr><td class="t">0:00–0:30</td><td>Exercice G14 : retrouver son travail</td></tr>
+<tr><td class="t">0:30–1:00</td><td>Exercice G15 : quand ça ne marche plus</td></tr>
 <tr><td class="t">1:00–1:15</td><td>Faire du ménage : sessions, serveur de fond, <code>/pair</code></td></tr>
 <tr><td class="t">1:15–2:50</td><td>Projet au choix : boîte en papier ou emploi du temps</td></tr>
 <tr><td class="t">2:50–3:00</td><td>Bilan : au fil de la conversation ou avec un cahier des charges ?</td></tr>
 </tbody></table></div>
 
-<div class="ex" id="gp-g13">
-<h4><span class="id">G13</span> Retrouver son travail <span class="lvl">manipulation · 30 min</span></h4>
+<div class="ex" id="gp-g14">
+<h4><span class="id">G14</span> Retrouver son travail <span class="lvl">manipulation · 30 min</span></h4>
 <p>opencode enregistre chaque conversation et la range avec le dossier dans lequel vous l'avez ouverte. Retournez dans le dossier <code>courses</code>, ouvrez opencode et essayez :</p>
 <div class="tbl"><table><tbody>
 <tr><td><code>/sessions</code></td><td>Voir la liste des conversations de ce dossier</td></tr>
@@ -1951,8 +2054,8 @@ Ne devine jamais le contenu d'une page que tu n'as pas lue.</code></pre>
 </details>
 </div>
 
-<div class="ex" id="gp-g14">
-<h4><span class="id">G14</span> Quand ça ne marche plus <span class="lvl">réflexion · 30 min</span></h4>
+<div class="ex" id="gp-g15">
+<h4><span class="id">G15</span> Quand ça ne marche plus <span class="lvl">réflexion · 30 min</span></h4>
 <p>Pour chaque situation, choisissez la réaction la plus douce qui règle le problème.</p>
 <details><summary>Réponses</summary>
 <div class="tbl"><table>
@@ -2107,7 +2210,7 @@ Découpe = trait plein. Pli = trait pointillé.
 <ol>
 <li>Faites écrire par l'assistant un cahier des charges, <code>SPEC.md</code>, qui reprend les règles ci-dessus en phrases simples.</li>
 <li>Demandez <b>un programme</b> qui construit l'emploi du temps à partir des tableaux. Ne demandez pas à l'assistant de le construire de tête : il se tromperait.</li>
-<li>Faites exécuter ce programme par l'assistant de calcul (vu en G12).</li>
+<li>Faites exécuter ce programme par l'assistant de calcul (vu en G13).</li>
 <li>Démarrez une <b>nouvelle conversation</b> avec <code>/clear</code> et demandez un <b>second programme</b> qui vérifie chaque règle sur le résultat, à partir du seul <code>SPEC.md</code>.</li>
 <li>Demandez enfin une page web qui affiche l'emploi du temps de chaque groupe sous forme de grille.</li>
 </ol>
@@ -2116,7 +2219,7 @@ Découpe = trait plein. Pli = trait pointillé.
 <li>Avec les tableaux d'exemple, le premier programme place les 16 séances, et le second annonce « aucune règle violée ».</li>
 <li>Pourquoi deux programmes, écrits dans deux conversations différentes ? Si le même raisonnement construit et vérifie, il risque de faire deux fois la même erreur. Une conversation vierge donne un regard neuf.</li>
 <li>Essayez d'ajouter une absence qui rend l'emploi du temps impossible : le programme doit le dire clairement, plutôt que de produire un emploi du temps faux.</li>
-<li>Le code complet des deux programmes se trouve dans la version « Informaticien » du cours (exercice E18).</li>
+<li>Le code complet des deux programmes se trouve dans la version « Informaticien » du cours (exercice E19).</li>
 </ul>
 </details>
 </div>
@@ -2159,7 +2262,8 @@ Découpe = trait plein. Pli = trait pointillé.
 <tr><td>Conversation</td><td>Session</td><td>Un échange enregistré, rangé avec son dossier</td></tr>
 <tr><td>Connexion à distance</td><td>SSH</td><td>Travailler sur un autre ordinateur depuis le sien</td></tr>
 <tr><td>Cahier des charges</td><td>Spécification, <code>SPEC.md</code></td><td>Ce que l'on veut obtenir, écrit avant de commencer</td></tr>
-<tr><td>Extensions</td><td>Skills, MCP, plugins</td><td>Moyens d'ajouter des capacités à l'assistant (non abordés ici)</td></tr>
+<tr><td>Fiche de savoir-faire</td><td>Skill</td><td>Une procédure que l'assistant ne sort que lorsqu'il en a besoin</td></tr>
+<tr><td>Extensions</td><td>MCP, plugins</td><td>Moyens d'ajouter des capacités à l'assistant (non abordés ici)</td></tr>
 </tbody></table></div>
 
 <!-- ============ GP MÉMO ============ -->

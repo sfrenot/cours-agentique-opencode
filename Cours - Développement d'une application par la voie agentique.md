@@ -52,7 +52,7 @@ Le cours progresse de l'usage vers la compréhension, puis vers la maîtrise. On
 | Séance | Thème | Notions clés | Livrable de fin de séance |
 |---|---|---|---|
 | S1 | **Du prompt à l'agent** | 4 niveaux d'interaction, approche agile / ingénierie, boucle agentique, TUI et mode headless | Page HTML « compteur » générée par l'agent |
-| S2 | **Harnais et contexte** | Ce que voit le LLM, tokens et fenêtre, compaction, `AGENTS.md`, permissions, `/undo` | `AGENTS.md` et `opencode.json` de projet |
+| S2 | **Harnais et contexte** | Ce que voit le LLM, tokens et fenêtre, compaction, `AGENTS.md`, permissions, `/undo`, skills | `AGENTS.md` et `opencode.json` de projet |
 | S3 | **Outils et agents** | Outils minimaux, agents Plan/Build, sous-agents, modèle léger, extensions (skills, MCP, plugins) | Deux sous-agents : `web-explore` et `remote-python` |
 | S4 | **État, maintenance, projet** | Sessions et base, service de fond, diagnostic, réinitialisation graduée | Mini-projet au choix (quiz, boîte en papier, emploi du temps) réalisé à partir d'une spécification |
 
@@ -72,7 +72,7 @@ Aucune connaissance en programmation n'est demandée. Les quelques commandes à 
 | Séance | Thème | Ce que vous apprenez | Ce que vous emportez |
 |---|---|---|---|
 | 1 | **Découvrir l'assistant** | Poser une question ou confier une tâche, voir l'assistant travailler | Une petite page web créée par l'assistant |
-| 2 | **Ce que l'assistant voit et retient** | La mémoire de travail, la fiche de consignes, les autorisations, le retour en arrière | Votre fiche de consignes |
+| 2 | **Ce que l'assistant voit et retient** | La mémoire de travail, la fiche de consignes, les autorisations, le retour en arrière, les fiches de savoir-faire | Votre fiche de consignes |
 | 3 | **Des assistants spécialisés** | Préparer avant d'agir, confier une recherche à un petit assistant | Un assistant de recherche sur le web |
 | 4 | **Reprendre et réparer** | Retrouver une conversation, redémarrer proprement, mener un projet | Une boîte en papier ou un emploi du temps |
 
@@ -466,12 +466,13 @@ Le nombre d'allers-retours change d'une fois à l'autre : on ne peut pas prévoi
 
 | Durée | Activité | Support |
 |---|---|---|
-| 0:00–0:30 | Les choses cachées : harnais et contexte | Schéma 3 et tableau |
-| 0:30–0:50 | Tokens, fenêtre, compaction : ordres de grandeur entre Claude et Qwen | Tableaux du cours |
-| 0:50–1:30 | TP : E5, écrire un `AGENTS.md` | Exercice E5 |
-| 1:30–2:10 | TP : E6, permissions de projet | Exercice E6 |
-| 2:10–2:30 | TP : E7, `/undo` et `/redo` | Exercice E7 |
-| 2:30–3:00 | TP : E8, mesurer et compacter le contexte | Exercice E8 |
+| 0:00–0:25 | Les choses cachées : harnais et contexte | Schéma 3 et tableau |
+| 0:25–0:40 | Tokens, fenêtre, compaction : ordres de grandeur entre Claude et Qwen | Tableaux du cours |
+| 0:40–1:15 | TP : E5, écrire un `AGENTS.md` | Exercice E5 |
+| 1:15–1:50 | TP : E6, permissions de projet | Exercice E6 |
+| 1:50–2:05 | TP : E7, `/undo` et `/redo` | Exercice E7 |
+| 2:05–2:30 | TP : E8, mesurer et compacter le contexte | Exercice E8 |
+| 2:30–3:00 | Les skills. TP : E9, une skill de cuisine | Exercice E9 |
 
 #### Harnais et contexte
 
@@ -595,6 +596,68 @@ Le fichier `AGENTS.md` pilote ce contexte : il indique les informations pertinen
 
 C'est l'outil adapté pour demander une explication en cours de travail. Le contexte ne grossit pas, et l'agent ne se met pas à modifier le code à partir d'une simple question. S'il faut lire un fichier qui n'est pas encore dans le contexte, posez une question normale.
 
+#### Les skills : un savoir-faire chargé à la demande
+
+Une skill est un dossier qui contient un fichier `SKILL.md` : un en-tête (`name`, `description`) suivi d'instructions. Au démarrage, opencode ne place dans le contexte que le **nom et la description** de chaque skill. Quand une demande correspond à la description, le modèle appelle l'outil `skill`, et c'est seulement à ce moment que les instructions entrent dans le contexte.
+
+|   | `AGENTS.md` | Skill |
+|---|---|---|
+| **Chargé** | À chaque appel | À la demande, quand le modèle le décide |
+| **Contenu** | Règles générales du projet | Procédure précise pour une tâche donnée |
+| **Coût en contexte** | Tout le texte, tout le temps | La description seule, puis le texte quand la skill sert |
+| **Déclenchement** | Automatique | Par le modèle, d'après la description |
+
+On range donc dans une skill un savoir-faire précis et occasionnel. La description fait tout le travail de déclenchement : elle doit reprendre les mots que l'utilisateur emploiera. Pour charger les skills de façon fiable, on utilise le Qwen 3.8 (27b).
+
+> [!question] E9 · Une skill de cuisine : `recette-ajustee` (configuration · 30 min)
+> Dans un dossier `cuisine/`, créer le fichier `.opencode/skills/recette-ajustee/SKILL.md` :
+>
+> ```
+> ---
+> name: recette-ajustee
+> description: Adapte une recette de cuisine à un nombre de personnes et produit la liste de courses. À utiliser dès qu'on demande d'ajuster une recette, de changer le nombre de personnes ou de préparer les courses d'un repas.
+> ---
+> 1. Calcule le coefficient : personnes voulues ÷ personnes de la recette.
+> 2. Multiplie chaque quantité. Arrondis à l'unité ce qui ne se coupe pas
+>    (œufs, citrons, pincées) ; arrondis les grammes à 10 g près.
+> 3. Écris la recette ajustée, puis la liste de courses regroupée par rayon :
+>    frais, épicerie, fruits et légumes.
+> 4. Termine par une ligne : « Coefficient appliqué : × … ».
+> ```
+>
+> Lancer `opencode` avec le modèle `litellm/ll_wired-qwen3.8:27b-mlx` et vérifier avec `/skills` que la skill est reconnue. Demander ensuite :
+>
+> ```
+> Voici ma recette de crêpes pour 4 personnes : 250 g de farine, 3 œufs,
+> 50 cl de lait, 1 pincée de sel. Adapte-la pour 10 personnes et fais-moi
+> la liste de courses.
+> ```
+>
+> Refaire la même demande dans un dossier sans la skill, puis comparer les deux exports (`/export`).
+>
+> > [!success]- Correction
+> > Résultat attendu avec la skill :
+> >
+> > ```
+> > Crêpes pour 10 personnes
+> > - 630 g de farine
+> > - 8 œufs
+> > - 125 cl de lait (1,25 l)
+> > - 3 pincées de sel
+> >
+> > Liste de courses
+> > - Frais : 8 œufs, 1,25 l de lait
+> > - Épicerie : 630 g de farine, sel
+> > - Fruits et légumes : rien
+> >
+> > Coefficient appliqué : × 2,5
+> > ```
+> >
+> > - Dans l'export, un appel à l'outil `skill` (avec `recette-ajustee`) précède la réponse : les instructions sont entrées dans le contexte à ce moment-là, pas avant.
+> > - Les règles sont appliquées : 7,5 œufs arrondis à 8, 625 g de farine arrondis à 630 g, liste rangée par rayon, ligne finale du coefficient.
+> > - Sans la skill, le format change d'une fois à l'autre, et l'on voit souvent « 7,5 œufs » ou une liste de courses non classée.
+> > - Si le modèle ne charge pas la skill, deux réglages : enrichir la description avec les mots de la demande (« recette », « personnes », « courses »), ou demander explicitement *Utilise la skill recette-ajustee*.
+
 ### Séance 2 · Ce que l'assistant voit et retient
 #généraliste
 
@@ -606,11 +669,12 @@ C'est l'outil adapté pour demander une explication en cours de travail. Le cont
 
 | Durée | Activité |
 |---|---|
-| 0:00–0:35 | La mémoire de travail du modèle |
-| 0:35–1:15 | Exercice G6 : votre fiche de consignes |
-| 1:15–1:50 | Exercice G7 : demander la permission |
-| 1:50–2:20 | Exercice G8 : revenir en arrière |
-| 2:20–3:00 | Exercice G9 : une question à côté avec `/btw` |
+| 0:00–0:30 | La mémoire de travail du modèle |
+| 0:30–1:05 | Exercice G6 : votre fiche de consignes |
+| 1:05–1:35 | Exercice G7 : demander la permission |
+| 1:35–2:00 | Exercice G8 : revenir en arrière |
+| 2:00–2:25 | Exercice G9 : une question à côté avec `/btw` |
+| 2:25–3:00 | Les fiches de savoir-faire. Exercice G10 : une recette sur mesure |
 
 #### Ce que le modèle reçoit à chaque fois
 
@@ -693,6 +757,62 @@ Notre modèle comparé à une IA du commerce :
 > > - Le modèle répond avec ce qu'il sait déjà de la conversation. Il ne fait aucune action : il n'ouvre aucun fichier et ne modifie rien.
 > > - C'est l'outil idéal pour demander une explication sans risque. Si la réponse demande de lire un fichier pas encore ouvert, posez une question normale.
 
+#### Les fiches de savoir-faire (skills)
+
+La fiche de consignes (G6) est relue à chaque étape : elle occupe toujours de la place dans la mémoire de travail. Pour un savoir-faire dont on ne se sert que de temps en temps, opencode propose des **fiches de savoir-faire**, appelées *skills*. L'assistant ne garde en mémoire que leur titre et une phrase qui dit à quoi elles servent. Il ne sort la fiche complète que lorsqu'une demande correspond à cette phrase, comme on ouvre un livre de recettes à la bonne page seulement quand on cuisine.
+
+> [!question] G10 · Une recette sur mesure (réglage · 35 min)
+> Créez un dossier `cuisine`, ouvrez opencode et choisissez le modèle **Qwen 3.8** avec `/models`. Demandez-lui de créer la fiche de savoir-faire :
+>
+> ```
+> Crée une skill recette-ajustee dans le projet, dans le fichier
+> .opencode/skills/recette-ajustee/SKILL.md, avec exactement ce contenu :
+> ```
+>
+> ```
+> ---
+> name: recette-ajustee
+> description: Adapte une recette de cuisine à un nombre de personnes et produit la liste de courses. À utiliser dès qu'on demande d'ajuster une recette, de changer le nombre de personnes ou de préparer les courses d'un repas.
+> ---
+> 1. Calcule le coefficient : personnes voulues ÷ personnes de la recette.
+> 2. Multiplie chaque quantité. Arrondis à l'unité ce qui ne se coupe pas
+>    (œufs, citrons, pincées) ; arrondis les grammes à 10 g près.
+> 3. Écris la recette ajustée, puis la liste de courses regroupée par rayon :
+>    frais, épicerie, fruits et légumes.
+> 4. Termine par une ligne : « Coefficient appliqué : × … ».
+> ```
+>
+> Quittez et rouvrez opencode, puis tapez `/skills` : la fiche `recette-ajustee` doit apparaître. Demandez ensuite :
+>
+> ```
+> Voici ma recette de crêpes pour 4 personnes : 250 g de farine, 3 œufs,
+> 50 cl de lait, 1 pincée de sel. Adapte-la pour 10 personnes et fais-moi
+> la liste de courses.
+> ```
+>
+> > [!success]- Ce qu'il faut observer
+> > Vous devez obtenir à peu près ceci :
+> >
+> > ```
+> > Crêpes pour 10 personnes
+> > - 630 g de farine
+> > - 8 œufs
+> > - 125 cl de lait (1,25 l)
+> > - 3 pincées de sel
+> >
+> > Liste de courses
+> > - Frais : 8 œufs, 1,25 l de lait
+> > - Épicerie : 630 g de farine, sel
+> > - Fruits et légumes : rien
+> >
+> > Coefficient appliqué : × 2,5
+> > ```
+> >
+> > - L'assistant a reconnu une demande de cuisine et a sorti la fiche au bon moment. Dans l'enregistrement de la conversation (`/export`), on voit l'action `skill` juste avant la réponse.
+> > - Les règles de la fiche sont respectées : 8 œufs et non 7,5, la farine arrondie à 630 g, les courses rangées par rayon, et la ligne finale du coefficient.
+> > - Faites la même demande dans un autre dossier, sans la fiche : la présentation change, et des « 7,5 œufs » peuvent apparaître.
+> > - Si l'assistant n'utilise pas la fiche, demandez-le explicitement : *Utilise la skill recette-ajustee.* La phrase de description est essentielle : c'est elle qui permet à l'assistant de savoir quand sortir la fiche.
+
 ## Séance 3
 
 ### Séance 3 · Outils, agents et orchestration
@@ -709,10 +829,10 @@ Notre modèle comparé à une IA du commerce :
 | Durée | Activité | Support |
 |---|---|---|
 | 0:00–0:20 | Retour sur E3 : la liste des outils d'opencode et leur statut | Tableau des outils du cours |
-| 0:20–0:45 | Agents primaires (<kbd>Shift</kbd>+<kbd>Tab</kbd>) et sous-agents (`explore`, `general`, puis les nôtres) | Schéma 4, E9 |
-| 0:45–1:30 | TP : E10, sous-agent d'exploration web sur le 0,8b | Exercice E10 |
-| 1:30–2:20 | TP : E11, sous-agent d'exécution Python distante | Exercice E11 |
-| 2:20–2:45 | TP : E12, orchestration complète | Exercice E12 |
+| 0:20–0:45 | Agents primaires (<kbd>Shift</kbd>+<kbd>Tab</kbd>) et sous-agents (`explore`, `general`, puis les nôtres) | Schéma 4, E10 |
+| 0:45–1:30 | TP : E11, sous-agent d'exploration web sur le 0,8b | Exercice E11 |
+| 1:30–2:20 | TP : E12, sous-agent d'exécution Python distante | Exercice E12 |
+| 2:20–2:45 | TP : E13, orchestration complète | Exercice E13 |
 | 2:45–3:00 | Extensions : skills, MCP, plugins. Comment choisir ? | Discussion |
 
 #### Les outils d'opencode et leur statut
@@ -745,7 +865,7 @@ La boucle tourne avec un agent principal, dans le TUI ou sans interface avec `op
 
 #### Exercices
 
-> [!question] E9 · Plan puis Build (manipulation · 20 min)
+> [!question] E10 · Plan puis Build (manipulation · 20 min)
 > Dans un dossier `convertisseur/`, passer en agent **Plan** avec <kbd>Shift</kbd>+<kbd>Tab</kbd> et demander : *Prépare le plan d'une page HTML autonome qui convertit des °C en °F et inversement.* Constater que rien n'est écrit. Repasser en **Build** et demander : *Applique le plan.*
 >
 > > [!success]- Correction
@@ -753,7 +873,7 @@ La boucle tourne avec un agent principal, dans le TUI ou sans interface avec `op
 > >
 > > Ce qu'il faut retenir : un « agent » d'opencode est surtout un jeu de permissions, un prompt et un modèle appliqués à la même boucle.
 
-> [!question] E10 · Sous-agent d'exploration web sur le modèle 0,8b (agent · 45 min)
+> [!question] E11 · Sous-agent d'exploration web sur le modèle 0,8b (agent · 45 min)
 > Écrire le fichier agent d'un sous-agent `web-explore` qui fonctionne avec `litellm/ll_wired-qwen3.5:0.8b`, en lecture seule, avec uniquement les outils web et de lecture. Le tester depuis Build : *Utilise web-explore pour trouver la commande d'installation d'opencode sur opencode.ai.*
 >
 > > [!success]- Correction
@@ -793,7 +913,7 @@ La boucle tourne avec un agent principal, dans le TUI ou sans interface avec `op
 > >
 > > Vérification : `opencode debug agents | grep web-explore`. Pour un modèle de 0,8b, trois choses font la différence : une description précise (c'est elle qui fait choisir l'agent), une procédure numérotée courte, et `steps` pour couper les boucles d'outils. On peut montrer en contre-exemple le même agent avec un prompt long et vague : il boucle ou invente le contenu de la page.
 
-> [!question] E11 · Sous-agent d'exécution Python distante (agent · 50 min)
+> [!question] E12 · Sous-agent d'exécution Python distante (agent · 50 min)
 > La configuration globale interdit `python*`, `pip*`, `uv *` et `pytest*` en local. Écrire un sous-agent `remote-python` qui copie le projet sur la machine indiquée dans sa description, y exécute le script avec `uv` et rapporte la sortie. Il ne modifie aucun fichier.
 >
 > > [!success]- Correction
@@ -846,7 +966,7 @@ La boucle tourne avec un agent principal, dans le TUI ou sans interface avec `op
 > > - `~/.local/bin/uv` en chemin absolu, parce que le `PATH` d'une session SSH non interactive ne contient pas `uv`.
 > > - Ajouter dans l'`AGENTS.md` du parent : « toute exécution Python passe par `remote-python` ; écris toi-même les scripts ». Sans cette ligne, le 27b tente `python3`, se fait refuser, puis abandonne.
 
-> [!question] E12 · Orchestration : écrire en local, exécuter à distance (application · 25 min)
+> [!question] E13 · Orchestration : écrire en local, exécuter à distance (application · 25 min)
 > Dans un dossier `stats/`, fournir `notes.csv` (colonnes `nom,note`, 10 lignes). Demander à Build : *Écris stats.py qui affiche la moyenne, le minimum et le maximum de notes.csv avec le module csv uniquement, puis fais-le exécuter par remote-python.*
 >
 > > [!success]- Correction
@@ -885,9 +1005,9 @@ Le vocabulaire n'est pas normalisé. Ce qui distingue les mécanismes, c'est le 
 | Durée | Activité |
 |---|---|
 | 0:00–0:30 | Plusieurs assistants, plusieurs rôles |
-| 0:30–1:10 | Exercice G10 : préparer avant d'agir |
-| 1:10–2:20 | Exercice G11 : un assistant de recherche sur le web |
-| 2:20–3:00 | G12 : démonstration, confier un calcul à une autre machine |
+| 0:30–1:10 | Exercice G11 : préparer avant d'agir |
+| 1:10–2:20 | Exercice G12 : un assistant de recherche sur le web |
+| 2:20–3:00 | G13 : démonstration, confier un calcul à une autre machine |
 
 #### Plusieurs assistants, plusieurs rôles
 
@@ -900,13 +1020,13 @@ Exemple : *Lance 3 assistants pour comparer le prix des yaourts chez Auchan, Lec
 
 #### Exercices
 
-> [!question] G10 · Préparer avant d'agir (manipulation · 40 min)
+> [!question] G11 · Préparer avant d'agir (manipulation · 40 min)
 > Dans un nouveau dossier `convertisseur`, ouvrez opencode, appuyez sur <kbd>Shift</kbd>+<kbd>Tab</kbd> (touche majuscule et touche tabulation) pour passer en mode **Plan** et demandez : *Prépare le plan d'une page web qui convertit des euros en dollars, avec un taux fixe de 1 € = 1,10 $.* Vérifiez qu'aucun fichier n'a été créé. Repassez en mode **Build** avec <kbd>Shift</kbd>+<kbd>Tab</kbd> et demandez : *Applique le plan.*
 >
 > > [!success]- Ce qu'il faut observer
 > > En mode Plan, l'assistant décrit ce qu'il compte faire (un seul fichier, un champ en euros, le résultat en dollars, la formule) sans rien écrire. En mode Build, il garde le plan en mémoire et l'exécute. Relire le plan avant de dire « applique » permet de corriger un malentendu avant qu'il ne coûte du temps.
 
-> [!question] G11 · Un assistant de recherche sur le web (réglage · 70 min)
+> [!question] G12 · Un assistant de recherche sur le web (réglage · 70 min)
 > Un assistant spécialisé se décrit dans un simple fichier texte. Plutôt que de l'écrire vous-même, demandez à l'assistant principal de le créer :
 >
 > ```
@@ -950,7 +1070,7 @@ Exemple : *Lance 3 assistants pour comparer le prix des yaourts chez Auchan, Lec
 > > - L'assistant principal confie la recherche à `web-explore` et reçoit seulement sa réponse courte.
 > > - Le petit modèle se trompe plus souvent. Il faut lui donner des étapes numérotées, simples et peu nombreuses : c'est pourquoi on garde vos instructions 1, 2 et 3.
 
-> [!question] G12 · Confier un calcul à une autre machine (démonstration · 40 min)
+> [!question] G13 · Confier un calcul à une autre machine (démonstration · 40 min)
 > Sur la machine de TP, l'assistant n'a pas le droit de lancer lui-même des programmes Python. Un assistant spécialisé, préparé par l'enseignant, envoie le programme au serveur de l'INSA, le lance là-bas et rapporte le résultat. Démonstration : à partir d'un fichier de notes, l'assistant écrit un petit programme de calcul de moyenne et le fait exécuter à distance.
 >
 > > [!success]- Ce qu'il faut observer
@@ -972,10 +1092,10 @@ Exemple : *Lance 3 assistants pour comparer le prix des yaourts chez Auchan, Lec
 | Durée | Activité | Support |
 |---|---|---|
 | 0:00–0:20 | Mémoire et état : le service de fond, la base, les sessions | Schéma de l'infrastructure |
-| 0:20–0:45 | TP : E13, sessions | Exercice E13 |
-| 0:45–1:20 | TP : E14, diagnostic d'une configuration cassée | Exercice E14 |
-| 1:20–1:40 | E15 : l'échelle de réinitialisation | Tableau E15 |
-| 1:40–2:50 | Mini-projet au choix : E16 (quiz), E17 (boîte en papier) ou E18 (emploi du temps) | Exercices E16 à E18 |
+| 0:20–0:45 | TP : E14, sessions | Exercice E14 |
+| 0:45–1:20 | TP : E15, diagnostic d'une configuration cassée | Exercice E15 |
+| 1:20–1:40 | E16 : l'échelle de réinitialisation | Tableau E16 |
+| 1:40–2:50 | Mini-projet au choix : E17 (quiz), E18 (boîte en papier) ou E19 (emploi du temps) | Exercices E17 à E19 |
 | 2:50–3:00 | Bilan : agile ou ingénierie ? | Discussion |
 
 > [!note]
@@ -983,7 +1103,7 @@ Exemple : *Lance 3 assistants pour comparer le prix des yaourts chez Auchan, Lec
 
 #### Exercices
 
-> [!question] E13 · Manipuler les sessions (manipulation · 25 min)
+> [!question] E14 · Manipuler les sessions (manipulation · 25 min)
 > Retrouver la session de E4 et la reprendre. La dupliquer pour tester une variante (thème sombre) sans toucher l'originale. Exporter la session en JSON depuis le shell.
 >
 > > [!success]- Correction
@@ -1004,7 +1124,7 @@ Exemple : *Lance 3 assistants pour comparer le prix des yaourts chez Auchan, Lec
 > >
 > > Une session est liée au **projet** (le dossier) : `opencode session list` lancé ailleurs ne la montre pas. Le fork copie l'historique, donc le contexte, mais pas les fichiers : les deux branches modifient le même `index.html`. Pour isoler aussi les fichiers, il faut `opencode run --worktree` dans un dépôt git.
 
-> [!question] E14 · Diagnostiquer une configuration cassée (maintenance · 35 min)
+> [!question] E15 · Diagnostiquer une configuration cassée (maintenance · 35 min)
 > Sauvegarder la configuration, puis la casser volontairement en retirant une virgule dans `opencode.json` du projet `compteur/`. Lancer opencode, observer, diagnostiquer et réparer. Faire de même avec un nom de modèle erroné dans un agent.
 >
 > > [!success]- Correction
@@ -1024,7 +1144,7 @@ Exemple : *Lance 3 assistants pour comparer le prix des yaourts chez Auchan, Lec
 > >
 > > Méthode à retenir : sauvegarder, puis regarder la configuration effective, les agents, les modèles, le service et les journaux, dans cet ordre. La configuration du projet se superpose à la configuration globale, donc une erreur peut venir de l'une ou de l'autre.
 
-> [!question] E15 · L'échelle de réinitialisation (maintenance · 20 min)
+> [!question] E16 · L'échelle de réinitialisation (maintenance · 20 min)
 > Pour chaque symptôme, choisir le niveau de réinitialisation **le plus bas** qui le règle.
 >
 > Symptômes : (a) l'agent tourne en rond depuis 20 tours ; (b) le TUI ne répond plus mais les autres sessions fonctionnent ; (c) `opencode` ne démarre plus du tout après une mise à jour ; (d) un plugin récemment installé fait échouer chaque appel ; (e) on veut rendre une machine de TP propre pour le groupe suivant.
@@ -1041,7 +1161,7 @@ Exemple : *Lance 3 assistants pour comparer le prix des yaourts chez Auchan, Lec
 > >
 > > On **déplace** plutôt qu'on ne supprime : un retour arrière reste possible. On arrête le service avant de toucher à la base, sinon il la réécrit. `opencode uninstall` conserve volontairement sessions, configuration et état. Au niveau 6, il faut refaire `opencode auth login` si les identifiants étaient stockés là.
 
-> [!question] E16 · Mini-projet : un quiz en approche ingénierie (projet · 70 min)
+> [!question] E17 · Mini-projet : un quiz en approche ingénierie (projet · 70 min)
 > Par binôme, dans un dossier `quiz/` vierge :
 >
 > 1. Écrire à la main `SPEC.md` (une demi-page au plus) et `AGENTS.md`, en reprenant E5.
@@ -1090,13 +1210,13 @@ Exemple : *Lance 3 assistants pour comparer le prix des yaourts chez Auchan, Lec
 
 | Durée | Activité |
 |---|---|
-| 0:00–0:30 | Exercice G13 : retrouver son travail |
-| 0:30–1:00 | Exercice G14 : quand ça ne marche plus |
+| 0:00–0:30 | Exercice G14 : retrouver son travail |
+| 0:30–1:00 | Exercice G15 : quand ça ne marche plus |
 | 1:00–1:15 | Faire du ménage : sessions, serveur de fond, `/pair` |
 | 1:15–2:50 | Projet au choix : boîte en papier ou emploi du temps |
 | 2:50–3:00 | Bilan : au fil de la conversation ou avec un cahier des charges ? |
 
-> [!question] G13 · Retrouver son travail (manipulation · 30 min)
+> [!question] G14 · Retrouver son travail (manipulation · 30 min)
 > opencode enregistre chaque conversation et la range avec le dossier dans lequel vous l'avez ouverte. Retournez dans le dossier `courses`, ouvrez opencode et essayez :
 >
 > |   |   |
@@ -1109,7 +1229,7 @@ Exemple : *Lance 3 assistants pour comparer le prix des yaourts chez Auchan, Lec
 > > [!success]- Ce qu'il faut observer
 > > Les conversations sont liées au dossier : ouvert depuis un autre dossier, opencode ne les montre pas. Une copie faite avec `/fork` duplique la conversation, pas les fichiers. Les deux versions travaillent donc sur le même `index.html`.
 
-> [!question] G14 · Quand ça ne marche plus (réflexion · 30 min)
+> [!question] G15 · Quand ça ne marche plus (réflexion · 30 min)
 > Pour chaque situation, choisissez la réaction la plus douce qui règle le problème.
 >
 > > [!success]- Réponses
@@ -1159,7 +1279,7 @@ Deux projets plus longs, à mener en binôme en S4 à la place du quiz ou en tra
 > [!note]
 > **Règle commune.** Le modèle est mauvais en géométrie et en combinatoire. On ne lui demande donc ni de « calculer » un patron ni de « trouver » un emploi du temps de tête. On lui fait écrire le fichier ou le programme qui le fait, et on vérifie le résultat avec un outil.
 
-> [!question] E17 · Boîte en papier de 5 cm × 5 cm avec couvercle lié (projet · 70 à 90 min)
+> [!question] E18 · Boîte en papier de 5 cm × 5 cm avec couvercle lié (projet · 70 à 90 min)
 > Produire un patron imprimable, à l'échelle réelle, d'une boîte cubique de 5 cm de côté, dont le couvercle est attaché au dos de la boîte et fermé par un rabat glissé à l'avant. On découpe le patron, on le plie et on le colle : la boîte doit se fermer.
 >
 > ![[schemas/figure-i8a.svg]]
@@ -1237,7 +1357,7 @@ Deux projets plus longs, à mener en binôme en S4 à la place du quiz ou en tra
 > > - Les languettes oubliées : la boîte ne tient pas. La liste des pièces de `SPEC.md` sert de liste de contrôle.
 > > - L'impression mise à l'échelle par le navigateur : on imprime en « taille réelle / 100 % » et on vérifie la cote de 50 mm à la règle.
 
-> [!question] E18 · Emploi du temps d'un département de formation (projet · 2 × 90 min)
+> [!question] E19 · Emploi du temps d'un département de formation (projet · 2 × 90 min)
 > Produire l'emploi du temps d'une semaine pour plusieurs groupes d'un département, à partir de fichiers de données (cours, salles, indisponibilités des enseignants), avec un contrôle automatique des contraintes.
 >
 > > [!note]
@@ -1482,7 +1602,7 @@ Deux projets à mener en binôme. Les deux suivent la même démarche : on écri
 >
 > 1. Faites écrire par l'assistant un cahier des charges, `SPEC.md`, qui reprend les règles ci-dessus en phrases simples.
 > 2. Demandez **un programme** qui construit l'emploi du temps à partir des tableaux. Ne demandez pas à l'assistant de le construire de tête : il se tromperait.
-> 3. Faites exécuter ce programme par l'assistant de calcul (vu en G12).
+> 3. Faites exécuter ce programme par l'assistant de calcul (vu en G13).
 > 4. Démarrez une **nouvelle conversation** avec `/clear` et demandez un **second programme** qui vérifie chaque règle sur le résultat, à partir du seul `SPEC.md`.
 > 5. Demandez enfin une page web qui affiche l'emploi du temps de chaque groupe sous forme de grille.
 >
@@ -1490,7 +1610,7 @@ Deux projets à mener en binôme. Les deux suivent la même démarche : on écri
 > > - Avec les tableaux d'exemple, le premier programme place les 16 séances, et le second annonce « aucune règle violée ».
 > > - Pourquoi deux programmes, écrits dans deux conversations différentes ? Si le même raisonnement construit et vérifie, il risque de faire deux fois la même erreur. Une conversation vierge donne un regard neuf.
 > > - Essayez d'ajouter une absence qui rend l'emploi du temps impossible : le programme doit le dire clairement, plutôt que de produire un emploi du temps faux.
-> > - Le code complet des deux programmes se trouve dans la version « Informaticien » du cours (exercice E18).
+> > - Le code complet des deux programmes se trouve dans la version « Informaticien » du cours (exercice E19).
 
 ## Points à retenir
 
@@ -1554,16 +1674,17 @@ Trois habitudes qui comptent plus que la connaissance des commandes, parce que l
 | E6 | Permissions de projet | Harnais | Configuration |
 | E7 | `/undo`, `/redo` | Vérification et retours | Manipulation |
 | E8 | Gros fichier et compaction | Fenêtre de contexte | Observation |
-| E9 | Plan puis Build | Agents primaires | Manipulation |
-| E10 | Sous-agent `web-explore` (0,8b) | Sous-agents, modèle léger | Agent |
-| E11 | Sous-agent `remote-python` | Exécution déportée | Agent |
-| E12 | Écrire en local, exécuter à distance | Orchestration | Application |
-| E13 | Sessions | Mémoire et état | Manipulation |
-| E14 | Configuration cassée | Diagnostic | Maintenance |
-| E15 | Échelle de réinitialisation | Réinitialisation | Maintenance |
-| E16 | Quiz en approche ingénierie | Synthèse | Projet |
-| E17 | Boîte en papier de 5 cm avec couvercle lié | Spécification géométrique, vérification physique | Mini-projet |
-| E18 | Emploi du temps d'un département | Solveur et vérificateur séparés, exécution distante | Mini-projet |
+| E9 | Skill `recette-ajustee` | Skills, chargement à la demande | Configuration |
+| E10 | Plan puis Build | Agents primaires | Manipulation |
+| E11 | Sous-agent `web-explore` (0,8b) | Sous-agents, modèle léger | Agent |
+| E12 | Sous-agent `remote-python` | Exécution déportée | Agent |
+| E13 | Écrire en local, exécuter à distance | Orchestration | Application |
+| E14 | Sessions | Mémoire et état | Manipulation |
+| E15 | Configuration cassée | Diagnostic | Maintenance |
+| E16 | Échelle de réinitialisation | Réinitialisation | Maintenance |
+| E17 | Quiz en approche ingénierie | Synthèse | Projet |
+| E18 | Boîte en papier de 5 cm avec couvercle lié | Spécification géométrique, vérification physique | Mini-projet |
+| E19 | Emploi du temps d'un département | Solveur et vérificateur séparés, exécution distante | Mini-projet |
 
 ## Lexique
 
@@ -1591,7 +1712,8 @@ Les mots utilisés dans cette version, avec leur équivalent dans le métier, ce
 | Conversation | Session | Un échange enregistré, rangé avec son dossier |
 | Connexion à distance | SSH | Travailler sur un autre ordinateur depuis le sien |
 | Cahier des charges | Spécification, `SPEC.md` | Ce que l'on veut obtenir, écrit avant de commencer |
-| Extensions | Skills, MCP, plugins | Moyens d'ajouter des capacités à l'assistant (non abordés ici) |
+| Fiche de savoir-faire | Skill | Une procédure que l'assistant ne sort que lorsqu'il en a besoin |
+| Extensions | MCP, plugins | Moyens d'ajouter des capacités à l'assistant (non abordés ici) |
 
 ## Mémo des commandes
 

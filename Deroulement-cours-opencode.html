@@ -26,11 +26,12 @@
 body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:16px;line-height:1.6;margin:0}
 .wrap{display:grid;grid-template-columns:240px minmax(0,1fr);gap:48px;max-width:1180px;margin:0 auto;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:40px 80px}
-nav.toc{position:sticky;top:calc(env(safe-area-inset-top,0px) + 24px);align-self:start;font-size:14px}
+nav.toc{position:sticky;top:calc(env(safe-area-inset-top,0px) + 24px);align-self:start;font-size:14px;max-height:calc(100vh - 48px);overflow-y:auto;overscroll-behavior:contain;padding-right:4px}
 nav.toc p{font-family:var(--f-display);font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:12px;color:var(--muted);margin:0 0 8px}
 nav.toc ol{list-style:none;margin:0 0 20px;padding:0;display:flex;flex-direction:column;gap:4px}
 nav.toc a{color:var(--fg);text-decoration:none;display:block;padding:3px 10px;border-left:2px solid var(--line)}
 nav.toc a:hover,nav.toc a:focus-visible{border-left-color:var(--accent);color:var(--accent)}
+nav.toc a.actif{border-left:3px solid var(--accent);padding-left:9px;color:var(--accent);background:var(--accent-soft);font-weight:600;border-radius:0 4px 4px 0}
 main{min-width:0;max-width:820px}
 h1,h2,h3,h4{font-family:var(--f-display);text-wrap:balance;line-height:1.2}
 h1{font-size:2.4rem;margin:0 0 12px;font-weight:700}
@@ -115,7 +116,7 @@ footer{margin-top:80px;font-size:13px;color:var(--muted)}
 
 @media (max-width:900px){
   .wrap{grid-template-columns:minmax(0,1fr);gap:0}
-  nav.toc{position:static;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:24px}
+  nav.toc{position:static;max-height:none;overflow:visible;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:24px}
   nav.toc ol{flex-direction:row;flex-wrap:wrap}
   h1{font-size:1.9rem}
 }
@@ -2207,5 +2208,41 @@ Découpe = trait plein. Pli = trait pointillé.
     var h = fromHash();
     if (h) show(h, false);
   });
+})();
+
+/* Sommaire : surligne la section en cours de lecture */
+(function () {
+  var nav = document.querySelector('nav.toc');
+  var ticking = false;
+  function liens() {
+    return Array.prototype.filter.call(nav.querySelectorAll('a[href^="#"]'), function (a) {
+      return a.offsetParent !== null && document.getElementById(a.getAttribute('href').slice(1));
+    });
+  }
+  function maj() {
+    ticking = false;
+    var ls = liens(), courant = null, seuil = 120;
+    ls.forEach(function (a) {
+      var cible = document.getElementById(a.getAttribute('href').slice(1));
+      if (cible.offsetParent !== null && cible.getBoundingClientRect().top <= seuil) courant = a;
+    });
+    if (!courant && ls.length) courant = ls[0];
+    if ((window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 2 && ls.length) courant = ls[ls.length - 1];
+    nav.querySelectorAll('a.actif').forEach(function (a) { if (a !== courant) { a.classList.remove('actif'); a.removeAttribute('aria-current'); } });
+    if (courant && !courant.classList.contains('actif')) {
+      courant.classList.add('actif');
+      courant.setAttribute('aria-current', 'location');
+      if (nav.scrollHeight > nav.clientHeight) {
+        var r = courant.getBoundingClientRect(), n = nav.getBoundingClientRect();
+        if (r.top < n.top + 40 || r.bottom > n.bottom - 40) nav.scrollTop += r.top - n.top - nav.clientHeight / 2;
+      }
+    }
+  }
+  function demander() { if (!ticking) { ticking = true; requestAnimationFrame(maj); } }
+  window.addEventListener('scroll', demander, { passive: true });
+  window.addEventListener('resize', demander);
+  window.addEventListener('hashchange', demander);
+  document.querySelectorAll('[data-set]').forEach(function (b) { b.addEventListener('click', function () { setTimeout(maj, 0); }); });
+  maj();
 })();
 </script>

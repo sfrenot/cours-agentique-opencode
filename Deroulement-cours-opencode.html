@@ -819,6 +819,46 @@ Coefficient appliqué : × 2,5</code></pre>
 </details>
 </div>
 
+<div class="ex" id="e9c">
+<h4><span class="id">E9c</span> Une skill Excel : la recette en tableur <span class="lvl">pour aller plus loin · 35 min · après E13</span></h4>
+<p>Ajouter une skill de traitement de fichiers Excel, puis l'utiliser sur la recette de E9 :</p>
+<ol>
+<li>Avec le Qwen 3.8, dans le dossier <code>cuisine/</code> : <code>find a skill for excel files</code>. Lire le <code>SKILL.md</code> proposé avant d'accepter l'installation, puis vérifier avec <code>/skills</code>.</li>
+<li>Demander ensuite :</li>
+</ol>
+<pre><code>À partir de la recette de crêpes ajustée pour 10 personnes, fabrique un
+fichier recette.xlsx avec deux feuilles :
+- "Recette" : le nombre de personnes de la recette (4) et le nombre voulu (10),
+  le coefficient, puis un tableau Ingrédient / Unité / Pour 4 / Pour 10, où la
+  colonne Pour 10 est calculée par des formules à partir du coefficient ;
+- "Courses" : la liste de courses par rayon, qui reprend les quantités de la
+  feuille Recette.</code></pre>
+<p>Récupérer <code>recette.xlsx</code> sur son poste, l'ouvrir dans Excel ou LibreOffice, puis changer le nombre de personnes voulues.</p>
+<details><summary>Correction</summary>
+<ul>
+<li><code>find-skills</code> propose la skill <code>xlsx</code> du dépôt <code>anthropics/skills</code> (<code>anthropics/skills@xlsx</code>). Elle s'installe dans <code>~/.agents/skills/xlsx/</code> avec un <code>SKILL.md</code>, une licence et un dossier <code>scripts/</code> (dont <code>recalc.py</code>).</li>
+<li>Sa lecture montre ses prérequis : Python avec <code>openpyxl</code> et <code>pandas</code>, et LibreOffice pour recalculer les formules. Sur la machine d'accès, Python est interdit par les permissions (<code>python*: deny</code>), <code>openpyxl</code> n'est pas installé et LibreOffice non plus.</li>
+<li>L'agent écrit donc le script (par exemple <code>creer_recette.py</code>) et le confie au sous-agent <code>remote-python</code> (E12), qui l'exécute sur <code>serveurllm</code> avec <code>~/.local/bin/uv run --with openpyxl creer_recette.py</code>, puis rapatrie <code>recette.xlsx</code> avec <code>scp</code>. D'où le prérequis : avoir fait E12 et E13.</li>
+<li>La skill impose ses règles, et c'est tout son intérêt : police Arial, <b>formules plutôt que valeurs calculées</b>, hypothèses documentées. Feuille « Recette » attendue :</li>
+</ul>
+<div class="tbl"><table>
+<thead><tr><th>Cellule</th><th>Contenu</th><th>Valeur affichée</th></tr></thead>
+<tbody>
+<tr><td class="t">B1</td><td>Personnes de la recette</td><td>4</td></tr>
+<tr><td class="t">B2</td><td>Personnes voulues</td><td>10</td></tr>
+<tr><td class="t">B3</td><td><code>=B2/B1</code></td><td>2,5</td></tr>
+<tr><td class="t">D6</td><td>Farine : <code>=ROUND(C6*$B$3,-1)</code></td><td>630</td></tr>
+<tr><td class="t">D7</td><td>Œufs : <code>=ROUNDUP(C7*$B$3,0)</code></td><td>8</td></tr>
+<tr><td class="t">D8</td><td>Lait (cl) : <code>=C8*$B$3</code></td><td>125</td></tr>
+<tr><td class="t">D9</td><td>Sel (pincées) : <code>=ROUNDUP(C9*$B$3,0)</code></td><td>3</td></tr>
+</tbody></table></div>
+<ul>
+<li>La feuille « Courses » renvoie à ces cellules (<code>=Recette!D7</code>…) plutôt que de recopier les nombres. En passant B2 de 10 à 6, toute la recette et la liste de courses se recalculent à l'ouverture.</li>
+<li>L'étape de recalcul de la skill (<code>recalc.py</code>, qui appelle LibreOffice) échoue faute de LibreOffice. Ce n'est pas bloquant : Excel ou LibreOffice recalculent les formules à l'ouverture du fichier. C'est un nouvel exemple de skill dont un outil manque, comme ImageMagick en E9b.</li>
+</ul>
+</details>
+</div>
+
 <!-- ============ S3 ============ -->
 <h2 id="s3">Séance 3 · Outils, agents et orchestration</h2>
 <div class="goals"><h4>À la fin de la séance, l'étudiant sait</h4><ul>
@@ -1466,6 +1506,7 @@ Pourquoi as-tu modifié cette ligne ? Qu'est-ce qui casse si je l'enlève ?</cod
 <tr><td class="t"><a href="#e8">E8</a></td><td>Gros fichier et compaction</td><td>Fenêtre de contexte</td><td>Observation</td></tr>
 <tr><td class="t"><a href="#e9">E9</a></td><td>Skill <code>recette-ajustee</code></td><td>Skills, chargement à la demande</td><td>Configuration</td></tr>
 <tr><td class="t"><a href="#e9b">E9b</a></td><td>Trouver et installer une skill existante</td><td>Écosystème des skills, prérequis, sécurité</td><td>Pour aller plus loin</td></tr>
+<tr><td class="t"><a href="#e9c">E9c</a></td><td>Skill Excel : la recette en tableur</td><td>Skill tierce, prérequis, exécution déportée</td><td>Pour aller plus loin</td></tr>
 <tr><td class="t"><a href="#e10">E10</a></td><td>Plan puis Build</td><td>Agents primaires</td><td>Manipulation</td></tr>
 <tr><td class="t"><a href="#e11">E11</a></td><td>Sous-agent <code>web-explore</code> (0,8b)</td><td>Sous-agents, modèle léger</td><td>Agent</td></tr>
 <tr><td class="t"><a href="#e12">E12</a></td><td>Sous-agent <code>remote-python</code></td><td>Exécution déportée</td><td>Agent</td></tr>
@@ -1953,6 +1994,44 @@ Coefficient appliqué : × 2,5</code></pre>
 <li>L'assistant utilise une fiche déjà installée, <code>find-skills</code>, qui sait chercher d'autres fiches. Il cherche sur GitHub, un grand site de partage, et trouve <code>image-manipulation-image-magick</code>, qui retouche des images.</li>
 <li>En lisant la fiche, on découvre qu'elle a besoin d'un logiciel, ImageMagick. Il n'est pas installé sur la machine d'accès : la réduction de l'image échoue. Une fiche explique comment faire, mais elle n'apporte pas l'outil.</li>
 <li>Une fiche trouvée sur internet a été écrite par un inconnu, et l'assistant suivra ses instructions. Lisez-la toujours avant de l'installer, et gardez les autorisations « demander » de l'exercice G7 : elles vous laissent le dernier mot.</li>
+</ul>
+</details>
+</div>
+
+<div class="ex" id="gp-g10c">
+<h4><span class="id">G10c</span> La recette dans un tableur Excel <span class="lvl">pour aller plus loin · 35 min · après la séance 3</span></h4>
+<p>On ajoute une deuxième fiche de savoir-faire, pour les fichiers Excel, puis on s'en sert pour mettre la recette de G10 dans un tableur.</p>
+<ol>
+<li>Dans le dossier <code>cuisine</code>, avec le Qwen 3.8, demandez : <code>find a skill for excel files</code>. Faites-vous expliquer la fiche trouvée avant d'accepter son installation, puis tapez <code>/skills</code>.</li>
+<li>Demandez ensuite :</li>
+</ol>
+<pre><code>À partir de la recette de crêpes ajustée pour 10 personnes, fabrique un
+fichier recette.xlsx avec deux feuilles :
+- "Recette" : le nombre de personnes de la recette (4) et le nombre voulu (10),
+  le coefficient, puis un tableau Ingrédient / Unité / Pour 4 / Pour 10, où la
+  colonne Pour 10 est calculée par des formules à partir du coefficient ;
+- "Courses" : la liste de courses par rayon, qui reprend les quantités de la
+  feuille Recette.</code></pre>
+<p>Récupérez le fichier <code>recette.xlsx</code> sur votre ordinateur, comme la page web de G2, et ouvrez-le dans Excel ou LibreOffice. Changez le nombre de personnes voulues : que se passe-t-il ?</p>
+<details><summary>Ce qu'il faut observer</summary>
+<ul>
+<li>L'assistant trouve la fiche <code>xlsx</code>, publiée par Anthropic. En la lisant, on découvre qu'elle a besoin du langage Python et de modules spécialisés. Sur la machine d'accès, l'assistant n'a pas le droit de lancer Python : il écrit le programme et le fait exécuter sur le serveur de l'INSA par l'assistant de calcul (G13), qui rapporte le fichier.</li>
+<li>La fiche impose ses règles : par exemple, des <b>formules</b> plutôt que des nombres recopiés. Le tableau ressemble à ceci :</li>
+</ul>
+<div class="tbl"><table>
+<thead><tr><th>Cellule</th><th>Contenu</th><th>Valeur affichée</th></tr></thead>
+<tbody>
+<tr><td class="t">B1</td><td>Personnes de la recette</td><td>4</td></tr>
+<tr><td class="t">B2</td><td>Personnes voulues</td><td>10</td></tr>
+<tr><td class="t">B3</td><td><code>=B2/B1</code></td><td>2,5</td></tr>
+<tr><td class="t">D6</td><td>Farine : <code>=ROUND(C6*$B$3,-1)</code></td><td>630</td></tr>
+<tr><td class="t">D7</td><td>Œufs : <code>=ROUNDUP(C7*$B$3,0)</code></td><td>8</td></tr>
+<tr><td class="t">D8</td><td>Lait (cl) : <code>=C8*$B$3</code></td><td>125</td></tr>
+<tr><td class="t">D9</td><td>Sel (pincées) : <code>=ROUNDUP(C9*$B$3,0)</code></td><td>3</td></tr>
+</tbody></table></div>
+<ul>
+<li>Si vous remplacez 10 par 6 dans la case B2, toutes les quantités et la liste de courses se mettent à jour d'elles-mêmes : c'est l'intérêt des formules.</li>
+<li>Une étape de vérification de la fiche a besoin d'un logiciel absent de la machine (LibreOffice). Ce n'est pas grave ici : le tableur refait les calculs à l'ouverture du fichier. Mais c'est une nouvelle preuve qu'une fiche toute faite suppose des outils qu'il faut avoir.</li>
 </ul>
 </details>
 </div>
